@@ -1,0 +1,22 @@
+.account-viewport {
+  //border: solid 1px green;
+  color: #737373;
+
+  .body {
+    //flex-direction: column !important;
+    display: block !important;
+    padding: 15px;
+
+    .account-item {
+      $account-item-base-color: #e7f3fe;
+      font-weight: bold;
+      padding: 8px;
+      border: solid 1px darken($account-item-base-color, 1);
+      margin-bottom: 6px;
+      border-radius: 3px;
+      background-color: lighten($account-item-base-color, 4);
+    }
+
+  }
+
+}

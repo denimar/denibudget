@@ -1,0 +1,42 @@
+.page-body-viewport {
+  $default-border-color: lighten(#ccc, 5%);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  .page-body-container {
+    width: 100%;
+    height: 100%;
+    width: 890px;
+    min-height: 200px;
+    display: flex;
+    background-color: white;
+
+    .page-body-view {
+      justify-content: space-around;
+      flex: 1;
+      flex-direction: column;
+      border: solid 1px $default-border-color;
+      display: flex;
+
+      .header {
+        border-bottom: solid 2px #e6e6e6;
+        padding: 5px;
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
+        background-color: #f2f2f2;
+      }
+
+      .body {
+        display: flex;
+        flex: 1;
+        justify-content: space-around;
+        flex-direction: row;
+      }
+
+    }
+  }
+}

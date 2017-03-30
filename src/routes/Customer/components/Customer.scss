@@ -1,0 +1,10 @@
+.customer-container {
+  border: solid 2px lighten(#ccc, 5%);
+  margin: 4px;
+  padding: 4px;
+
+
+  .customer-item {
+    border-bottom: solid 1px lighten(#ccc, 10%);
+  }
+}
