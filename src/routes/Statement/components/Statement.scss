@@ -1,0 +1,60 @@
+
+.statement-viewport {
+  $account-viewport-base-color: #F6FAFF;
+  color: #737373;
+  display: flex;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .body {
+    //flex-direction: column !important;
+    display: flex;
+    padding: 15px;
+    justify-content: space-around;
+    flex: 1;
+
+    .account-container {
+      // border: solid 1px purple;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      flex: 1;
+
+      .menu-items {
+        z-index: 99;
+
+        .account-item {
+          font-weight: normal;
+          padding: 8px 15px;
+          margin-bottom: 2px;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+          border-right-width: 0px;
+          cursor: pointer;
+
+          &.selected {
+            border: solid 1px darken($account-viewport-base-color, 5);
+            border-right: solid 1px $account-viewport-base-color;
+            font-weight: bold;
+            background-color: $account-viewport-base-color;
+          }
+        }
+      }
+
+      .account-statement {
+        border: solid 1px darken($account-viewport-base-color, 5);
+        justify-content: space-around;
+        flex: 1;
+        margin-left: -1px;
+        border-radius: 6px;
+        background-color: $account-viewport-base-color;
+      }
+
+    }
+
+
+  }
+
+}

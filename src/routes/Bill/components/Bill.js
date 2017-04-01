@@ -55,6 +55,9 @@ class Bill extends React.Component {
         {
           this.props.bills.data.map((bill, index) => {
             return <div key={index} className={'bill-item ' + bill.type.toLowerCase()}>
+                    <div className="account">
+                      {bill.account.name}
+                    </div>
                      <div className="category">
                        {bill.category.path}
                      </div>

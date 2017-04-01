@@ -13,7 +13,7 @@
         border-bottom: solid 1px #f2f2f2;
         padding: 15px 10px;
         //display: flex;
-        height: 60px;
+        height: 75px;
         flex-direction: column;
         //border-style: dotted;
 
@@ -32,6 +32,13 @@
         // &:hover {
         //   background-color: #f2f2f2;
         // }
+
+        .account {
+          font-size: 11px;
+          color: silver;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
 
         .category {
           font-size: 11px;

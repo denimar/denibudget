@@ -5,6 +5,8 @@ const argv = require('yargs').argv
 const ip = require('ip')
 const env = require('../env').default
 
+debugger;
+
 debug('Creating default configuration.')
 
 let nodeENV = process.env.NODE_ENV || 'development';

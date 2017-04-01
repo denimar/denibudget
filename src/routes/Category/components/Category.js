@@ -3,8 +3,7 @@ import './Category.scss';
 import DeniReactTreeView from 'deni-react-treeview';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
-import FaTrashO from 'react-icons/lib/fa/trash-o';
-import FaEdit from 'react-icons/lib/fa/edit';
+import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 
 class Category extends React.Component {
 
@@ -47,10 +46,7 @@ class Category extends React.Component {
       />
     );
 
-    const actionButtons = [
-      (<FaTrashO size="15" color="#ff704d" />),
-      (<FaEdit size="15" color="#245075" style={{"marginTop": '1px'}} />)
-    ];
+    const actionButtons = [CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT];
 
     const body = (
       <DeniReactTreeView

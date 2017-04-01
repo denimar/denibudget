@@ -6,8 +6,9 @@ let repositoryHelper = require('../../helper/repository.helper')(Bill);
 module.exports = {
 
   getBills: () => {
-    return repositoryHelper.getAll({}, null, null, (query) => {
+    return repositoryHelper.getAll({}, null, null, null, (query) => {
       query.populate('category');
+      query.populate('account');      
     });
   },
 

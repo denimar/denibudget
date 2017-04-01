@@ -8,4 +8,18 @@ module.exports = {
     });
   },
 
+  addAccount: (req, res) => {
+    accountRepository.add(req.body).then((addedAccount) => {
+      res.end(JSON.stringify(addedAccount, null, 2));
+    });
+  },
+
+  delAccount: (req, res) => {
+    let id = req.params.id;
+
+    accountRepository.del(id).then((deletedAccount) => {
+      res.end(JSON.stringify(deletedAccount, null, 2));
+    });
+  }
+
 }

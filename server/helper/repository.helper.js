@@ -3,8 +3,9 @@ module.exports = function(model) {
 
   return {
 
-    getAll: function(where, skip, limit, beforeExecFind) {
+    getAll: function(where, sort, skip, limit, beforeExecFind) {
       where = where || {};
+      sort = sort || {};
       skip = parseInt(skip || 0);
       limit = parseInt(limit || 0); //0 used to ignore limit property when it wasn't set
 
@@ -12,6 +13,7 @@ module.exports = function(model) {
         model.count(where, function( err, count){
 
           let query = model.find(where)
+                        .sort(sort)
                         .skip(skip)
                         .limit(limit)
 

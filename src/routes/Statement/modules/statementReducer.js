@@ -4,7 +4,7 @@ const initialState = {
   fetched: false,
   error: null,
 }
-export default function accountReducer (state = initialState, action) {
+export default function statementReducer (state = initialState, action) {
 
   switch (action.type) {
 
@@ -33,19 +33,6 @@ export default function accountReducer (state = initialState, action) {
       }
     }
 
-    case 'ADD_ACCOUNT': {
-      return {
-        ...state,
-        data: state.data.concat(action.payload)
-      }
-    }
-
-    case 'DEL_ACCOUNT': {
-      return {
-        ...state,
-        data: state.data.filter(account => account._id !== action.payload._id),
-      }
-    }
   }
 
   return state

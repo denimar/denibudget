@@ -42,7 +42,7 @@ console.log('----------------------------------------------------------');
 
 db.on('error', err => {
   console.log('----------------------------------------------------------');
-  console.log('Filed to connect to MongoDB:');
+  console.log('Failed to connect to MongoDB:');
   console.log(err);
   console.log('----------------------------------------------------------');
   throw err;

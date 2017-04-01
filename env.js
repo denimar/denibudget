@@ -16,7 +16,7 @@ const ENVIRONMENT = {
     MONGODB_DATABASE: 'budget',
     MONGODB_CONNECTION_TIMEOUT: 5000,
     MONGODB_REPLICA_SET: false
-  }
+  },
 
   production: {
     PORT: 3000,

@@ -2,26 +2,21 @@ import React from 'react'
 import { Modal, Button, Form, FormGroup, FormControl, Checkbox, Col, ButtonGroup, Input, ControlLabel, FieldGroup, Radio } from 'react-bootstrap';
 import CurrencyInput from 'react-currency-input';
 import moment from 'moment'
-import Pikaday from 'pikaday';
-import ReactPikaday from 'react-pikaday';
 import axios from 'axios';
-require('./BillModal.scss');
-require('pikaday/css/pikaday.css');
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-const commonConstant = require('../../../../common/common.constant');
+import commonConstant from '../../../../common/common.constant'
+import DateInput from '../../../components/DateInput'
 
-var getCategories = function(input, callback) {
+let getAccounts = (input, callback) => {
 
-  const url = commonConstant.ENDPOINT.CATEGORY_LIST
+  const url = commonConstant.ENDPOINT.ACCOUNT;
 
   axios.get(url)
     .then((response) => {
 
       callback(null, {
         options: response.data,
-        // labelKey: 'path',
-        // valueKey: 'id',
         complete: true
       });
 
@@ -30,7 +25,26 @@ var getCategories = function(input, callback) {
       console.warn(err);
     });
 
-};
+}
+
+let getCategories = (input, callback) => {
+
+  const url = commonConstant.ENDPOINT.CATEGORY_LIST
+
+  axios.get(url)
+    .then((response) => {
+
+      callback(null, {
+        options: response.data,
+        complete: true
+      });
+
+    })
+    .catch((err) => {
+      console.warn(err);
+    });
+
+}
 
 class BillModal extends React.Component {
 
@@ -87,8 +101,13 @@ class BillModal extends React.Component {
     this.setState({form: Object.assign(this.state.form, {type: e.target.value})});
   }
 
+  accountInputChange(item) {
+    let form = Object.assign({}, this.state.form, {account: item ? item._id : null});
+    this.setState({form: form});
+  }
+
   categoryInputChange(item) {
-    let form = Object.assign({}, this.state.form, {category: item.value});
+    let form = Object.assign({}, this.state.form, {category: item ? item.value : null});
     this.setState({form: form});
   }
 
@@ -103,15 +122,14 @@ class BillModal extends React.Component {
           <Form horizontal ref='Form'>
 
             <FormGroup>
-              <Col sm={2}>
+              <Col componentClass={ControlLabel} sm={2}>
                 Date
               </Col>
               <Col sm={10}>
-                <ReactPikaday
+                <DateInput
                   className="form-control"
                   value={this.state.form.date}
                   onChange={this.dateInputOnChange.bind(this)}
-                  format='dddd, DD [de] MMMM [de] YYYY'
                 />
 
               </Col>
@@ -124,6 +142,23 @@ class BillModal extends React.Component {
               <Col sm={10}>
                 <Select.Async
                     autofocus
+                    ref="categoryInput"
+                    name="form-field-name"
+                    loadOptions={getAccounts}
+                    labelKey="name"
+                    valueKey="_id"
+                    value={this.state.form.account}
+                    onChange={this.accountInputChange.bind(this)}
+                />
+              </Col>
+            </FormGroup>
+
+            <FormGroup >
+              <Col componentClass={ControlLabel} sm={2}>
+                Category
+              </Col>
+              <Col sm={10}>
+                <Select.Async
                     ref="categoryInput"
                     name="form-field-name"
                     loadOptions={getCategories}
@@ -147,7 +182,12 @@ class BillModal extends React.Component {
                 Value
               </Col>
               <Col sm={3}>
-                <CurrencyInput ref="valueInput" className="form-control" value={this.state.form.value} onChange={this.billValueOnChange.bind(this)} />
+                <CurrencyInput
+                  ref="valueInput"
+                  className="form-control"
+                  value={this.state.form.value}
+                  onChange={this.billValueOnChange.bind(this)}
+              />
               </Col>
             </FormGroup>
 

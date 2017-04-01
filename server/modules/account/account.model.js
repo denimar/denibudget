@@ -5,7 +5,11 @@ require('mongoose-double')(mongoose);
 //Schema
 let accountSchema = new Schema({
   name: String,
-  initialValue: Schema.Types.Double
+  startDate: {
+    type: Date,
+    default: Date.now
+  },
+  openingBalance: Schema.Types.Double
 });
 
 //Model

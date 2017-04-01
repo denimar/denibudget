@@ -29,7 +29,7 @@
       }
     },
     "dev": {
-      "command": "nodemon bin/dev-server --exec babel-node --presets es2015,stage-2 --ignore dist --ignore coverage --ignore tests --ignore src",
+      "command": "nodemon --inspect bin/dev-server --exec babel-node --presets es2015,stage-2 --ignore dist --ignore coverage --ignore tests --ignore src",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"

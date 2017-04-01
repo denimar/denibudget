@@ -1,4 +1,3 @@
-require('es6-promise').polyfill();
 import axios from "axios";
 const commonConstant = require('../../../../common/common.constant');
 

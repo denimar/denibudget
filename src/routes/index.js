@@ -7,7 +7,7 @@ import AccountRoute from './Account'
 import CounterRoute from './Counter'
 import CustomerRoute from './Customer'
 
-import TesteRoute from './Teste'
+import StatementRoute from './Statement'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -23,7 +23,7 @@ export const createRoutes = (store) => ({
     CounterRoute(store),
     CustomerRoute(store),
 
-    TesteRoute(store)
+    StatementRoute(store)
   ]
 })
 

@@ -4,11 +4,11 @@ const initialState = {
   fetched: false,
   error: null,
 }
-export default function testeReducer (state = initialState, action) {
+export default function statementReducer (state = initialState, action) {
 
   switch (action.type) {
 
-    case 'ADD_TESTE': {
+    case 'ADD_STATEMENT': {
       return {
         ...state,
         data: action.payload

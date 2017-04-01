@@ -13,6 +13,10 @@ let billSchema = new Schema({
     type: String,
     enum: ['C', 'D']
   },
+  account: {
+		type: Schema.Types.ObjectId,
+		ref: 'Account'
+	},
   category: {
 		type: Schema.Types.ObjectId,
 		ref: 'Category'

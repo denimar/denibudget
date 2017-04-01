@@ -1,20 +1,45 @@
 .account-viewport {
-  //border: solid 1px green;
-  color: #737373;
+  color: #666666;
 
   .body {
     //flex-direction: column !important;
     display: block !important;
-    padding: 15px;
+    padding-top: 4px;
 
     .account-item {
       $account-item-base-color: #e7f3fe;
-      font-weight: bold;
-      padding: 8px;
-      border: solid 1px darken($account-item-base-color, 1);
-      margin-bottom: 6px;
-      border-radius: 3px;
-      background-color: lighten($account-item-base-color, 4);
+      //font-weight: bold;
+      padding: 8px 25px;
+      border-bottom: solid 1px darken($account-item-base-color, 1);
+      display: flex;
+      flex-direction: row;
+
+      .account-name {
+        //border: solid 1px green;
+        flex: 1;
+        justify-content: space-around;
+      }
+
+      .action-buttons {
+        //border: solid 1px red;
+        opacity: 0.4;
+
+        * {
+          margin-left: 10px;
+          cursor: pointer;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+
+      }
+
+      &:hover {
+        background-color: lighten($account-item-base-color, 3);
+        color: #0d0d0d;
+      }
+
     }
 
   }
