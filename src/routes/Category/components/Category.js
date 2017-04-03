@@ -1,9 +1,11 @@
 import React from 'react'
 import './Category.scss';
-import DeniReactTreeView from 'deni-react-treeview';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
+import DeniReactTreeView from 'deni-react-treeview';
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
+import 'bootstrap/dist/css/bootstrap.css'
+import Dialog from 'react-bootstrap-dialog'
 
 class Category extends React.Component {
 
@@ -16,8 +18,17 @@ class Category extends React.Component {
     this.props.addCategory(this.refs.treeview, selectedItem.id, 'Now Denimar', false);
   }
 
-  deleteItemClick(id) {
-    this.props.delCategory(this.refs.treeview, id);
+  delCategoryClick(id) {
+    this.refs.dialog.show({
+      body: 'Confirm Category Deletion?',
+      actions: [
+        Dialog.CancelAction(),
+        Dialog.DefaultAction('Confirm', () => {
+          this.props.delCategory(this.refs.treeview, id);
+        }, 'btn-danger')
+      ],
+      onHide: (dialog) => {}
+    })
   }
 
   editItemClick() {
@@ -29,7 +40,8 @@ class Category extends React.Component {
 
     switch (buttonName) {
       case 'FaTrashO':
-        this.deleteItemClick(item.id)
+        this.delCategoryClick(item.id)
+        event.preventDefault();
         break;
       case 'FaEdit':
         this.editItemClick(item.id)
@@ -53,7 +65,7 @@ class Category extends React.Component {
         ref="treeview"
         json="/endpoints/category"
         selectRow={true}
-        showRoot={true}
+        showRoot={false}
         actionButtons={actionButtons}
         onActionButtonClick={this.onActionButtonClick.bind(this)}
       />
@@ -61,6 +73,7 @@ class Category extends React.Component {
 
     return (
       <div className="category-viewport">
+        <Dialog ref='dialog'/>
         <PageBody header={header} body={body} />
       </div>
     )

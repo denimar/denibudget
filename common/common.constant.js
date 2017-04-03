@@ -8,8 +8,8 @@ module.exports = {
     ADD_CATEGORY: BASE_ENDPOINTS + '/add_category',
     ACCOUNT: BASE_ENDPOINTS + '/account',
     CUSTOMER: BASE_ENDPOINTS + '/customer',
-    BILL: BASE_ENDPOINTS + '/bill',
-
+    TRANSACTION: BASE_ENDPOINTS + '/transaction',
+    BUDGET: BASE_ENDPOINTS + '/budget',
     TESTE: BASE_ENDPOINTS + '/teste',
   }
 

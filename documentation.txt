@@ -1,0 +1,39 @@
+-> dashboard
+  -Income X Expenses (Monthly)
+  -Account Balance (Monthly)
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+
+-> overviews
+
+  < --- september 2017 --->
+
+    -> accounts
+        aaa  .............. 1.500,00
+        bbb  .............. 1.200,00
+        ccc  .............. 3.120,00
+
+    -> categories
+        Incomes
+          aaaaaaaa » bbbbbbbbbbbbb » ccccccccccccc .............. 156,00
+          dddddddd » eeeeeeeeeeeee » fffffffffffff .............. 322,00
+          gggggggg » hhhhhhhhhhhhh » iiiiiiiiiiiii .............. 108,00
+        Expenses
+          aaaaaaaa » bbbbbbbbbbbbb » ccccccccccccc .............. 156,00
+          dddddddd » eeeeeeeeeeeee » fffffffffffff .............. 322,00
+          gggggggg » hhhhhhhhhhhhh » iiiiiiiiiiiii .............. 108,00
+          aaaaaaaa » bbbbbbbbbbbbb » ccccccccccccc .............. 156,00
+          dddddddd » eeeeeeeeeeeee » fffffffffffff .............. 322,00
+          gggggggg » hhhhhhhhhhhhh » iiiiiiiiiiiii .............. 108,00
+
+-> budgets
+  aaaaaaaa » bbbbbbbbbbbbb » ccccccccccccc .............. 156,00
+  dddddddd » eeeeeeeeeeeee » fffffffffffff .............. 322,00
+  gggggggg » hhhhhhhhhhhhh » iiiiiiiiiiiii .............. 108,00
+  aaaaaaaa » bbbbbbbbbbbbb » ccccccccccccc .............. 156,00
+  dddddddd » eeeeeeeeeeeee » fffffffffffff .............. 322,00

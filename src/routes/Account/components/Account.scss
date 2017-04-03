@@ -1,4 +1,7 @@
 .account-viewport {
+  $account-item-base-color: #e7f3fe;
+  $account-name-column-width: 400px;
+  $account-start-date-column-width: 150px;
   color: #666666;
 
   .body {
@@ -6,27 +9,51 @@
     display: block !important;
     padding-top: 4px;
 
+    .column-headers {
+      border-bottom: solid 1px lighten(#f2f2f2, 2);
+      padding-left: 25px;
+      //font-weight: bold;
+      font-size: 12px;
+      display: flex;
+
+      .column-header {
+        color: #c0c0c0;
+
+        &.account-name {
+          width: $account-name-column-width;
+        }
+
+        &.account-start-date {
+          width: $account-start-date-column-width;
+        }
+
+      }
+    }
+
     .account-item {
-      $account-item-base-color: #e7f3fe;
       //font-weight: bold;
       padding: 8px 25px;
       border-bottom: solid 1px darken($account-item-base-color, 1);
       display: flex;
       flex-direction: row;
 
+      .account-start-date {
+        width: $account-start-date-column-width;
+      }
+
       .account-name {
-        //border: solid 1px green;
-        flex: 1;
-        justify-content: space-around;
+        width: $account-name-column-width;
       }
 
       .action-buttons {
-        //border: solid 1px red;
         opacity: 0.4;
+        flex: 1;
+        justify-content: space-around;
 
         * {
           margin-left: 10px;
           cursor: pointer;
+          float: right;
         }
 
         &:hover {

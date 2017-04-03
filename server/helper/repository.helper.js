@@ -17,7 +17,7 @@ module.exports = function(model) {
                         .skip(skip)
                         .limit(limit)
 
-          //beforeExecFind sometime is used to execute .populate in order to populate foreign fields (bill.category, for example)
+          //beforeExecFind sometime is used to execute .populate in order to populate foreign fields (transaction.category, for example)
           if (beforeExecFind) {
             beforeExecFind(query);
           }
