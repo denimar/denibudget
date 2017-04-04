@@ -14,6 +14,14 @@ module.exports = {
     });
   },
 
+  addBudgetItem: (req, res) => {
+    const budget = req.body.budget;
+    const budgetItemToAdd = req.body.budgetItemToAdd;
+    budgetRepository.addItem(budget, budgetItemToAdd).then((addedBudgetItem) => {
+      res.end(JSON.stringify(addedBudgetItem, null, 2));
+    });
+  },
+
   delBudget: (req, res) => {
     let id = req.params.id;
 

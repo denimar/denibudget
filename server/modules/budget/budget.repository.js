@@ -29,6 +29,32 @@ module.exports = {
 
   },
 
+  addItem: (budget, budgetItemToAdd ) => {
+    return new Promise(function(success) {
+
+      let budgetDocument = new Budget(budget);
+      if (!budgetDocument.details) {
+        budgetDocument.details = [];
+      }
+      budgetDocument.details.push(budgetItemToAdd);
+
+      budgetDocument.save(function(err) {
+        if (err) return handleError(err);
+
+        Budget.findById(budgetDocument._id)
+          .populate('category')
+          .exec()
+
+            .then(function(data) {
+              success(data);
+            });
+
+      });
+
+    });
+
+  },
+
   del: (id) => {
     return new Promise(function(success) {
 

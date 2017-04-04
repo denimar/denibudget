@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import Dialog from 'react-bootstrap-dialog'
 
@@ -7,6 +7,7 @@ import './Budget.scss';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
 import BudgetModal from './BudgetModal';
+import BudgetItemModal from './BudgetItemModal';
 
 import FaPlus from 'react-icons/lib/fa/plus';
 import FaMinus from 'react-icons/lib/fa/minus';
@@ -45,6 +46,14 @@ class Budget extends React.Component {
       });
   }
 
+  newBudgetItemModal(budget) {
+    let me = this;
+    me.refs.BudgetItemModal.open()
+      .then(budgetItemToAdd => {
+        me.props.addBudgetItem(budget, budgetItemToAdd);
+      });
+  }
+
   expandButtonClick(budget) {
     budget.expanded = !budget.expanded;
     this.forceUpdate();
@@ -61,7 +70,13 @@ class Budget extends React.Component {
       if (budget.expanded) {
 
         let noItems = (<div className="budget-detail-no-items"></div>)
-        let details = budget.details ? budget.details.map(detail => (
+        let details = budget.details;
+        let sortedDetails = details.sort((detail1, detail2) => {
+          if (detail1.description < detail2.description) return -1;
+          if (detail1.description > detail2.description) return 1;
+          return 0;
+        });
+        let detailItemsEl = sortedDetails ? sortedDetails.map(detail => (
           <div className={ 'budget-detail-item ' + detail.type.toLowerCase() }>
             <div className="budget-detail-field description">{ detail.description }</div>
             <div className="budget-detail-field type">{ detail.type }</div>
@@ -79,7 +94,7 @@ class Budget extends React.Component {
 
         detailEl = (
           <div className="budget-detail-container">
-            { details }
+            { detailItemsEl }
           </div>
         );
         expandButton = <FaMinus style={{marginTop: '-2px', marginRight: '8px'}} />
@@ -106,9 +121,13 @@ class Budget extends React.Component {
               <span>
                 {(CRUD_ACTION_BUTTON_DELETE)}
               </span>
-              <span>
-                {(CRUD_ACTION_BUTTON_ADD_DETAIL)}
-              </span>
+              <OverlayTrigger placement="left" overlay={(
+                  <Tooltip>Add a new item in this budget.</Tooltip>
+                )}>
+                <span onClick={ this.newBudgetItemModal.bind(this, budget) }>
+                  {(CRUD_ACTION_BUTTON_ADD_DETAIL)}
+                </span>
+              </OverlayTrigger>
             </div>
           </div>
 
@@ -144,6 +163,7 @@ class Budget extends React.Component {
 
       <div className="budget-viewport">
         <BudgetModal ref='BudgetModal'/>
+        <BudgetItemModal ref='BudgetItemModal'/>
 
         <Dialog ref='dialog'/>
 

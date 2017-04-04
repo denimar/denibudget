@@ -7,6 +7,7 @@ module.exports = function(app) {
 
   app.get(commonConstant.ENDPOINT.BUDGET, budgetService.getBudgets);
   app.post(commonConstant.ENDPOINT.BUDGET + '/add', jsonParser, budgetService.addBudget);
+  app.post(commonConstant.ENDPOINT.BUDGET + '/additem', jsonParser, budgetService.addBudgetItem);
   app.delete(commonConstant.ENDPOINT.BUDGET + '/del/:id', budgetService.delBudget);
 
 }

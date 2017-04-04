@@ -48,11 +48,11 @@ export const fetchBudgetDetails = (budget) => {
   }
 }
 
-export const addBudget = (budget) => {
+export const addBudget = (budgetToAdd) => {
   return (dispatch, getState) => {
 
     const url = commonConstant.ENDPOINT.BUDGET + '/add'
-    axios.post(url, budget)
+    axios.post(url, budgetToAdd)
       .then((response) => {
         dispatch({
           type : 'ADD_BUDGET',
@@ -62,6 +62,32 @@ export const addBudget = (budget) => {
       .catch((err) => {
         dispatch({
           type: "ADD_BUDGET_ERROR",
+          payload: err
+        })
+      });
+
+  }
+}
+
+export const addBudgetItem = (budget, budgetItemToAdd) => {
+  return (dispatch, getState) => {
+
+    const url = commonConstant.ENDPOINT.BUDGET + '/additem'
+    const jsonData = {
+      budget: budget,
+      budgetItemToAdd: budgetItemToAdd
+    }
+    axios.post(url, jsonData)
+      .then((response) => {
+        dispatch({
+          type : 'ADD_BUDGET_ITEM',
+          payload : response.data,
+          budget: budget
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: "ADD_BUDGET_ITEM_ERROR",
           payload: err
         })
       });

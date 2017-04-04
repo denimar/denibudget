@@ -70,6 +70,20 @@ export default function budgetReducer (state = initialState, action) {
       }
     }
 
+    case 'ADD_BUDGET_ITEM': {
+      const budgetId = action.budget.id;
+      const newBudgets = [...state.data];
+      const budgetIndex = newBudgets.findIndex(budget => budget.id === id)
+      const details = newBudgets[budgetIndex].details || [];
+      details.push(action.payload);
+
+      return {
+        ...state,
+        data: newBudgets
+      }
+    }
+
+
   }
 
   return state;
