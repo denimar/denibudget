@@ -1,80 +1,145 @@
 .budget-viewport {
+  $budget-item-base-color: #e7f3fe;
+  $budget-name-column-width: 380px;
+  $budget-date-column-width: 170px;
+  color: #666666;
 
   .body {
-    display: flex;
+    //flex-direction: column !important;
+    display: block !important;
+    padding-top: 4px;
 
-    .budget-items {
-      flex: 1;
-      //padding: 0px 10px;
-      display: flex;;
-      flex-direction: column;
-      padding: 2px 4px;
+    .column-headers {
+      border-bottom: solid 1px lighten(#f2f2f2, 2);
+      padding-left: 25px;
+      //font-weight: bold;
+      font-size: 12px;
+      display: flex;
+
+      .column-header {
+        color: #c0c0c0;
+
+        &.budget-description {
+          width: $budget-name-column-width;
+        }
+
+        &.budget-start-date {
+          width: $budget-date-column-width;
+        }
+
+        &.budget-end-date {
+          width: $budget-date-column-width;
+        }
+
+      }
+    }
+
+    .budget-item-container {
+      //font-weight: bold;
+      padding: 8px 25px;
+      border-bottom: solid 1px darken($budget-item-base-color, 1);
+
+      &:hover {
+        background-color: lighten($budget-item-base-color, 3);
+        color: #0d0d0d;
+      }
 
       .budget-item {
-        border: solid 1px #f2f2f2;
-        padding: 10px 10px;
-        margin-top: 3px;
-        //display: flex;
-        height: 60px;
-        flex-direction: column;
-        //border-style: dotted;
-        border-radius: 8px;
+        display: flex;
+        flex-direction: row;
 
-        &.c {
-          $base-color-credit: #008000;
-          color: lighten($base-color-credit, 12%);
-          background-color: lighten($base-color-credit, 74%);
+        .budget-start-date {
+          width: $budget-date-column-width;
         }
 
-        &.d {
-          $base-color-debt: #ff0000;
-          color: lighten($base-color-debt, 20%);
-          background-color: lighten($base-color-debt, 49%);
+        .budget-end-date {
+          width: $budget-date-column-width;
         }
 
-        // &:hover {
-        //   background-color: #f2f2f2;
-        // }
+        .budget-description {
+          width: $budget-name-column-width;
 
-        .category {
-          font-size: 11px;
-          color: #b3b3b3;
+          .expand-button {
+            cursor: pointer;
+          }
         }
 
-        .item {
+        .action-buttons {
+          opacity: 0.4;
+          flex: 1;
+          justify-content: space-around;
+          //border: solid 1px red;
+
+          * {
+            margin-left: 10px;
+            cursor: pointer;
+            float: right;
+          }
+
+          &:hover {
+            opacity: 1;
+          }
+
+        }
+
+      }
+
+      .budget-detail-container {
+        margin-top: 4px;
+        padding-left: 20px;
+        //border: solid 1px #e6e6e6;
+        //background-color: #F7F7F7;
+        margin-left: 20px;
+        margin-right: 140px;
+        //padding: 5px;
+        border-radius: 4px;
+
+        .budget-detail-item {
+          border: solid 1px #e6e6e6;
+          margin-bottom: 2px;
+          padding: 2px 15px;
           display: flex;
-          flex-direction: row;
-          padding-left: 20px;
-          margin-top: 4px;
+          align-items: center;
+          border-radius: 3px;
 
-          .date {
-            margin-right: 20px;
+          &.c {
+            $base-color-credit: #339966;
+            color: lighten($base-color-credit, 10%);
+            background-color: lighten($base-color-credit, 57%);
           }
 
-          .description {
-            justify-content: space-around;
-            flex: 1
+          &.d {
+            $base-color-debt: #ff0000;
+            color: lighten($base-color-debt, 25%);
+            background-color: lighten($base-color-debt, 49%);
           }
 
-          .type {
-            width: 100px;
-          }
+          .budget-detail-field {
+            display: inline-flex;
 
-          .value {
-            width: 140px;
-            text-align: right;
-            padding-right: 40px;
+            &.description {
+              width: 320px;
+            }
+
+            &.type {
+              width: 80px;
+            }
+
+            &.value {
+              width: 120px;
+              text-align: right;
+            }
           }
 
           .action-buttons {
+            display: inline-flex;
+            margin-left: 10px;
             opacity: 0.4;
-            width: 100px;
-            margin-top: 2px;
 
             * {
-              margin-left: 6px;
+              margin-left: 10px;
+              display: inline-flex;
               cursor: pointer;
-              float: right;
             }
 
             &:hover {
@@ -84,7 +149,13 @@
           }
         }
 
+        .budget-detail-no-items {
+          height: 25px;
+        }
       }
+
     }
+
   }
+
 }

@@ -4,20 +4,10 @@ require('mongoose-double')(mongoose);
 
 //Schema
 let budgetSchema = new Schema({
-  date: {
-    type: Date,
-    default: Date.now
-  },
+  startDate: Date,
+  endDate: Date,
   description: String,
-  type: {
-    type: String,
-    enum: ['C', 'D']
-  },
-  category: {
-		type: Schema.Types.ObjectId,
-		ref: 'Category'
-	},
-  value: Schema.Types.Double
+  detail: [Object]
 });
 
 //Model

@@ -8,10 +8,10 @@ export const Header = () => (
 
     <div className="navigation">
       <IndexLink to='/transaction' activeClassName="route-active"> Transactions </IndexLink>
+      <IndexLink to='/budget' activeClassName="route-active"> Budgets </IndexLink>
       <IndexLink to='/statement' activeClassName="route-active"> Statements </IndexLink>
       <IndexLink to='/account' activeClassName="route-active"> Accounts </IndexLink>
       <IndexLink to='/category' activeClassName="route-active"> Categories </IndexLink>
-      <IndexLink to='/budget' activeClassName="route-active"> Budgets </IndexLink>
       <IndexLink to='/customer' activeClassName="route-active"> Customers </IndexLink>
       <IndexLink to='/counter' activeClassName="route-active"> Counter </IndexLink>
     </div>

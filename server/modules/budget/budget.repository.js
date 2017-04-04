@@ -5,12 +5,7 @@ let repositoryHelper = require('../../helper/repository.helper')(Budget);
 
 module.exports = {
 
-  getBudgets: () => {
-    return repositoryHelper.getAll({}, null, null, null, (query) => {
-      query.populate('category');
-      query.populate('account');
-    });
-  },
+  getBudgets: repositoryHelper.getAll,
 
   add: (documentToAdd) => {
     return new Promise(function(success) {

@@ -3,7 +3,7 @@ const commonConstant = require('../../../../common/common.constant');
 
 export const fetchBudgets = () => {
   return (dispatch, getState) => {
-      const url = commonConstant.ENDPOINT.BUDGET
+      const url = commonConstant.ENDPOINT.BUDGET;
 
       dispatch({type: 'FETCH_BUDGETS'});
 
@@ -17,6 +17,30 @@ export const fetchBudgets = () => {
         .catch((err) => {
           dispatch({
             type: "FETCH_BUDGETS_REJECTED",
+            payload: err
+          })
+        });
+
+  }
+}
+
+export const fetchBudgetDetails = (budget) => {
+  return (dispatch, getState) => {
+      const url = commonConstant.ENDPOINT.BUDGET_DETAIL;
+
+      dispatch({type: 'FETCH_BUDGET_DETAILS'});
+
+      axios.get(url)
+        .then((response) => {
+          dispatch({
+            type : 'FETCH_BUDGET_DETAILS_FULFILLED',
+            payload : response.data,
+            budget: budget
+          })
+        })
+        .catch((err) => {
+          dispatch({
+            type: "FETCH_BUDGET_DETAILS_REJECTED",
             payload: err
           })
         });

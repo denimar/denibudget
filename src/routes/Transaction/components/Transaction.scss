@@ -21,14 +21,14 @@
         border-radius: 8px;
 
         &.c {
-          $base-color-credit: #008000;
-          color: lighten($base-color-credit, 12%);
-          background-color: lighten($base-color-credit, 74%);
+          $base-color-credit: #339966;
+          color: lighten($base-color-credit, 10%);
+          background-color: lighten($base-color-credit, 57%);
         }
 
         &.d {
           $base-color-debt: #ff0000;
-          color: lighten($base-color-debt, 20%);
+          color: lighten($base-color-debt, 25%);
           background-color: lighten($base-color-debt, 49%);
         }
 

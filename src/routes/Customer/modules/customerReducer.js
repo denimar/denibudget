@@ -41,7 +41,7 @@ export default function customerReducer (state = initialState, action) {
     }
 
     case "UPDATE_CUSTOMER": {
-      const id = action.payload.id
+      const id = action.payload.id;
       const newCustomers = [...state.data]
       const customerIndexToUpdate = newCustomers.findIndex(customer => customer.id === id)
       if (customerIndexToUpdate != -1) {

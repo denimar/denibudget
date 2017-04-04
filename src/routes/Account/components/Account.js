@@ -5,7 +5,7 @@ import PageHeaderCrud from '../../../components/PageHeaderCrud';
 import AccountModal from './AccountModal'
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import Dialog from 'react-bootstrap-dialog'
-import moment from 'moment'
+import Moment from 'moment'
 
 class Account extends React.Component {
 
@@ -43,7 +43,7 @@ class Account extends React.Component {
     let accounts = this.props.accounts;
 
     const mappedAccounts = accounts.data.map((account, index) => {
-      let startDate = moment(account.startDate);
+      let startDate = Moment(account.startDate);
       return (
         <div
           className="account-item"
