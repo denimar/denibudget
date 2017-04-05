@@ -42,9 +42,9 @@ export default function budgetReducer (state = initialState, action) {
     }
 
     case 'FETCH_BUDGET_DETAILS_FULFILLED': {
-      const budgetId = action.budget.id;
-      const newBudgets = [...state.data];
-      const budgetIndex = newBudgets.findIndex(budget => budget.id === id)
+      let budgetId = action.budget._id;
+      let newBudgets = Object.assign(state.data);
+      let budgetIndex = newBudgets.findIndex(budget => budget.id === id)
       newBudgets[budgetIndex].details = action.payload;
 
       return {
@@ -71,15 +71,13 @@ export default function budgetReducer (state = initialState, action) {
     }
 
     case 'ADD_BUDGET_ITEM': {
-      const budgetId = action.budget.id;
-      const newBudgets = [...state.data];
-      const budgetIndex = newBudgets.findIndex(budget => budget.id === id)
-      const details = newBudgets[budgetIndex].details || [];
-      details.push(action.payload);
+      let budgetId = action.budget._id;
+      let budgetIndex = state.data.findIndex(budget => budget._id === budgetId);
+      state.data[budgetIndex] = action.payload;
 
       return {
         ...state,
-        data: newBudgets
+        data: Object.assign(state.data)
       }
     }
 

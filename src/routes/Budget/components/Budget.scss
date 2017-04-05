@@ -122,12 +122,15 @@
             }
 
             &.type {
-              width: 80px;
+              width: 40px;
             }
 
             &.value {
-              width: 120px;
-              text-align: right;
+              width: 100px;
+              align-items: flex-end;
+              display: flex;
+              flex-direction: column;
+              margin-right: 45px;
             }
           }
 
@@ -149,9 +152,28 @@
           }
         }
 
-        .budget-detail-no-items {
-          height: 25px;
+        .budget-sum-items-container {
+          width: 475px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+
+          .budget-sum-items {
+            display: inline-block;
+            float: right;
+
+            .budget-sum-items-value {
+              font-weight: bold;
+              display: inline-block;
+              margin-left: 10px;
+            }
+          }
+
+          .budget-detail-no-items {
+            height: 25px;
+          }
         }
+
       }
 
     }

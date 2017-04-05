@@ -7,7 +7,7 @@ let budgetSchema = new Schema({
   startDate: Date,
   endDate: Date,
   description: String,
-  detail: [Object]
+  details: []
 });
 
 //Model

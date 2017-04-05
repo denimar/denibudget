@@ -76,25 +76,40 @@ class Budget extends React.Component {
           if (detail1.description > detail2.description) return 1;
           return 0;
         });
-        let detailItemsEl = sortedDetails ? sortedDetails.map(detail => (
-          <div className={ 'budget-detail-item ' + detail.type.toLowerCase() }>
-            <div className="budget-detail-field description">{ detail.description }</div>
-            <div className="budget-detail-field type">{ detail.type }</div>
-            <div className="budget-detail-field value">{ routine.formatNumber(detail.value) }</div>
-            <div className="action-buttons">
-              <span>
-                {(CRUD_ACTION_BUTTON_DELETE)}
-              </span>
-              <span>
-                {(CRUD_ACTION_BUTTON_EDIT)}
+        let sumItems = 0;
+        let detailItemsEl = sortedDetails ? sortedDetails.map(detail => {
+          sumItems += detail.value;
+          return (
+            <div className={ 'budget-detail-item ' + detail.type.toLowerCase() }>
+              <div className="budget-detail-field description">{ detail.description }</div>
+              <div className="budget-detail-field type">{ detail.type }</div>
+              <div className="budget-detail-field value">{ routine.formatNumber(detail.value) }</div>
+              <div className="action-buttons">
+                <span>
+                  {(CRUD_ACTION_BUTTON_DELETE)}
+                </span>
+                <span>
+                  {(CRUD_ACTION_BUTTON_EDIT)}
+                </span>
+              </div>
+            </div>
+          )
+        }) : noItems;
+
+        let detailTotalEl = (
+          <div className="budget-sum-items-container">
+            <div className="budget-sum-items">
+              <span className="budget-sum-items-value">
+                { routine.formatNumber(sumItems) }
               </span>
             </div>
           </div>
-        )) : noItems;
+        );
 
         detailEl = (
           <div className="budget-detail-container">
             { detailItemsEl }
+            { detailTotalEl }
           </div>
         );
         expandButton = <FaMinus style={{marginTop: '-2px', marginRight: '8px'}} />

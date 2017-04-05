@@ -32,25 +32,16 @@ module.exports = {
   addItem: (budget, budgetItemToAdd ) => {
     return new Promise(function(success) {
 
-      let budgetDocument = new Budget(budget);
-      if (!budgetDocument.details) {
-        budgetDocument.details = [];
+      if (!budget.details) {
+        budget.details = [];
       }
-      budgetDocument.details.push(budgetItemToAdd);
 
-      budgetDocument.save(function(err) {
+      budget.details.push(budgetItemToAdd);
+
+      Budget.findByIdAndUpdate(budget._id, budget, (err, updatedModel) => {
         if (err) return handleError(err);
-
-        Budget.findById(budgetDocument._id)
-          .populate('category')
-          .exec()
-
-            .then(function(data) {
-              success(data);
-            });
-
+        success(budget);
       });
-
     });
 
   },
