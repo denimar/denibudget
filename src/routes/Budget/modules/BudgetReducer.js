@@ -81,6 +81,39 @@ export default function budgetReducer (state = initialState, action) {
       }
     }
 
+    case 'DEL_BUDGET': {
+      let budgetId = action.payload._id;
+      let budgetIndex = state.data.findIndex(budget => budget._id === budgetId);
+      state.data.splice(budgetIndex, 1);
+
+      return {
+        ...state,
+        data: Object.assign(state.data)
+      }
+    }
+
+    case 'DEL_BUDGET_ITEM': {
+      let budgetId = action.budget._id;
+      let budgetIndex = state.data.findIndex(budget => budget._id === budgetId);
+      state.data[budgetIndex] = action.payload;
+
+      return {
+        ...state,
+        data: Object.assign(state.data)
+      }
+    }
+
+    case 'UPD_BUDGET': {
+      let budgetId = action.payload._id;
+      let budgetIndex = state.data.findIndex(budget => budget._id === budgetId);
+      state.data[budgetIndex] = action.payload;
+
+      return {
+        ...state,
+        data: Object.assign(state.data)
+      }
+    }
+
 
   }
 

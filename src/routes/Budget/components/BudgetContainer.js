@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchBudgets, fetchBudgetDetails, addBudget, addBudgetItem, delBudget, showModal } from '../modules/budgetActions'
+import { fetchBudgets, fetchBudgetDetails, addBudget, addBudgetItem, delBudget, delBudgetItem, updBudget } from '../modules/budgetActions'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -17,7 +17,9 @@ const mapDispatchToProps = {
   fetchBudgetDetails : (budget) => fetchBudgetDetails(budget),
   addBudget : (budgetToAdd) => addBudget(budgetToAdd),
   addBudgetItem : (budget, budgetItemToAdd) => addBudgetItem(budget, budgetItemToAdd),
-  delBudget : (id) => delBudget(id)
+  delBudget : (id) => delBudget(id),
+  delBudgetItem : (budget, budgetItemToDel) => delBudgetItem(budget, budgetItemToDel),
+  updBudget : (budgetToUpd) => updBudget(budgetToUpd),
 }
 
 const mapStateToProps = (state) => ({

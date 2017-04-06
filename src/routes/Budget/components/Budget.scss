@@ -1,13 +1,15 @@
 .budget-viewport {
   $budget-item-base-color: #e7f3fe;
-  $budget-name-column-width: 380px;
-  $budget-date-column-width: 170px;
+  $budget-name-column-width: 285px;
+  $budget-period-column-width: 170px;
+  $budget-value-column-width: 90px;
   color: #666666;
 
   .body {
     //flex-direction: column !important;
     display: block !important;
     padding-top: 4px;
+    font-family: arial,helvetica,tahoma;
 
     .column-headers {
       border-bottom: solid 1px lighten(#f2f2f2, 2);
@@ -23,12 +25,14 @@
           width: $budget-name-column-width;
         }
 
-        &.budget-start-date {
-          width: $budget-date-column-width;
+        &.budget-period {
+          width: $budget-period-column-width;
+          text-align: center;
         }
 
-        &.budget-end-date {
-          width: $budget-date-column-width;
+        &.budget-value {
+          width: $budget-value-column-width;
+          text-align: right;
         }
 
       }
@@ -47,14 +51,7 @@
       .budget-item {
         display: flex;
         flex-direction: row;
-
-        .budget-start-date {
-          width: $budget-date-column-width;
-        }
-
-        .budget-end-date {
-          width: $budget-date-column-width;
-        }
+        font-size: 13px;
 
         .budget-description {
           width: $budget-name-column-width;
@@ -64,14 +61,32 @@
           }
         }
 
+        .budget-period {
+          width: $budget-period-column-width;
+          text-align: center;
+        }
+
+        .budget-value{
+          width: $budget-value-column-width;
+          text-align: right;
+
+          &.C {
+            color: green;
+          }
+
+          &.D {
+            color: red;
+          }
+
+        }
+
         .action-buttons {
           opacity: 0.4;
           flex: 1;
           justify-content: space-around;
-          //border: solid 1px red;
 
           * {
-            margin-left: 10px;
+            margin-left: 5px;
             cursor: pointer;
             float: right;
           }
@@ -87,17 +102,15 @@
       .budget-detail-container {
         margin-top: 4px;
         padding-left: 20px;
-        //border: solid 1px #e6e6e6;
-        //background-color: #F7F7F7;
         margin-left: 20px;
         margin-right: 140px;
-        //padding: 5px;
         border-radius: 4px;
+        font-size: 14px;
 
         .budget-detail-item {
           border: solid 1px #e6e6e6;
           margin-bottom: 2px;
-          padding: 2px 15px;
+          padding: 0px 15px;
           display: flex;
           align-items: center;
           border-radius: 3px;

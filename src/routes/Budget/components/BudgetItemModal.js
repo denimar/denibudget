@@ -7,6 +7,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
+import './BudgetItemModal.scss'
 
 let getCategories = (input, callback) => {
 
@@ -37,13 +38,13 @@ class BudgetModal extends React.Component {
   }
 
   onShow = function() {
-    this.setState({
-      form: {
-        description: '',
-        type: 'D',
-        value: 0
-      }
-    });
+    // this.setState({
+    //   form: {
+    //     description: '',
+    //     type: 'D',
+    //     value: 0
+    //   }
+    // });
   }
 
   close = function() {
@@ -55,11 +56,13 @@ class BudgetModal extends React.Component {
     this.promiseModalSuccess(this.state.form);
   }
 
-  open = function() {
-    let vm = this;
+  open = function(initialState) {
+    let me = this;
     return new Promise(function(success) {
-      vm.setState({ showModal: true });
-      vm.promiseModalSuccess = success;
+      let state = initialState || {};
+      state.showModal = false;
+      me.setState(state);
+      me.promiseModalSuccess = success;
     });
   };
 
@@ -83,7 +86,7 @@ class BudgetModal extends React.Component {
   render(){
 
     return (
-      <Modal className="budget-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
+      <Modal className="budget-item-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
         <Modal.Header closeButton>
           <Modal.Title>Budget Item</Modal.Title>
         </Modal.Header>
@@ -131,8 +134,8 @@ class BudgetModal extends React.Component {
 
             <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)}>
               <Col smOffset={2} sm={10}>
-                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} >Credit</Radio>
-                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"}>Debit</Radio>
+                <Radio name="type" value="C" inline defaultChecked={ this.state.form.type === "C" }>Income</Radio>
+                <Radio name="type" value="D" inline defaultChecked={ this.state.form.type === "D" }>Expense</Radio>
               </Col>
             </FormGroup>
 

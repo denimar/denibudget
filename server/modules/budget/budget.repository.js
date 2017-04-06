@@ -5,7 +5,9 @@ let repositoryHelper = require('../../helper/repository.helper')(Budget);
 
 module.exports = {
 
-  getBudgets: repositoryHelper.getAll,
+  getBudgets: () => {
+    return repositoryHelper.getAll({}, {startDate: -1})
+  },
 
   add: (documentToAdd) => {
     return new Promise(function(success) {
@@ -67,6 +69,38 @@ module.exports = {
 
     });
 
-  }
+  },
+
+  delItem: (budget, budgetItemToDel) => {
+    return new Promise(function(success) {
+
+      const details = budget.details || [];
+      for (let i = 0 ; i < details.length ; i++) {
+        const budgetItem = details[i];
+        if (budgetItem.category === budgetItemToDel.category && budgetItem.description === budgetItemToDel.description) {
+          details.splice(i, 1);
+          break;
+        }
+      }
+      budget.details = details;
+
+      Budget.findByIdAndUpdate(budget._id, budget, (err, updatedModel) => {
+        if (err) return handleError(err);
+        success(budget);
+      });
+
+    });
+
+  },
+
+  upd: (budgetToUpd) => {
+    return new Promise(function(success) {
+      Budget.findByIdAndUpdate(budgetToUpd._id, budgetToUpd, (err, updatedModel) => {
+        if (err) return handleError(err);
+        success(budgetToUpd);
+      });
+    });
+
+  },
 
 }

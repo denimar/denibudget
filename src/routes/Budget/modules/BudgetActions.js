@@ -115,3 +115,50 @@ export const delBudget = (id) => {
 
   }
 }
+
+export const delBudgetItem = (budget, budgetItemToDel) => {
+  return (dispatch, getState) => {
+
+    const url = commonConstant.ENDPOINT.BUDGET_ITEM + '/del';
+    const jsonData = {
+      budget: budget,
+      budgetItemToDel: budgetItemToDel
+    }
+    axios.post(url, jsonData)
+      .then((response) => {
+        dispatch({
+          type : 'DEL_BUDGET_ITEM',
+          payload : response.data,
+          budget: budget
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: "DEL_BUDGET_ITEM_ERROR",
+          payload: err
+        })
+      });
+
+  }
+}
+
+export const updBudget = (budgetToUpd) => {
+  return (dispatch, getState) => {
+
+    const url = commonConstant.ENDPOINT.BUDGET + '/upd';
+    axios.post(url, budgetToUpd)
+      .then((response) => {
+        dispatch({
+          type : 'UPD_BUDGET',
+          payload : response.data
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: "UPD_BUDGET_ERROR",
+          payload: err
+        })
+      });
+
+  }
+}

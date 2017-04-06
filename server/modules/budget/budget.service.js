@@ -28,6 +28,20 @@ module.exports = {
     budgetRepository.del(id).then((deletedBudget) => {
       res.end(JSON.stringify(deletedBudget, null, 2));
     });
-  }
+  },
+
+  delBudgetItem: (req, res) => {
+    const budget = req.body.budget;
+    const budgetItemToDel = req.body.budgetItemToDel;
+    budgetRepository.delItem(budget, budgetItemToDel).then((updatedBudget) => {
+      res.end(JSON.stringify(updatedBudget, null, 2));
+    });
+  },
+
+  updBudget: (req, res) => {
+    budgetRepository.upd(req.body).then((updatedBudget) => {
+      res.end(JSON.stringify(updatedBudget, null, 2));
+    });
+  },
 
 }

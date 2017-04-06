@@ -7,44 +7,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
-
-let getAccounts = (input, callback) => {
-
-  const url = commonConstant.ENDPOINT.ACCOUNT;
-
-  axios.get(url)
-    .then((response) => {
-
-      callback(null, {
-        options: response.data,
-        complete: true
-      });
-
-    })
-    .catch((err) => {
-      console.warn(err);
-    });
-
-}
-
-let getCategories = (input, callback) => {
-
-  const url = commonConstant.ENDPOINT.CATEGORY_LIST
-
-  axios.get(url)
-    .then((response) => {
-
-      callback(null, {
-        options: response.data,
-        complete: true
-      });
-
-    })
-    .catch((err) => {
-      console.warn(err);
-    });
-
-}
+import './BudgetModal.scss'
 
 class BudgetModal extends React.Component {
 
@@ -52,18 +15,14 @@ class BudgetModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {showModal: false, form: {type: 'D'}};
+    this.state = {showModal: false, form: {details: []}};
   }
 
   onShow = function() {
-    this.setState({
-      form: {
-        date: new Date(),
-        description: '',
-        type: 'D',
-        value: 0
-      }
-    });
+    // this.setState({
+    //   form: {
+    //   }
+    // });
   }
 
   close = function() {
@@ -72,43 +31,44 @@ class BudgetModal extends React.Component {
 
   save = function() {
     this.setState({ showModal: false });
-    //this.state.form.date = this.state.form.date.toJSON();
     this.promiseModalSuccess(this.state.form);
   }
 
-  open = function() {
-    let vm = this;
+  // open = function() {
+  //   let vm = this;
+  //   return new Promise(function(success) {
+  //     vm.setState({ showModal: true });
+  //     vm.promiseModalSuccess = success;
+  //   });
+  // };
+  open = function(budget) {
+    let me = this;
     return new Promise(function(success) {
-      vm.setState({ showModal: true });
-      vm.promiseModalSuccess = success;
+      let state = {
+        showModal: true,
+        form: {}
+      };
+      if (budget) {
+        state.form['description'] = budget.description;
+        const startDate = moment(budget.startDate);
+        state.form['startDate'] = startDate.toDate();
+        const endDate = moment(budget.endDate);
+        state.form['endDate'] = endDate.toDate();
+      }
+      me.setState(state);
+      me.promiseModalSuccess = success;
     });
   };
-
-  dateInputOnChange = function(date) {
-    this.setState({form: Object.assign(this.state.form, {date: date})})
-  }
 
   descriptionInputOnChange = function(e) {
     this.setState({form: Object.assign(this.state.form, {description: e.target.value})})
   }
-
-  budgetValueOnChange = function(e) {
-    this.setState({form: Object.assign(this.state.form, {value: Number.parseFloat(e)})});
-
+  startDateInputOnChange = function(date) {
+    this.setState({form: Object.assign(this.state.form, {startDate: date})})
   }
 
-  typeOnChange = function(e) {
-    this.setState({form: Object.assign(this.state.form, {type: e.target.value})});
-  }
-
-  accountInputChange(item) {
-    let form = Object.assign({}, this.state.form, {account: item ? item._id : null});
-    this.setState({form: form});
-  }
-
-  categoryInputChange(item) {
-    let form = Object.assign({}, this.state.form, {category: item ? item.value : null});
-    this.setState({form: form});
+  endDateInputOnChange = function(date) {
+    this.setState({form: Object.assign(this.state.form, {endDate: date})})
   }
 
   render(){
@@ -122,79 +82,39 @@ class BudgetModal extends React.Component {
           <Form horizontal ref='Form'>
 
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={2}>
-                Date
+              <Col componentClass={ControlLabel} sm={3}>
+                Description
               </Col>
-              <Col sm={10}>
-                <DateInput
-                  className="form-control"
-                  value={this.state.form.date}
-                  onChange={this.dateInputOnChange.bind(this)}
-                />
-
-              </Col>
-            </FormGroup>
-
-            <FormGroup >
-              <Col componentClass={ControlLabel} sm={2}>
-                Account
-              </Col>
-              <Col sm={10}>
-                <Select.Async
-                    autofocus
-                    ref="categoryInput"
-                    name="form-field-name"
-                    loadOptions={getAccounts}
-                    labelKey="name"
-                    valueKey="_id"
-                    value={this.state.form.account}
-                    onChange={this.accountInputChange.bind(this)}
-                />
-              </Col>
-            </FormGroup>
-
-            <FormGroup >
-              <Col componentClass={ControlLabel} sm={2}>
-                Category
-              </Col>
-              <Col sm={10}>
-                <Select.Async
-                    ref="categoryInput"
-                    name="form-field-name"
-                    loadOptions={getCategories}
-                    value={this.state.form.category}
-                    onChange={this.categoryInputChange.bind(this)}
-                />
+              <Col sm={9}>
+                <FormControl autoFocus ref="descriptionInput" type="text" value={this.state.form.description} onChange={this.descriptionInputOnChange.bind(this)} placeholder="Description" />
               </Col>
             </FormGroup>
 
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={2}>
-                Description
+              <Col componentClass={ControlLabel} sm={3}>
+                Start Date
               </Col>
-              <Col sm={10}>
-                <FormControl ref="descriptionInput" type="text" value={this.state.form.description} onChange={this.descriptionInputOnChange.bind(this)} placeholder="Description" />
-              </Col>
-            </FormGroup>
-
-            <FormGroup >
-              <Col componentClass={ControlLabel} sm={2}>
-                Value
-              </Col>
-              <Col sm={3}>
-                <CurrencyInput
-                  ref="valueInput"
+              <Col sm={9}>
+                <DateInput
                   className="form-control"
-                  value={this.state.form.value}
-                  onChange={this.budgetValueOnChange.bind(this)}
-              />
+                  value={this.state.form.startDate}
+                  onChange={this.startDateInputOnChange.bind(this)}
+                />
+
               </Col>
             </FormGroup>
 
-            <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)}>
-              <Col smOffset={2} sm={10}>
-                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} >Credit</Radio>
-                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"}>Debit</Radio>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                End Date
+              </Col>
+              <Col sm={9}>
+                <DateInput
+                  className="form-control"
+                  value={this.state.form.endDate}
+                  onChange={this.endDateInputOnChange.bind(this)}
+                />
+
               </Col>
             </FormGroup>
 
