@@ -31,23 +31,6 @@ module.exports = {
 
   },
 
-  addItem: (budget, budgetItemToAdd ) => {
-    return new Promise(function(success) {
-
-      if (!budget.details) {
-        budget.details = [];
-      }
-
-      budget.details.push(budgetItemToAdd);
-
-      Budget.findByIdAndUpdate(budget._id, budget, (err, updatedModel) => {
-        if (err) return handleError(err);
-        success(budget);
-      });
-    });
-
-  },
-
   del: (id) => {
     return new Promise(function(success) {
 
@@ -66,28 +49,6 @@ module.exports = {
         }
 
       })
-
-    });
-
-  },
-
-  delItem: (budget, budgetItemToDel) => {
-    return new Promise(function(success) {
-
-      const details = budget.details || [];
-      for (let i = 0 ; i < details.length ; i++) {
-        const budgetItem = details[i];
-        if (budgetItem.category === budgetItemToDel.category && budgetItem.description === budgetItemToDel.description) {
-          details.splice(i, 1);
-          break;
-        }
-      }
-      budget.details = details;
-
-      Budget.findByIdAndUpdate(budget._id, budget, (err, updatedModel) => {
-        if (err) return handleError(err);
-        success(budget);
-      });
 
     });
 

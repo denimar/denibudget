@@ -44,19 +44,24 @@ class Budget extends React.Component {
     let me = this;
     me.refs.BudgetModal.open(budget)
       .then(budgetReturned => {
-        if (budget) {
+        if (budget) { //Editing
           me.props.updBudget(Object.assign(budget, budgetReturned));
-        } else {
+        } else { //Inserting
           me.props.addBudget(budgetReturned);
         }
       });
   }
 
-  newBudgetItemModal(budget) {
+  budgetItemModal(budget, budgetItem, detailIndex) {
     let me = this;
-    me.refs.BudgetItemModal.open()
-      .then(budgetItemToAdd => {
-        me.props.addBudgetItem(budget, budgetItemToAdd);
+    me.refs.BudgetItemModal.open(budget, budgetItem)
+      .then(budgetItemReturned => {
+        if (budgetItem) { //Editing
+          budget.details[detailIndex] = Object.assign(budget.details[detailIndex], budgetItemReturned);
+        } else { //Inserting
+          budget.details = (budget.details || []).concat(budgetItemReturned);
+        }
+        me.props.updBudget(budget);
       });
   }
 
@@ -73,13 +78,14 @@ class Budget extends React.Component {
     })
   }
 
-  delBudgetItem(budget, budgetItemToDel) {
+  delBudgetItem(budget, detailIndex) {
     this.refs.dialog.show({
       body: 'Confirm Budget Item Deletion?',
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
-          this.props.delBudgetItem(budget, budgetItemToDel);
+          budget.details.splice(detailIndex, 1);
+          this.props.updBudget(budget);
         }, 'btn-danger')
       ],
       onHide: (dialog) => {}
@@ -113,17 +119,17 @@ class Budget extends React.Component {
           if (string1 > string2) return 1;
           return 0;
         });
-        let detailItemsEl = sortedDetails ? sortedDetails.map(detail => {
+        let detailItemsEl = sortedDetails ? sortedDetails.map((detail, detailIndex) => {
           return (
             <div className={ 'budget-detail-item ' + detail.type.toLowerCase() }>
               <div className="budget-detail-field description">{ detail.description }</div>
               <div className="budget-detail-field type">{ detail.type }</div>
               <div className="budget-detail-field value">{ routine.formatNumber(detail.value) }</div>
               <div className="action-buttons">
-                <span onClick={ this.delBudgetItem.bind(this, budget, detail) }>
+                <span onClick={ this.delBudgetItem.bind(this, budget, detailIndex) }>
                   {(CRUD_ACTION_BUTTON_DELETE)}
                 </span>
-                <span>
+                <span onClick={ this.budgetItemModal.bind(this, budget, detail, detailIndex) }>
                   {(CRUD_ACTION_BUTTON_EDIT)}
                 </span>
               </div>
@@ -156,7 +162,7 @@ class Budget extends React.Component {
             <div className="budget-period">{ startDate.format('MM/DD/YYYY') + ' - ' + endDate.format('MM/DD/YYYY') }</div>
             <div className="budget-value">{ routine.formatNumber(budgetBalance.incomes) }</div>
             <div className="budget-value">{ routine.formatNumber(budgetBalance.expenses) }</div>
-            <div className={ "budget-value " + (budgetBalance.balance > 0 ? "C" : "D") }>{ routine.formatNumber(budgetBalance.balance) }</div>
+            <div className={ "budget-value " + (budgetBalance.balance >= 0 ? "C" : "D") }>{ routine.formatNumber(budgetBalance.balance) }</div>
             <div className="action-buttons">
               <span onClick={ this.budgetModal.bind(this, budget) }>
                 {(CRUD_ACTION_BUTTON_EDIT)}
@@ -167,7 +173,7 @@ class Budget extends React.Component {
               <OverlayTrigger placement="left" overlay={(
                   <Tooltip>Add a new item in this budget.</Tooltip>
                 )}>
-                <span onClick={ this.newBudgetItemModal.bind(this, budget) }>
+                <span onClick={ this.budgetItemModal.bind(this, budget, null) }>
                   {(CRUD_ACTION_BUTTON_ADD_DETAIL)}
                 </span>
               </OverlayTrigger>

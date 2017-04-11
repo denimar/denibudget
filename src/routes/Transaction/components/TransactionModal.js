@@ -141,14 +141,14 @@ class TransactionModal extends React.Component {
               </Col>
               <Col sm={10}>
                 <Select.Async
-                    autofocus
-                    ref="categoryInput"
-                    name="form-field-name"
-                    loadOptions={getAccounts}
-                    labelKey="name"
-                    valueKey="_id"
-                    value={this.state.form.account}
-                    onChange={this.accountInputChange.bind(this)}
+                  autofocus
+                  ref="categoryInput"
+                  name="form-field-name"
+                  loadOptions={getAccounts}
+                  labelKey="name"
+                  valueKey="_id"
+                  value={this.state.form.account}
+                  onChange={this.accountInputChange.bind(this)}
                 />
               </Col>
             </FormGroup>
@@ -193,8 +193,8 @@ class TransactionModal extends React.Component {
 
             <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)}>
               <Col smOffset={2} sm={10}>
-                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} >Credit</Radio>
-                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"}>Debit</Radio>
+                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} >Income</Radio>
+                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"}>Expense</Radio>
               </Col>
             </FormGroup>
 

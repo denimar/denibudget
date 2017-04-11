@@ -56,11 +56,22 @@ class BudgetModal extends React.Component {
     this.promiseModalSuccess(this.state.form);
   }
 
-  open = function(initialState) {
+  open = function(budget, budgetItem) {
     let me = this;
+    me.budget = budget;
     return new Promise(function(success) {
-      let state = initialState || {};
-      state.showModal = false;
+      let state = {
+        showModal: true,
+        form: {
+          type: 'D'
+        }
+      };
+      if (budgetItem) {
+        state.form['description'] = budgetItem.description;
+        state.form['category'] = budgetItem.category;
+        state.form['type'] = budgetItem.type;
+        state.form['value'] = budgetItem.value;
+      }
       me.setState(state);
       me.promiseModalSuccess = success;
     });

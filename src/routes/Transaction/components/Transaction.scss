@@ -1,5 +1,65 @@
 .transaction-viewport {
 
+  .header {
+    flex-direction: row !important;
+
+    .page-header-elements {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-around;
+      flex: 1;
+
+      .page-header-content {
+        justify-content: space-around;
+        flex: 1;
+        padding: 0px 10px;
+        color: #737373;
+
+        .label-budget {
+          color: #737373;
+        }
+
+        .select-budget.Select {
+          display: inline-flex;
+          width: 280px;
+          margin-left: 5px;
+
+          .Select-control {
+            background-color: darken(#F2F2F2, 1);
+            border-color: darken(#F2F2F2, 5);
+          }
+
+          &.is-focused:not(.is-open) {
+            .Select-control {
+                border-color: darken(#F2F2F2, 6);
+                box-shadow: 0px 0px 0px;
+            }
+          }
+
+          // &.is-focused:not(.is-open) {
+          //   .Select-control {
+          //       border-width: 0px;
+          //   }
+          // }
+          //
+          // // &:focus {
+          // //   border-width: 0px !important;
+          // // }
+          //
+          // .Select-control {
+          //   background-color: darken(#F2F2F2, 3);
+          //   border-color: darken(#F2F2F2, 6);
+          // }
+        }
+      }
+
+      .page-header-crud-viewport {
+
+      }
+    }
+
+  }
+
   .body {
     display: flex;
 

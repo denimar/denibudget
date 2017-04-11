@@ -69,32 +69,6 @@ export const addBudget = (budgetToAdd) => {
   }
 }
 
-export const addBudgetItem = (budget, budgetItemToAdd) => {
-  return (dispatch, getState) => {
-
-    const url = commonConstant.ENDPOINT.BUDGET + '/additem'
-    const jsonData = {
-      budget: budget,
-      budgetItemToAdd: budgetItemToAdd
-    }
-    axios.post(url, jsonData)
-      .then((response) => {
-        dispatch({
-          type : 'ADD_BUDGET_ITEM',
-          payload : response.data,
-          budget: budget
-        })
-      })
-      .catch((err) => {
-        dispatch({
-          type: "ADD_BUDGET_ITEM_ERROR",
-          payload: err
-        })
-      });
-
-  }
-}
-
 export const delBudget = (id) => {
   return (dispatch, getState) => {
 
@@ -109,32 +83,6 @@ export const delBudget = (id) => {
       .catch((err) => {
         dispatch({
           type: "DEL_BUDGET_ERROR",
-          payload: err
-        })
-      });
-
-  }
-}
-
-export const delBudgetItem = (budget, budgetItemToDel) => {
-  return (dispatch, getState) => {
-
-    const url = commonConstant.ENDPOINT.BUDGET_ITEM + '/del';
-    const jsonData = {
-      budget: budget,
-      budgetItemToDel: budgetItemToDel
-    }
-    axios.post(url, jsonData)
-      .then((response) => {
-        dispatch({
-          type : 'DEL_BUDGET_ITEM',
-          payload : response.data,
-          budget: budget
-        })
-      })
-      .catch((err) => {
-        dispatch({
-          type: "DEL_BUDGET_ITEM_ERROR",
           payload: err
         })
       });

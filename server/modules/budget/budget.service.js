@@ -14,27 +14,11 @@ module.exports = {
     });
   },
 
-  addBudgetItem: (req, res) => {
-    const budget = req.body.budget;
-    const budgetItemToAdd = req.body.budgetItemToAdd;
-    budgetRepository.addItem(budget, budgetItemToAdd).then((addedBudgetItem) => {
-      res.end(JSON.stringify(addedBudgetItem, null, 2));
-    });
-  },
-
   delBudget: (req, res) => {
     let id = req.params.id;
 
     budgetRepository.del(id).then((deletedBudget) => {
       res.end(JSON.stringify(deletedBudget, null, 2));
-    });
-  },
-
-  delBudgetItem: (req, res) => {
-    const budget = req.body.budget;
-    const budgetItemToDel = req.body.budgetItemToDel;
-    budgetRepository.delItem(budget, budgetItemToDel).then((updatedBudget) => {
-      res.end(JSON.stringify(updatedBudget, null, 2));
     });
   },
 
