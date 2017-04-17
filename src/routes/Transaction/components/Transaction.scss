@@ -72,13 +72,14 @@
 
       .transaction-item {
         border: solid 1px #dbe3f0; //#f2f2f2;
-        padding: 10px 10px;
+        padding: 10px 10px 5px 10px;
         margin-top: 3px;
-        //display: flex;
+        display: flex;
         //height: 79px;
-        flex-direction: column;
+        flex-direction: row;
         //border-style: dotted;
         border-radius: 8px;
+        //border: solid 1px blue;
 
         &.c {
           $base-color-credit: #339966;
@@ -96,112 +97,70 @@
         //   background-color: #f2f2f2;
         // }
 
-        .account {
+        .category-and-description {
           font-size: 12px;
           color: #b3b3b3;
-          text-transform: uppercase;
-          font-weight: bold;
+          //border: solid 1px orange;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          justify-content: space-around;
+
+          .category {
+           }
+
+          .description {
+            font-weight: bold;
+            color: #595959;
+            display: block;
+            margin-top: -3px;
+
+            &:before {
+              content: '»';
+              margin-left: 10px;
+              margin-right: 10px;
+            }
+          }
         }
 
-        .category {
-          font-size: 11px;
-          color: #b3b3b3;
-          margin-left: 10px;
-        }
-
-        .item {
+        .comparative-chart-container {
+          width: 310px;
           display: flex;
           flex-direction: row;
-          padding-left: 10px;
-          margin-top: 2px;
-          font-size: 11px;
-          color: #4573a1;
+          align-items: center;
+          //margin-top: -20px;
+          //border: solid 1px green;
 
-          .budget-transactions-container {
-            //border: solid 1px purple;
-            display: flex;
-            justify-content: space-around;
-            flex: 1;
-            flex-direction: column;
-
-            .description-and-value {
-              //border: solid 1px orange;
-              margin-right: 20px;
-              padding-right: 10px;
-              display: flex;
-              width: 400px;
-
-              .date {
-                width: 90px;
-              }
-
-              .description {
-                font-weight: bold;
-                justify-content: space-around;
-                flex: 1
-              }
-
-              .value {
-                width: 80px;
-                text-align: right;
-              }
-            }
-          }
-
-          .comparative-chart-container {
+          .comparative-chart-bar {
             width: 310px;
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            flex-direction: column;
 
-            .comparative-chart-bar {
-              width: 310px;
+            .comparative-chart-bar-item {
+              height: 16px;
+              margin-bottom: 3px;
               display: flex;
-              flex-direction: column;
-
-              .comparative-chart-bar-item {
-                height: 16px;
-                margin-bottom: 3px;
-                display: flex;
-              }
-
-              .comparative-chart-bar-estimated {
-                $comparative-chart-bar-estimated-background-color: #D9E1EF;
-                width: 250px;
-                background-color: $comparative-chart-bar-estimated-background-color;
-                border: solid 1px darken($comparative-chart-bar-estimated-background-color, 3);
-              }
-
-              .comparative-chart-bar-actual {
-                $comparative-chart-bar-actual-background-color: #8BACCD;
-                width: 190px;
-                background-color: $comparative-chart-bar-actual-background-color;
-                border: solid 1px darken($comparative-chart-bar-actual-background-color, 3);
-              }
-
-              .comparative-chart-bar-value {
-                margin-left: 3px;
-                font-size: 11px;
-                color: #808080;
-                align-self: center;
-              }
-
-            }
-          }
-
-          .action-buttons {
-            opacity: 0.4;
-            width: 90px;
-            margin-top: 2px;
-
-            * {
-              margin-left: 6px;
-              cursor: pointer;
-              float: right;
             }
 
-            &:hover {
-              opacity: 1;
+            .comparative-chart-bar-estimated {
+              $comparative-chart-bar-estimated-background-color: #D9E1EF;
+              width: 250px;
+              background-color: $comparative-chart-bar-estimated-background-color;
+              border: solid 1px darken($comparative-chart-bar-estimated-background-color, 3);
+            }
+
+            .comparative-chart-bar-actual {
+              $comparative-chart-bar-actual-background-color: #8BACCD;
+              width: 190px;
+              background-color: $comparative-chart-bar-actual-background-color;
+              border: solid 1px darken($comparative-chart-bar-actual-background-color, 3);
+            }
+
+            .comparative-chart-bar-value {
+              margin-left: 3px;
+              font-size: 11px;
+              color: #808080;
+              align-self: center;
             }
 
           }

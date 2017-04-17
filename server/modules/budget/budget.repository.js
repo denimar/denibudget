@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 const model = require('./budget.model');
-let Budget = mongoose.model('Budget');
+let Budget = mongoose.model('budget');
 let repositoryHelper = require('../../helper/repository.helper')(Budget);
 
 module.exports = {
 
   getBudgets: () => {
-    return repositoryHelper.getAll({}, {startDate: -1})
+    return repositoryHelper.getAll({}, {startDate: -1}, null, null, (query) => {
+      query.populate('details.category');
+    });
   },
 
   add: (documentToAdd) => {

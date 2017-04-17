@@ -71,7 +71,10 @@ class Transaction extends React.Component {
             <FaArrowRight style={{marginTop: '3px', marginRight: '5px'}} />
 
             <div className="date">
-              {Moment(new Date(budgetTransactionItem.date)).format("L")}
+              {Moment(new Date(budgetTransactionItem.date)).format("MMMM, DD")}
+            </div>
+            <div className="account">
+              {budgetTransactionItem.account.name}
             </div>
             <div className="description">
               {budgetTransactionItem.description}
@@ -170,7 +173,7 @@ class Transaction extends React.Component {
       });
     }
 
-    //Set the unestimated transactions items
+    //Set the unforecasted transactions items
     this.props.transactions.data.forEach(transactionItem => {
       if (!transactionItem.budgetItem) {
         allItems.push(transactionItem);
@@ -182,23 +185,11 @@ class Transaction extends React.Component {
         {
           allItems.map((transaction, index) => {
             return <div key={index} className={'transaction-item ' + transaction.type.toLowerCase()}>
-                    <div className="account">
-                      { transaction.category.path }
-                    </div>
-                     <div className="category">
-                       {transaction.category.path}
+                     <div className="category-and-description">
+                       <span className="category">{ transaction.category.path }</span>
+                       <span className="description">{ transaction.description }</span>
                      </div>
-                     <div className="item">
-                       { this.getBudgetTransactionsItemsElem(transaction) }
-                       { this.getBudgetTransactionsGraph(transaction) }
-
-                       <div className="action-buttons">
-                         <span>
-                           {(CRUD_ACTION_BUTTON_DELETE)}
-                         </span>
-                         {(CRUD_ACTION_BUTTON_EDIT)}
-                       </div>
-                     </div>
+                     { this.getBudgetTransactionsGraph(transaction) }
                    </div>;
           })
         }
