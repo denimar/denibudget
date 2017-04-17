@@ -55,6 +55,13 @@ module.exports = {
   },
 
   upd: (budgetToUpd) => {
+    let details = budgetToUpd.details || [];
+    details.forEach(item => {
+      if (!item._id) { //when id comes undefined means it is a new record
+        item._id = mongoose.Types.ObjectId();
+      }
+    });
+
     return new Promise(function(success) {
       Budget.findByIdAndUpdate(budgetToUpd._id, budgetToUpd, (err, updatedModel) => {
         if (err) return handleError(err);

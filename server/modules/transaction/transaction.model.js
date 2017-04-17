@@ -13,6 +13,7 @@ let transactionSchema = new Schema({
     type: String,
     enum: ['C', 'D']
   },
+  budgetItem: Schema.Types.ObjectId,
   account: {
 		type: Schema.Types.ObjectId,
 		ref: 'Account'

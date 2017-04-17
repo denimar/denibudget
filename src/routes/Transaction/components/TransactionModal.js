@@ -52,7 +52,13 @@ class TransactionModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {showModal: false, form: {type: 'D'}};
+    this.state = {
+      showModal: false,
+      form: {
+        type: 'D',
+        budgetItem: null
+      }
+    };
   }
 
   onShow = function() {
@@ -61,6 +67,7 @@ class TransactionModal extends React.Component {
         date: new Date(),
         description: '',
         type: 'D',
+        budgetItem: null,
         value: 0
       }
     });
@@ -76,7 +83,8 @@ class TransactionModal extends React.Component {
     this.promiseModalSuccess(this.state.form);
   }
 
-  open = function() {
+  open = function(budget) {
+    this.budget = budget;
     let vm = this;
     return new Promise(function(success) {
       vm.setState({ showModal: true });
@@ -93,12 +101,28 @@ class TransactionModal extends React.Component {
   }
 
   transactionValueOnChange = function(e) {
-    this.setState({form: Object.assign(this.state.form, {value: Number.parseFloat(e)})});
-
+    var thousandSeparator = (1111).toLocaleString().replace(/1/g, ''); //workaround TODO:fix it
+    var regExp = new RegExp('\\' + thousandSeparator, 'g');
+    var strNumber = e.replace(regExp, '');
+    this.setState({form: Object.assign(this.state.form, {value: Number.parseFloat(strNumber)})});
   }
 
   typeOnChange = function(e) {
     this.setState({form: Object.assign(this.state.form, {type: e.target.value})});
+  }
+
+  budgetItemInputChange(budgetItem) {
+    let budgetItemInfo = budgetItem ? {
+      budgetItem: budgetItem._id,
+      type: budgetItem.type,
+      category: budgetItem.category,
+      value: budgetItem.value,
+      description: budgetItem.description
+    } : {
+      budgetItem: null
+    };
+    let form = Object.assign({}, this.state.form, budgetItemInfo);
+    this.setState({form: form});
   }
 
   accountInputChange(item) {
@@ -122,10 +146,10 @@ class TransactionModal extends React.Component {
           <Form horizontal ref='Form'>
 
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={3}>
                 Date
               </Col>
-              <Col sm={10}>
+              <Col sm={9}>
                 <DateInput
                   className="form-control"
                   value={this.state.form.date}
@@ -136,49 +160,74 @@ class TransactionModal extends React.Component {
             </FormGroup>
 
             <FormGroup >
-              <Col componentClass={ControlLabel} sm={2}>
-                Account
+              <Col componentClass={ControlLabel} sm={3}>
+                Budget Item
               </Col>
-              <Col sm={10}>
-                <Select.Async
+              <Col sm={9}>
+                <Select
                   autofocus
-                  ref="categoryInput"
-                  name="form-field-name"
-                  loadOptions={getAccounts}
-                  labelKey="name"
+                  ref="budgetItemInput"
+                  name="form-field-budgetitem"
+                  options={ this.budget ? this.budget.details : [] }
+                  labelKey="description"
                   valueKey="_id"
-                  value={this.state.form.account}
-                  onChange={this.accountInputChange.bind(this)}
+                  value={this.state.form.budgetItem}
+                  onChange={this.budgetItemInputChange.bind(this)}
                 />
               </Col>
             </FormGroup>
 
             <FormGroup >
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={3}>
                 Category
               </Col>
-              <Col sm={10}>
+              <Col sm={9}>
                 <Select.Async
                     ref="categoryInput"
                     name="form-field-name"
                     loadOptions={getCategories}
+                    clearable={false}
+                    disabled={this.state.form.budgetItem !== null}
                     value={this.state.form.category}
                     onChange={this.categoryInputChange.bind(this)}
                 />
               </Col>
             </FormGroup>
 
+            <FormGroup >
+              <Col componentClass={ControlLabel} sm={3}>
+                Account
+              </Col>
+              <Col sm={9}>
+                <Select.Async
+                  ref="categoryInput"
+                  name="form-field-name"
+                  loadOptions={getAccounts}
+                  labelKey="name"
+                  valueKey="_id"
+                  clearable={false}
+                  value={this.state.form.account}
+                  onChange={this.accountInputChange.bind(this)}
+                />
+              </Col>
+            </FormGroup>
+
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={3}>
                 Description
               </Col>
-              <Col sm={10}>
-                <FormControl ref="descriptionInput" type="text" value={this.state.form.description} onChange={this.descriptionInputOnChange.bind(this)} placeholder="Description" />
+              <Col sm={9}>
+                <FormControl
+                  ref="descriptionInput"
+                  type="text"
+                  value={this.state.form.description}
+                  onChange={this.descriptionInputOnChange.bind(this)}
+                  placeholder="Description" />
               </Col>
             </FormGroup>
 
             <FormGroup >
-              <Col componentClass={ControlLabel} sm={2}>
+              <Col componentClass={ControlLabel} sm={3}>
                 Value
               </Col>
               <Col sm={3}>
@@ -191,10 +240,10 @@ class TransactionModal extends React.Component {
               </Col>
             </FormGroup>
 
-            <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)}>
+            <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)} >
               <Col smOffset={2} sm={10}>
-                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} >Income</Radio>
-                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"}>Expense</Radio>
+                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} disabled={this.state.form.budgetItem !== null}>Income</Radio>
+                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"} disabled={this.state.form.budgetItem !== null}>Expense</Radio>
               </Col>
             </FormGroup>
 

@@ -71,24 +71,24 @@
       padding: 2px 4px;
 
       .transaction-item {
-        border: solid 1px #f2f2f2;
+        border: solid 1px #dbe3f0; //#f2f2f2;
         padding: 10px 10px;
         margin-top: 3px;
         //display: flex;
-        height: 79px;
+        //height: 79px;
         flex-direction: column;
         //border-style: dotted;
         border-radius: 8px;
 
         &.c {
           $base-color-credit: #339966;
-          color: lighten($base-color-credit, 10%);
+          //color: lighten($base-color-credit, 10%);
           background-color: lighten($base-color-credit, 57%);
         }
 
         &.d {
           $base-color-debt: #ff0000;
-          color: lighten($base-color-debt, 25%);
+          //color: lighten($base-color-debt, 25%);
           background-color: lighten($base-color-debt, 49%);
         }
 
@@ -106,37 +106,92 @@
         .category {
           font-size: 11px;
           color: #b3b3b3;
-          margin-left: 20px;
+          margin-left: 10px;
         }
 
         .item {
           display: flex;
           flex-direction: row;
-          padding-left: 40px;
-          margin-top: 4px;
+          padding-left: 10px;
+          margin-top: 2px;
+          font-size: 11px;
+          color: #4573a1;
 
-          .date {
-            margin-right: 20px;
-          }
-
-          .description {
+          .budget-transactions-container {
+            //border: solid 1px purple;
+            display: flex;
             justify-content: space-around;
-            flex: 1
+            flex: 1;
+            flex-direction: column;
+
+            .description-and-value {
+              //border: solid 1px orange;
+              margin-right: 20px;
+              padding-right: 10px;
+              display: flex;
+              width: 400px;
+
+              .date {
+                width: 90px;
+              }
+
+              .description {
+                font-weight: bold;
+                justify-content: space-around;
+                flex: 1
+              }
+
+              .value {
+                width: 80px;
+                text-align: right;
+              }
+            }
           }
 
-          .type {
-            width: 100px;
-          }
+          .comparative-chart-container {
+            width: 310px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
 
-          .value {
-            width: 140px;
-            text-align: right;
-            padding-right: 40px;
+            .comparative-chart-bar {
+              width: 310px;
+              display: flex;
+              flex-direction: column;
+
+              .comparative-chart-bar-item {
+                height: 16px;
+                margin-bottom: 3px;
+                display: flex;
+              }
+
+              .comparative-chart-bar-estimated {
+                $comparative-chart-bar-estimated-background-color: #D9E1EF;
+                width: 250px;
+                background-color: $comparative-chart-bar-estimated-background-color;
+                border: solid 1px darken($comparative-chart-bar-estimated-background-color, 3);
+              }
+
+              .comparative-chart-bar-actual {
+                $comparative-chart-bar-actual-background-color: #8BACCD;
+                width: 190px;
+                background-color: $comparative-chart-bar-actual-background-color;
+                border: solid 1px darken($comparative-chart-bar-actual-background-color, 3);
+              }
+
+              .comparative-chart-bar-value {
+                margin-left: 3px;
+                font-size: 11px;
+                color: #808080;
+                align-self: center;
+              }
+
+            }
           }
 
           .action-buttons {
             opacity: 0.4;
-            width: 100px;
+            width: 90px;
             margin-top: 2px;
 
             * {

@@ -1,4 +1,27 @@
+import commonConstant from '../../../../common/common.constant'
+import axios from 'axios';
+
 class BudgetService {
+
+  /**
+   * function used to get budgets for select element
+   */
+  static getBudgetsForSelects(selectElem, callback) {
+
+    const url = commonConstant.ENDPOINT.BUDGET;
+
+    axios.get(url)
+      .then((response) => {
+        callback(null, {
+          options: response.data,
+          complete: true
+        });
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+
+  }
 
   static getBudgetBalance(budget) {
     let incomes = 0;

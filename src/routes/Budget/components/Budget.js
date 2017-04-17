@@ -78,7 +78,7 @@ class Budget extends React.Component {
     })
   }
 
-  delBudgetItem(budget, detailIndex) {
+  delBudgetItem(budget, budgetItemIndex) {
     this.refs.dialog.show({
       body: 'Confirm Budget Item Deletion?',
       actions: [
@@ -119,17 +119,17 @@ class Budget extends React.Component {
           if (string1 > string2) return 1;
           return 0;
         });
-        let detailItemsEl = sortedDetails ? sortedDetails.map((detail, detailIndex) => {
+        let detailItemsEl = sortedDetails ? sortedDetails.map((budgetItem, index) => {
           return (
-            <div className={ 'budget-detail-item ' + detail.type.toLowerCase() }>
-              <div className="budget-detail-field description">{ detail.description }</div>
-              <div className="budget-detail-field type">{ detail.type }</div>
-              <div className="budget-detail-field value">{ routine.formatNumber(detail.value) }</div>
+            <div className={ 'budget-detail-item ' + budgetItem.type.toLowerCase() }>
+              <div className="budget-detail-field description">{ budgetItem.description }</div>
+              <div className="budget-detail-field type">{ budgetItem.type }</div>
+              <div className="budget-detail-field value">{ routine.formatNumber(budgetItem.value) }</div>
               <div className="action-buttons">
-                <span onClick={ this.delBudgetItem.bind(this, budget, detailIndex) }>
+                <span onClick={ this.delBudgetItem.bind(this, budget, index) }>
                   {(CRUD_ACTION_BUTTON_DELETE)}
                 </span>
-                <span onClick={ this.budgetItemModal.bind(this, budget, detail, detailIndex) }>
+                <span onClick={ this.budgetItemModal.bind(this, budget, budgetItem, index) }>
                   {(CRUD_ACTION_BUTTON_EDIT)}
                 </span>
               </div>

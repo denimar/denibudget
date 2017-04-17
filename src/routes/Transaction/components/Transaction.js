@@ -15,25 +15,7 @@ import FaArrowRight from 'react-icons/lib/fa/arrow-right';
 import Moment from 'moment';
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import commonConstant from '../../../../common/common.constant'
-
-let getBudgets = (input, callback) => {
-
-  const url = commonConstant.ENDPOINT.BUDGET;
-
-  axios.get(url)
-    .then((response) => {
-
-      callback(null, {
-        options: response.data,
-        complete: true
-      });
-
-    })
-    .catch((err) => {
-      console.warn(err);
-    });
-
-}
+import BudgetService from '../../Budget/modules/BudgetService'
 
 class Transaction extends React.Component {
 
@@ -61,7 +43,7 @@ class Transaction extends React.Component {
 
   newTransactionModal() {
     let me = this;
-    me.refs.TransactionModal.open()
+    me.refs.TransactionModal.open(this.state.form.currentBudget)
       .then(transactionToAdd => {
         me.props.addTransaction(transactionToAdd);
       });
@@ -76,8 +58,72 @@ class Transaction extends React.Component {
 
   currentBudgetInputChange(budget) {
     let budgetItemsSum = this.getBudgetItemsSum(budget);
-    let form = Object.assign({}, this.state.form, {currentBudget: budget ? budget._id : null, currentBudgetItemsSum: budgetItemsSum});
+    let form = Object.assign({}, this.state.form, {currentBudget: budget, currentBudgetItemsSum: budgetItemsSum});
     this.setState({form: form});
+  }
+
+  getBudgetTransactionsItemsElem(budgetItem) {
+    let budgetTransactionsElemArray = [];
+    if (budgetItem.transactions) {
+      budgetItem.transactions.forEach(budgetTransactionItem => {
+        budgetTransactionsElemArray.push((
+          <div className="description-and-value">
+            <FaArrowRight style={{marginTop: '3px', marginRight: '5px'}} />
+
+            <div className="date">
+              {Moment(new Date(budgetTransactionItem.date)).format("L")}
+            </div>
+            <div className="description">
+              {budgetTransactionItem.description}
+            </div>
+            <div className="value">
+              {routine.formatNumber(budgetTransactionItem.value)}
+            </div>
+          </div>
+        ))
+      })
+    }
+    return (
+      <div className="budget-transactions-container">
+        { budgetTransactionsElemArray }
+      </div>
+    );
+  }
+
+  getBudgetTransactionsGraph(budgetItem) {
+    let budgetTransactionsGraphBarArray = [];
+    let transactions;
+    if (budgetItem.budgetItemId) {
+      budgetTransactionsGraphBarArray.push((
+        <div className="comparative-chart-bar-item">
+          <span className="comparative-chart-bar-estimated"></span>
+          <span className="comparative-chart-bar-value">{ routine.formatNumber(budgetItem.value) }</span>
+        </div>
+      ));
+      transactions = budgetItem.transactions
+    } else {
+      transactions = [budgetItem];
+    }
+    if (transactions.length > 0) {
+      let sumBudgetItemTransactions = 0;
+      transactions.forEach(trans => {
+        sumBudgetItemTransactions += trans.value;
+      })
+
+      budgetTransactionsGraphBarArray.push((
+        <div className="comparative-chart-bar-item">
+          <span className="comparative-chart-bar-actual"></span>
+          <span className="comparative-chart-bar-value">{ routine.formatNumber(sumBudgetItemTransactions) }</span>
+        </div>
+      ));
+    }
+    return (
+      <div className="comparative-chart-container">
+        <div className="comparative-chart-bar">
+          { budgetTransactionsGraphBarArray }
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -88,12 +134,12 @@ class Transaction extends React.Component {
           <span className="label-budget">Budget :</span>
           <Select.Async
             className="select-budget"
-            loadOptions={getBudgets}
+            loadOptions={ BudgetService.getBudgetsForSelects }
             labelKey="description"
             valueKey="_id"
             clearable={false}
-            value={this.state.form.currentBudget}
-            onChange={this.currentBudgetInputChange.bind(this)}
+            value={ this.state.form.currentBudget ? this.state.form.currentBudget._id : null }
+            onChange={ this.currentBudgetInputChange.bind(this) }
           />
         </div>
         <PageHeaderCrud
@@ -102,31 +148,50 @@ class Transaction extends React.Component {
       </div>
     );
 
+    let allItems = [];
+
+    //Set the budget items
+    if (this.state.form && this.state.form.currentBudget && this.state.form.currentBudget.details) {
+      this.state.form.currentBudget.details.forEach(budgetItem => {
+        let itemToAdd = {
+          budgetItemId: budgetItem._id,
+          description: budgetItem.description,
+          type: budgetItem.type,
+          category: budgetItem.category,
+          value: budgetItem.value,
+          transactions: []
+        };
+        this.props.transactions.data.forEach(transactionItem => {
+          if (transactionItem.budgetItem === budgetItem._id) {
+            itemToAdd.transactions.push(transactionItem);
+          }
+        })
+        allItems.push(itemToAdd);
+      });
+    }
+
+    //Set the unestimated transactions items
+    this.props.transactions.data.forEach(transactionItem => {
+      if (!transactionItem.budgetItem) {
+        allItems.push(transactionItem);
+      }
+    });
+
     const body = (
       <div className="transaction-items">
         {
-          this.props.transactions.data.map((transaction, index) => {
+          allItems.map((transaction, index) => {
             return <div key={index} className={'transaction-item ' + transaction.type.toLowerCase()}>
                     <div className="account">
-                      {transaction.account.name}
+                      { transaction.category.path }
                     </div>
                      <div className="category">
                        {transaction.category.path}
                      </div>
                      <div className="item">
-                       <FaArrowRight style={{marginTop: '3px', marginRight: '5px'}} />
-                       <div className="date">
-                         {Moment(new Date(transaction.date)).format("L")}
-                       </div>
-                       <div className="description">
-                         {transaction.description}
-                       </div>
-                       <div className='type'>
-                         {transaction.type}
-                       </div>
-                       <div className="value">
-                         {routine.formatNumber(transaction.value)}
-                       </div>
+                       { this.getBudgetTransactionsItemsElem(transaction) }
+                       { this.getBudgetTransactionsGraph(transaction) }
+
                        <div className="action-buttons">
                          <span>
                            {(CRUD_ACTION_BUTTON_DELETE)}
