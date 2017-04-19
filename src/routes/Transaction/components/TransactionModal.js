@@ -56,35 +56,53 @@ class TransactionModal extends React.Component {
       showModal: false,
       form: {
         type: 'D',
-        budgetItem: null
+        //budgetItem: null
       }
     };
   }
 
   onShow = function() {
-    this.setState({
-      form: {
-        date: new Date(),
-        description: '',
-        type: 'D',
-        budgetItem: null,
-        value: 0
-      }
-    });
+    //
   }
 
-  close = function() {
+  close() {
     this.setState({ showModal: false });
   }
 
-  save = function() {
-    this.setState({ showModal: false });
-    //this.state.form.date = this.state.form.date.toJSON();
-    this.promiseModalSuccess(this.state.form);
+  consisteData() {
   }
 
-  open = function(budget) {
+  save() {
+    if (this.consisteData()) {
+      this.setState({ showModal: false });
+      //this.state.form.date = this.state.form.date.toJSON();
+      this.promiseModalSuccess(this.state.form);
+    }
+  }
+
+  open = function(budget, budgetItem) {
     this.budget = budget;
+    this.budgetItem = budgetItem;
+
+    if (budgetItem) {
+      let form = this.getBudgetItemInfo(budgetItem);
+      form.date = new Date();
+      this.setState({form: form});
+      setTimeout(() => {
+        this.refs.accountInput.select.focus();
+      }, 100)
+    } else {
+      this.setState({
+        form: {
+          date: new Date(),
+          description: '',
+          type: 'D',
+          budgetItem: null,
+          value: 0
+        }
+      });
+    }
+
     let vm = this;
     return new Promise(function(success) {
       vm.setState({ showModal: true });
@@ -111,16 +129,21 @@ class TransactionModal extends React.Component {
     this.setState({form: Object.assign(this.state.form, {type: e.target.value})});
   }
 
-  budgetItemInputChange(budgetItem) {
+  getBudgetItemInfo(budgetItem) {
     let budgetItemInfo = budgetItem ? {
-      budgetItem: budgetItem._id,
+      budgetItem: budgetItem._id || budgetItem.budgetItemId,
       type: budgetItem.type,
-      category: budgetItem.category,
+      category: budgetItem.category._id,
       value: budgetItem.value,
       description: budgetItem.description
     } : {
       budgetItem: null
     };
+    return budgetItemInfo;
+  }
+
+  budgetItemInputChange(budgetItem) {
+    const budgetItemInfo = this.getBudgetItemInfo(budgetItem);
     let form = Object.assign({}, this.state.form, budgetItemInfo);
     this.setState({form: form});
   }
@@ -194,24 +217,6 @@ class TransactionModal extends React.Component {
               </Col>
             </FormGroup>
 
-            <FormGroup >
-              <Col componentClass={ControlLabel} sm={3}>
-                Account
-              </Col>
-              <Col sm={9}>
-                <Select.Async
-                  ref="categoryInput"
-                  name="form-field-name"
-                  loadOptions={getAccounts}
-                  labelKey="name"
-                  valueKey="_id"
-                  clearable={false}
-                  value={this.state.form.account}
-                  onChange={this.accountInputChange.bind(this)}
-                />
-              </Col>
-            </FormGroup>
-
             <FormGroup>
               <Col componentClass={ControlLabel} sm={3}>
                 Description
@@ -223,6 +228,24 @@ class TransactionModal extends React.Component {
                   value={this.state.form.description}
                   onChange={this.descriptionInputOnChange.bind(this)}
                   placeholder="Description" />
+              </Col>
+            </FormGroup>
+
+            <FormGroup >
+              <Col componentClass={ControlLabel} sm={3}>
+                Account
+              </Col>
+              <Col sm={9}>
+                <Select.Async
+                  ref="accountInput"
+                  name="form-field-name"
+                  loadOptions={getAccounts}
+                  labelKey="name"
+                  valueKey="_id"
+                  clearable={false}
+                  value={this.state.form.account}
+                  onChange={this.accountInputChange.bind(this)}
+                />
               </Col>
             </FormGroup>
 

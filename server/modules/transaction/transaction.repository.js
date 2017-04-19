@@ -8,7 +8,7 @@ module.exports = {
   getTransactions: () => {
     return repositoryHelper.getAll({}, null, null, null, (query) => {
       query.populate('category');
-      query.populate('account');      
+      query.populate('account');
     });
   },
 
@@ -22,8 +22,8 @@ module.exports = {
 
         Transaction.findById(newDocument._id)
           .populate('category')
+          .populate('account')
           .exec()
-
             .then(function(data) {
               success(data);
             });

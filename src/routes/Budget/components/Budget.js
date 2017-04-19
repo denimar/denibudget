@@ -119,17 +119,17 @@ class Budget extends React.Component {
           if (string1 > string2) return 1;
           return 0;
         });
-        let detailItemsEl = sortedDetails ? sortedDetails.map((budgetItem, index) => {
+        let detailItemsEl = sortedDetails ? sortedDetails.map((budgetItem, sortedIndex) => {
           return (
-            <div className={ 'budget-detail-item ' + budgetItem.type.toLowerCase() }>
+            <div key={sortedIndex} className={ 'budget-detail-item ' + budgetItem.type.toLowerCase() }>
               <div className="budget-detail-field description">{ budgetItem.description }</div>
               <div className="budget-detail-field type">{ budgetItem.type }</div>
               <div className="budget-detail-field value">{ routine.formatNumber(budgetItem.value) }</div>
               <div className="action-buttons">
-                <span onClick={ this.delBudgetItem.bind(this, budget, index) }>
+                <span onClick={ this.delBudgetItem.bind(this, budget, sortedIndex) }>
                   {(CRUD_ACTION_BUTTON_DELETE)}
                 </span>
-                <span onClick={ this.budgetItemModal.bind(this, budget, budgetItem, index) }>
+                <span onClick={ this.budgetItemModal.bind(this, budget, budgetItem, sortedIndex) }>
                   {(CRUD_ACTION_BUTTON_EDIT)}
                 </span>
               </div>
@@ -150,7 +150,7 @@ class Budget extends React.Component {
       const budgetBalance = BudgetService.getBudgetBalance(budget);
 
       return (
-        <div className="budget-item-container" key={index}>
+        <div key={index} className="budget-item-container">
 
           <div className="budget-item">
             <div className="budget-description">
@@ -171,7 +171,7 @@ class Budget extends React.Component {
                 {(CRUD_ACTION_BUTTON_DELETE)}
               </span>
               <OverlayTrigger placement="left" overlay={(
-                  <Tooltip>Add a new item in this budget.</Tooltip>
+                  <Tooltip id="btnCrudActionButtonAddDetailTooltip">Add a new item in this budget.</Tooltip>
                 )}>
                 <span onClick={ this.budgetItemModal.bind(this, budget, null) }>
                   {(CRUD_ACTION_BUTTON_ADD_DETAIL)}

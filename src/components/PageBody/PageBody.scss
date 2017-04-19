@@ -1,5 +1,5 @@
 .page-body-viewport {
-  $default-border-color: lighten(#ccc, 5%);
+  $default-border-color: lighten(#ccc, 3%);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -20,6 +20,7 @@
       flex-direction: column;
       border: solid 1px $default-border-color;
       display: flex;
+      box-shadow: 4px 4px 8px $default-border-color;
 
       .header {
         border-bottom: solid 1px #e6e6e6;

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
+import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import Dialog from 'react-bootstrap-dialog'
 import Select from 'react-select';
@@ -12,6 +12,7 @@ import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
 import TransactionModal from './TransactionModal';
 import FaArrowRight from 'react-icons/lib/fa/arrow-right';
+import FaPlusCircle from 'react-icons/lib/fa/plus-circle'
 import Moment from 'moment';
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import commonConstant from '../../../../common/common.constant'
@@ -21,29 +22,29 @@ class Transaction extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {form: {}};
+    this.state = { form: {} };
   }
 
   componentWillMount() {
     this.props.fetchTransactions();
   }
 
-  onDeleteClick(id) {
+  removeTransactionItemClick(transactionId) {
     this.refs.dialog.show({
       body: 'Confirm Transaction Deletion?',
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
-          this.props.delTransaction(id);
+          this.props.delTransaction(transactionId);
         }, 'btn-danger')
       ],
       onHide: (dialog) => {}
     })
   }
 
-  newTransactionModal() {
+  newTransactionModal(budgetItem) {
     let me = this;
-    me.refs.TransactionModal.open(this.state.form.currentBudget)
+    me.refs.TransactionModal.open(this.state.form.currentBudget, budgetItem)
       .then(transactionToAdd => {
         me.props.addTransaction(transactionToAdd);
       });
@@ -56,50 +57,50 @@ class Transaction extends React.Component {
     return budgetItemsSum;
   }
 
-  currentBudgetInputChange(budget) {
-    let budgetItemsSum = this.getBudgetItemsSum(budget);
-    let form = Object.assign({}, this.state.form, {currentBudget: budget, currentBudgetItemsSum: budgetItemsSum});
-    this.setState({form: form});
+  getTransactionsSum(transactionsItems) {
+    let transactionsSum = 0;
+    let transactions = transactionsItems || [];
+    transactions.forEach(transaction => transactionsSum += transaction.value);
+    return transactionsSum;
   }
 
-  getBudgetTransactionsItemsElem(budgetItem) {
-    let budgetTransactionsElemArray = [];
-    if (budgetItem.transactions) {
-      budgetItem.transactions.forEach(budgetTransactionItem => {
-        budgetTransactionsElemArray.push((
-          <div className="description-and-value">
-            <FaArrowRight style={{marginTop: '3px', marginRight: '5px'}} />
-
-            <div className="date">
-              {Moment(new Date(budgetTransactionItem.date)).format("MMMM, DD")}
-            </div>
-            <div className="account">
-              {budgetTransactionItem.account.name}
-            </div>
-            <div className="description">
-              {budgetTransactionItem.description}
-            </div>
-            <div className="value">
-              {routine.formatNumber(budgetTransactionItem.value)}
-            </div>
-          </div>
-        ))
+  getCurrentTransactions(budget) {
+    let currentTransactions = [];
+    if (budget) {
+      const startDate = Moment(budget.startDate).startOf('day');
+      const endDate = Moment(budget.endDate).startOf('day');
+      this.props.transactions.data.forEach(transactionItem => {
+        const transactionDate = Moment(transactionItem.date).startOf('day');
+        if (transactionDate.isBetween(startDate, endDate, 'days', '[]')) {
+          currentTransactions.push(transactionItem);
+        }
       })
     }
-    return (
-      <div className="budget-transactions-container">
-        { budgetTransactionsElemArray }
-      </div>
-    );
+    return currentTransactions;
+  }
+
+  currentBudgetInputChange(budget) {
+    const startDate = Moment(budget.startDate).startOf('day');
+    const endDate = Moment(budget.endDate).startOf('day');
+    let currentTransactions = this.getCurrentTransactions(budget);
+    const currentBudgetItemsSum = this.getBudgetItemsSum(budget);
+    const currentTransactionsSum = this.getTransactionsSum(currentTransactions);
+
+    let form = Object.assign({}, this.state.form, {currentBudget: budget});
+    this.setState({form: form, currentTransactionsSum: currentTransactionsSum, currentBudgetItemsSum: currentBudgetItemsSum});
   }
 
   getBudgetTransactionsGraph(budgetItem) {
     let budgetTransactionsGraphBarArray = [];
     let transactions;
+
+    const greaterValue = this.state.currentTransactionsSum > this.state.currentBudgetItemsSum ? this.state.currentTransactionsSum : this.state.currentBudgetItemsSum;
+    const estimatedPercentage = budgetItem.value * 100 / greaterValue;
+
     if (budgetItem.budgetItemId) {
       budgetTransactionsGraphBarArray.push((
-        <div className="comparative-chart-bar-item">
-          <span className="comparative-chart-bar-estimated"></span>
+        <div key={ 'estimated-' + budgetItem.budgetItemId } className="comparative-chart-bar-item">
+          <span className="comparative-chart-bar-estimated" style={ {"width" : estimatedPercentage.toString() + "%"} }></span>
           <span className="comparative-chart-bar-value">{ routine.formatNumber(budgetItem.value) }</span>
         </div>
       ));
@@ -113,9 +114,10 @@ class Transaction extends React.Component {
         sumBudgetItemTransactions += trans.value;
       })
 
+      const actualPercentage = sumBudgetItemTransactions * 100 / greaterValue;
       budgetTransactionsGraphBarArray.push((
-        <div className="comparative-chart-bar-item">
-          <span className="comparative-chart-bar-actual"></span>
+        <div key={ 'actual-' + budgetItem.budgetItemId } className="comparative-chart-bar-item">
+          <span className="comparative-chart-bar-actual" style={ {"width" : actualPercentage.toString() + "%"} }></span>
           <span className="comparative-chart-bar-value">{ routine.formatNumber(sumBudgetItemTransactions) }</span>
         </div>
       ));
@@ -127,6 +129,72 @@ class Transaction extends React.Component {
         </div>
       </div>
     );
+  }
+
+  getTransactionOrBudgetItem(transactionOrBudgetItem, isUnforecasted, isTransactionItem, index) {
+    let onlyTransactionItem = (!isUnforecasted && isTransactionItem);
+    let budgetTransactionsGraph = onlyTransactionItem ? null : this.getBudgetTransactionsGraph(transactionOrBudgetItem);
+    let categoryElem = onlyTransactionItem ? null : (
+      <span className="category">{ transactionOrBudgetItem.category.path }</span>
+    );
+    let descriptionElem = (
+      <div className="transaction-items-fields">
+        { onlyTransactionItem ? (
+            <div>
+              <FaArrowRight style={ {marginTop: '-2px', marginLeft: '15px', marginRight: '5px'} } />
+              <span className="date">{ Moment(new Date(transactionOrBudgetItem.date)).format("MMMM, DD") }</span>
+            </div>
+          )  : null
+        }
+        { categoryElem }
+        <div className="description">
+          <span>{ transactionOrBudgetItem.description  }</span>
+          { onlyTransactionItem ? null : (
+            <OverlayTrigger placement="top" overlay={(
+                <Tooltip id="btnActionButtonAddTransactionTooltip">Add a transaction in this budget.</Tooltip>
+              )}>
+                <FaPlusCircle
+                  color={ transactionOrBudgetItem.type.toLowerCase() === 'c' ? '#00cc00' : '#ff4d4d' }
+                  size="20"
+                  onClick={ this.newTransactionModal.bind(this, transactionOrBudgetItem) }
+                />
+              </OverlayTrigger>
+            )
+          }
+        </div>
+        { onlyTransactionItem ? (
+            <div>
+              <span className="account">{ transactionOrBudgetItem.account.name }</span>
+              <span className="value">{ routine.formatNumber(transactionOrBudgetItem.value) }</span>
+
+                <OverlayTrigger placement="top" overlay={(
+                    <Tooltip id="btnActionButtonDelTransactionTooltip">Remove this transaction item.</Tooltip>
+                  )}>
+                  <span className="action-button-delete-transaction" onClick={ this.removeTransactionItemClick.bind(this, transactionOrBudgetItem._id) } >
+                    { (CRUD_ACTION_BUTTON_DELETE) }
+                  </span>
+                </OverlayTrigger>
+
+            </div>
+          ) : null
+        }
+      </div>
+    );
+
+    return (
+      <div key={ index } className={ 'budget-item ' + (isUnforecasted ? 'is-unforecasted ' : ' ') + transactionOrBudgetItem.type.toLowerCase() + (onlyTransactionItem ? ' is-only-transaction-item' : '') }>
+        { descriptionElem }
+        { budgetTransactionsGraph }
+      </div>
+    )
+  }
+
+  getBudgetTranctionItems(budgetItem) {
+    let budgetTranctionItems = [];
+    budgetItem.transactions.map((transactionItem, index) => {
+      budgetTranctionItems.push(this.getTransactionOrBudgetItem(transactionItem, false, true, transactionItem._id));
+    });
+    return budgetTranctionItems;
   }
 
   render() {
@@ -146,12 +214,12 @@ class Transaction extends React.Component {
           />
         </div>
         <PageHeaderCrud
-          newRecordButtonClick={this.newTransactionModal.bind(this)}
+          newRecordButtonClick={this.newTransactionModal.bind(this, null)}
         />
       </div>
     );
 
-    let allItems = [];
+    let budgetItems = [];
 
     //Set the budget items
     if (this.state.form && this.state.form.currentBudget && this.state.form.currentBudget.details) {
@@ -164,33 +232,38 @@ class Transaction extends React.Component {
           value: budgetItem.value,
           transactions: []
         };
-        this.props.transactions.data.forEach(transactionItem => {
+        this.getCurrentTransactions(this.state.form.currentBudget).forEach(transactionItem => {
           if (transactionItem.budgetItem === budgetItem._id) {
             itemToAdd.transactions.push(transactionItem);
           }
         })
-        allItems.push(itemToAdd);
+        budgetItems.push(itemToAdd);
       });
     }
 
-    //Set the unforecasted transactions items
-    this.props.transactions.data.forEach(transactionItem => {
-      if (!transactionItem.budgetItem) {
-        allItems.push(transactionItem);
-      }
-    });
-
     const body = (
-      <div className="transaction-items">
+      <div className="budgets-and-transactions-items">
         {
-          allItems.map((transaction, index) => {
-            return <div key={index} className={'transaction-item ' + transaction.type.toLowerCase()}>
-                     <div className="category-and-description">
-                       <span className="category">{ transaction.category.path }</span>
-                       <span className="description">{ transaction.description }</span>
+          budgetItems.map((budgetItem, index) => {
+            return <div key={ budgetItem.budgetItemId } className={ 'budget-item-container ' + budgetItem.type.toLowerCase() }>
+                    { this.getTransactionOrBudgetItem(budgetItem, false, false, 'budget-' + budgetItem.budgetItemId) }
+                    {
+                      <div className="transactions-items">
+                        { this.getBudgetTranctionItems(budgetItem) }
+                      </div>
+                    }
+                  </div>
+          })
+        }
+        {
+          this.getCurrentTransactions(this.state.form.currentBudget).map((transactionItem, index) => {
+            if (!transactionItem.budgetItem) {
+              return <div className={ 'budget-item-container ' + transactionItem.type.toLowerCase() }>
+                       <div className="transactions-items">
+                         { this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id) }
+                       </div>
                      </div>
-                     { this.getBudgetTransactionsGraph(transaction) }
-                   </div>;
+            }
           })
         }
       </div>
