@@ -26,7 +26,9 @@ class Transaction extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchTransactions();
+    if (this.props.transactions.data.length === 0) {
+      this.props.fetchTransactions();
+    }
   }
 
   removeTransactionItemClick(transactionId) {
@@ -148,8 +150,8 @@ class Transaction extends React.Component {
         }
         { categoryElem }
         <div className="description">
-          <span>{ transactionOrBudgetItem.description  }</span>
-          { onlyTransactionItem ? null : (
+          <span>{ transactionOrBudgetItem.description }</span>
+          { (onlyTransactionItem || isUnforecasted) ? null : (
             <OverlayTrigger placement="top" overlay={(
                 <Tooltip id="btnActionButtonAddTransactionTooltip">Add a transaction in this budget.</Tooltip>
               )}>
@@ -245,12 +247,15 @@ class Transaction extends React.Component {
       <div className="budgets-and-transactions-items">
         {
           budgetItems.map((budgetItem, index) => {
+            const budgetTranctionItems = this.getBudgetTranctionItems(budgetItem);
             return <div key={ budgetItem.budgetItemId } className={ 'budget-item-container ' + budgetItem.type.toLowerCase() }>
                     { this.getTransactionOrBudgetItem(budgetItem, false, false, 'budget-' + budgetItem.budgetItemId) }
                     {
-                      <div className="transactions-items">
-                        { this.getBudgetTranctionItems(budgetItem) }
-                      </div>
+                      budgetTranctionItems.length > 0 ? (
+                        <div className="transactions-items with-budget">
+                          { budgetTranctionItems }
+                        </div>
+                      ) : null
                     }
                   </div>
           })
@@ -258,9 +263,10 @@ class Transaction extends React.Component {
         {
           this.getCurrentTransactions(this.state.form.currentBudget).map((transactionItem, index) => {
             if (!transactionItem.budgetItem) {
-              return <div className={ 'budget-item-container ' + transactionItem.type.toLowerCase() }>
+              const budgetTranctionItems = this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id);
+              return <div key={ transactionItem._id } className={ 'budget-item-container ' + transactionItem.type.toLowerCase() }>
                        <div className="transactions-items">
-                         { this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id) }
+                         { budgetTranctionItems }
                        </div>
                      </div>
             }

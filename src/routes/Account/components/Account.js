@@ -6,6 +6,7 @@ import AccountModal from './AccountModal'
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import Dialog from 'react-bootstrap-dialog'
 import Moment from 'moment'
+import routine from '../../../../common/common.routine';
 
 class Account extends React.Component {
 
@@ -45,16 +46,15 @@ class Account extends React.Component {
     const mappedAccounts = accounts.data.map((account, index) => {
       let startDate = Moment(account.startDate);
       return (
-        <div
-          className="account-item"
-          key={index}>
-          <div className="account-name">{account.name}</div>
-          <div className="account-start-date">{startDate.format('MM/DD/YYYY HH:MM')}</div>
+        <div className="account-item" key={index}>
+          <div className="account-name">{ account.name  }</div>
+          <div className="account-start-date">{ startDate.format('MM/DD/YYYY') }</div>
+          <div className="account-balance">{ routine.formatNumber(account.currentBalance) }</div>
           <div className="action-buttons">
-            <span onClick={this.delAccountClick.bind(this, account._id)}>
-              {(CRUD_ACTION_BUTTON_DELETE)}
+            <span onClick={ this.delAccountClick.bind(this, account._id) }>
+              { (CRUD_ACTION_BUTTON_DELETE) }
             </span>
-            {(CRUD_ACTION_BUTTON_EDIT)}
+            { (CRUD_ACTION_BUTTON_EDIT) }
           </div>
         </div>
       )
@@ -71,6 +71,7 @@ class Account extends React.Component {
         <div className="column-headers">
           <div className="column-header account-name">Name</div>
           <div className="column-header account-start-date">Start Date</div>
+          <div className="column-header account-balance">Balance</div>
         </div>
         <div className="menu-items">
           <div>{mappedAccounts}</div>

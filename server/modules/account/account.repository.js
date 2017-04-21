@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const model = require('./account.model');
 let Account = mongoose.model('Account');
 let repositoryHelper = require('../../helper/repository.helper')(Account);
+let transactionRepository = require('../transaction/transaction.repository');
 
 module.exports = {
 
@@ -47,6 +48,44 @@ module.exports = {
         }
 
       })
+
+    });
+
+  },
+
+  getAccountBalance: (id) => {
+
+    return new Promise(function(success) {
+
+      Account.findById(id, (err, account) => {
+
+        if (err) return handleError(err);
+
+        if (account) {
+          const openingBalance = account.openingBalance;
+          let balance = openingBalance;
+
+          transactionRepository.getTransactionsByAccount(account._id)
+            .then((transactions) => {
+
+              transactions.forEach(transaction => {
+                if (transaction.type === 'C') {
+                  balance += transaction.value;
+                } else {
+                  balance -= transaction.value;
+                }
+              })
+
+              success(balance);
+
+            })
+
+        } else {
+          success(0);
+        }
+
+      })
+
 
     });
 

@@ -9,10 +9,13 @@ export const fetchAccounts = () => {
 
       axios.get(url)
       .then((response) => {
-        dispatch({
-          type    : 'FETCH_ACCOUNTS_FULFILLED',
-          payload : response.data
-        })
+        _fillCurrentAccountBalance(response.data)
+          .then(accountsData => {
+            dispatch({
+              type    : 'FETCH_ACCOUNTS_FULFILLED',
+              payload : accountsData
+            })
+          })
       })
       .catch((err) => {
         dispatch({
@@ -64,4 +67,35 @@ export const delAccount = (id) => {
       });
 
   }
+}
+
+function _fillCurrentAccountBalance(accountsData) {
+  return new Promise(function(success, reject) {
+    let accountsWithBalance = accountsData;
+    const url = commonConstant.ENDPOINT.ACCOUNT + '/balance/'
+    let allAccountsHaveBalance = (accounts) => {
+      for (let i = 0 ; i < accounts.length ; i++) {
+        let account = accounts[i];
+        if (!account.currentBalance) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    accountsWithBalance.forEach(account => {
+      axios.get(url + account._id)
+      .then((response) => {
+        account.currentBalance = response.data.currentBalance;
+        if (allAccountsHaveBalance(accountsWithBalance)) {
+          success(accountsWithBalance);
+        }
+      })
+      .catch((err) => {
+        reject(err)
+      });
+    });
+
+  });
+
 }

@@ -53,6 +53,7 @@ class Budget extends React.Component {
   }
 
   budgetItemModal(budget, budgetItem, detailIndex) {
+    console.log(budgetItem)
     let me = this;
     me.refs.BudgetItemModal.open(budget, budgetItem)
       .then(budgetItemReturned => {
@@ -84,7 +85,7 @@ class Budget extends React.Component {
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
-          budget.details.splice(detailIndex, 1);
+          budget.details.splice(budgetItemIndex, 1);
           this.props.updBudget(budget);
         }, 'btn-danger')
       ],
@@ -99,9 +100,9 @@ class Budget extends React.Component {
 
   render() {
     let budgets = this.props.budgets;
-    if (budgets && budgets.data && budgets.data.length > 0) {
-      budgets.data[0].expanded = true;
-    }
+    // if (budgets && budgets.data && budgets.data.length > 0) {
+    //   budgets.data[0].expanded = true;
+    // }
 
     const mappedBudgets = budgets.data.map((budget, index) => {
       let startDate = Moment(budget.startDate);

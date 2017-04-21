@@ -12,8 +12,6 @@ export const Header = () => (
       <IndexLink to='/statement' activeClassName="route-active"> Statements </IndexLink>
       <IndexLink to='/account' activeClassName="route-active"> Accounts </IndexLink>
       <IndexLink to='/category' activeClassName="route-active"> Categories </IndexLink>
-      <IndexLink to='/customer' activeClassName="route-active"> Customers </IndexLink>
-      <IndexLink to='/counter' activeClassName="route-active"> Counter </IndexLink>
     </div>
 
   </div>

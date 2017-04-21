@@ -12,6 +12,12 @@ module.exports = {
     });
   },
 
+  getTransactionsByAccount: (accountId) => {
+    return repositoryHelper.getAll({
+      account: mongoose.Types.ObjectId(accountId)
+    });
+  },
+
   add: (documentToAdd) => {
     return new Promise(function(success) {
 

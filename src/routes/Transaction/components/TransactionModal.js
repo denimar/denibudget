@@ -70,6 +70,8 @@ class TransactionModal extends React.Component {
   }
 
   consisteData() {
+    return true;
+    //
   }
 
   save() {

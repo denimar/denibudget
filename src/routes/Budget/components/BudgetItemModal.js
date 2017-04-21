@@ -68,7 +68,7 @@ class BudgetModal extends React.Component {
       };
       if (budgetItem) {
         state.form['description'] = budgetItem.description;
-        state.form['category'] = budgetItem.category;
+        state.form['category'] = budgetItem.category._id;
         state.form['type'] = budgetItem.type;
         state.form['value'] = budgetItem.value;
       }
@@ -82,7 +82,10 @@ class BudgetModal extends React.Component {
   }
 
   budgetValueOnChange = function(e) {
-    this.setState({form: Object.assign(this.state.form, {value: Number.parseFloat(e)})});
+    var thousandSeparator = (1111).toLocaleString().replace(/1/g, ''); //workaround TODO:fix it
+    var regExp = new RegExp('\\' + thousandSeparator, 'g');
+    var strNumber = e.replace(regExp, '');
+    this.setState({form: Object.assign(this.state.form, {value: Number.parseFloat(strNumber)})});
   }
 
   typeOnChange = function(e) {

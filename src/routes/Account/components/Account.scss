@@ -1,7 +1,8 @@
 .account-viewport {
   $account-item-base-color: #e7f3fe;
-  $account-name-column-width: 400px;
-  $account-start-date-column-width: 150px;
+  $account-name-column-width: 350px;
+  $account-start-date-column-width: 130px;
+  $account-balance-column-width: 150px;
   color: #666666;
 
   .body {
@@ -25,6 +26,12 @@
 
         &.account-start-date {
           width: $account-start-date-column-width;
+          text-align: center;
+        }
+
+        &.account-balance {
+          width: $account-balance-column-width;
+          text-align: right;
         }
 
       }
@@ -37,12 +44,18 @@
       display: flex;
       flex-direction: row;
 
-      .account-start-date {
-        width: $account-start-date-column-width;
-      }
-
       .account-name {
         width: $account-name-column-width;
+      }
+
+      .account-start-date {
+        width: $account-start-date-column-width;
+        text-align: center;
+      }
+
+      .account-balance {
+        width: $account-balance-column-width;
+        text-align: right;
       }
 
       .action-buttons {

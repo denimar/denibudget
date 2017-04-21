@@ -20,6 +20,17 @@ module.exports = {
     accountRepository.del(id).then((deletedAccount) => {
       res.end(JSON.stringify(deletedAccount, null, 2));
     });
+  },
+
+  getAccountBalance: (req, res) => {
+    let id = req.params.id;
+
+    accountRepository.getAccountBalance(id).then((balance) => {
+      let currentBalanceJson = {
+        currentBalance: balance
+      }
+      res.end(JSON.stringify(currentBalanceJson, null, 2));
+    });
   }
 
 }

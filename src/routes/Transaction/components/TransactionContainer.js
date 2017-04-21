@@ -18,9 +18,13 @@ const mapDispatchToProps = {
   delTransaction : (id) => delTransaction(id)
 }
 
-const mapStateToProps = (state) => ({
-  transactions : state.transactions
-})
-
+// const mapStateToProps = (state) => ({
+//   transactions : state.transactions
+// })
+const mapStateToProps = (state) => {
+  return {
+    transactions : state.transactions
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Transaction)

@@ -4,8 +4,6 @@ import Home from './Home'
 import TransactionRoute from './Transaction'
 import CategoryRoute from './Category'
 import AccountRoute from './Account'
-import CounterRoute from './Counter'
-import CustomerRoute from './Customer'
 import BudgetRoute from './Budget'
 import StatementRoute from './Statement'
 
@@ -20,8 +18,6 @@ export const createRoutes = (store) => ({
     TransactionRoute(store),
     CategoryRoute(store),
     AccountRoute(store),
-    CounterRoute(store),
-    CustomerRoute(store),
     BudgetRoute(store),
     StatementRoute(store)
   ]
