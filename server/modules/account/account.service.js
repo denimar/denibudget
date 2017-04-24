@@ -31,6 +31,17 @@ module.exports = {
       }
       res.end(JSON.stringify(currentBalanceJson, null, 2));
     });
+  },
+
+  getAccountStatement: (req, res) => {
+    let id = req.params.id;
+    let startDate = req.params.startdate;
+    let endDate = req.params.enddate;
+
+    accountRepository.getAccountStatement(id, startDate, endDate)
+      .then((accountStatement) => {
+        res.end(JSON.stringify(accountStatement, null, 2));
+      });
   }
 
 }

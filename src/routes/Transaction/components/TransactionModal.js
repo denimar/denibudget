@@ -77,7 +77,11 @@ class TransactionModal extends React.Component {
   save() {
     if (this.consisteData()) {
       this.setState({ showModal: false });
-      //this.state.form.date = this.state.form.date.toJSON();
+
+      let momentDate = moment(this.state.form.date);
+      console.log(momentDate.toISOString())
+      //this.state.form.date = momentDate.toISOString();
+
       this.promiseModalSuccess(this.state.form);
     }
   }
@@ -85,10 +89,11 @@ class TransactionModal extends React.Component {
   open = function(budget, budgetItem) {
     this.budget = budget;
     this.budgetItem = budgetItem;
+    const momentToday = new moment().startOf('day');
 
     if (budgetItem) {
       let form = this.getBudgetItemInfo(budgetItem);
-      form.date = new Date();
+      form.date = momentToday.toDate();
       this.setState({form: form});
       setTimeout(() => {
         this.refs.accountInput.select.focus();
@@ -96,7 +101,7 @@ class TransactionModal extends React.Component {
     } else {
       this.setState({
         form: {
-          date: new Date(),
+          date: momentToday.toDate(),
           description: '',
           type: 'D',
           budgetItem: null,

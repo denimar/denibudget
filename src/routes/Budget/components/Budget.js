@@ -24,7 +24,9 @@ class Budget extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchBudgets();
+    if (this.props.budgets.data.length === 0) {
+      this.props.fetchBudgets();
+    }
   }
 
   onDeleteClick(id) {
@@ -203,7 +205,7 @@ class Budget extends React.Component {
           <div className="column-header budget-value">Balance</div>
         </div>
         <div className="menu-items">
-          <div>{mappedBudgets}</div>
+          <div>{ mappedBudgets }</div>
         </div>
         <div className="budget-statement">
         </div>

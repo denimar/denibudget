@@ -1,3 +1,4 @@
+import moment from 'moment'
 const mongoose = require('mongoose');
 const model = require('./transaction.model');
 let Transaction = mongoose.model('Transaction');
@@ -12,9 +13,20 @@ module.exports = {
     });
   },
 
-  getTransactionsByAccount: (accountId) => {
-    return repositoryHelper.getAll({
+  getTransactionsByAccount: (accountId, startDate, endDate) => {
+    let where = {
       account: mongoose.Types.ObjectId(accountId)
+    }
+    if (startDate && endDate) {
+      const momentStartDate = moment(startDate).startOf('day');
+      const momentEndDate = moment(endDate).startOf('day');
+      where.date = {
+        $gte: momentStartDate.toISOString(),
+        $lte: momentEndDate.toISOString(),
+      };
+    }
+    return repositoryHelper.getAll(where, null, null, null, (query) => {
+      query.populate('category');
     });
   },
 

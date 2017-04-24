@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchAccounts } from '../modules/statementActions'
+import { fetchStatement } from '../modules/statementActions'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,11 +13,11 @@ import Statement from './Statement'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  fetchAccounts : () => fetchAccounts(),
+  fetchStatement : (accountId) => fetchStatement(accountId),
 }
 
 const mapStateToProps = (state) => ({
-  accounts : state.accounts
+  statement : state.statement
 })
 
 

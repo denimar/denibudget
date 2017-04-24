@@ -8,7 +8,7 @@ export default function statementReducer (state = initialState, action) {
 
   switch (action.type) {
 
-    case 'FETCH_ACCOUNTS': {
+    case 'FETCH_STATEMENT': {
       return {
         ...state,
         fetching: true,
@@ -16,7 +16,7 @@ export default function statementReducer (state = initialState, action) {
       }
     }
 
-    case 'FETCH_ACCOUNTS_FULFILLED': {
+    case 'FETCH_STATEMENT_FULFILLED': {
       return {
         ...state,
         fetching: false,
@@ -25,7 +25,7 @@ export default function statementReducer (state = initialState, action) {
       }
     }
 
-    case 'FETCH_ACCOUNTS_REJECTED': {
+    case 'FETCH_STATEMENT_REJECTED': {
       return {
         ...state,
         fetching: false,

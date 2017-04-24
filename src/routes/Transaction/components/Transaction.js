@@ -29,6 +29,9 @@ class Transaction extends React.Component {
     if (this.props.transactions.data.length === 0) {
       this.props.fetchTransactions();
     }
+    if (this.props.transactions.currentBudget) {
+      this.currentBudgetInputChange(this.props.transactions.currentBudget);
+    }
   }
 
   removeTransactionItemClick(transactionId) {
@@ -88,6 +91,7 @@ class Transaction extends React.Component {
     const currentBudgetItemsSum = this.getBudgetItemsSum(budget);
     const currentTransactionsSum = this.getTransactionsSum(currentTransactions);
 
+    this.props.transactions.currentBudget = budget;
     let form = Object.assign({}, this.state.form, {currentBudget: budget});
     this.setState({form: form, currentTransactionsSum: currentTransactionsSum, currentBudgetItemsSum: currentBudgetItemsSum});
   }

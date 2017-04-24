@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('debug', true)
 const model = require('./account.model');
 let Account = mongoose.model('Account');
 let repositoryHelper = require('../../helper/repository.helper')(Account);
@@ -82,6 +83,39 @@ module.exports = {
 
         } else {
           success(0);
+        }
+
+      })
+
+
+    });
+
+  },
+
+  getAccountStatement: (id, startDate, endDate) => {
+
+    return new Promise(function(success) {
+
+      Account.findById(id, (err, account) => {
+
+        if (err) return handleError(err);
+
+        if (account) {
+          let statement = [];
+
+          transactionRepository.getTransactionsByAccount(id, startDate, endDate)
+            .then((transactions) => {
+              
+              transactions.forEach(transaction => {
+                statement.push(transaction);
+              })
+
+              success(statement);
+
+            })
+
+        } else {
+          success([]);
         }
 
       })

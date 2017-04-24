@@ -13,7 +13,7 @@ export default (store) => ({
       const reducer = require('./modules/statementReducer').default
 
       /*  Add the reducer to the store on key 'counter'  */
-      injectReducer(store, { key: 'accounts', reducer })
+      injectReducer(store, { key: 'statement', reducer })
 
       /*  Return getComponent   */
       cb(null, statementContainer )

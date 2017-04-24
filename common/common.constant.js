@@ -6,7 +6,7 @@ module.exports = {
     ACCOUNT: BASE_ENDPOINTS + '/account',
     ADD_CATEGORY: BASE_ENDPOINTS + '/add_category',
     BUDGET: BASE_ENDPOINTS + '/budget',
-    BUDGET_ITEM: BASE_ENDPOINTS + '/budgetitem',    
+    BUDGET_ITEM: BASE_ENDPOINTS + '/budgetitem',
     CATEGORY: BASE_ENDPOINTS + '/category',
     CATEGORY_LIST: BASE_ENDPOINTS + '/categorylist',
     CUSTOMER: BASE_ENDPOINTS + '/customer',
