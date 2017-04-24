@@ -13,7 +13,7 @@ import Statement from './Statement'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  fetchStatement : (accountId) => fetchStatement(accountId),
+  fetchStatement : (accountId, startDate, endDate) => fetchStatement(accountId, startDate, endDate),
 }
 
 const mapStateToProps = (state) => ({

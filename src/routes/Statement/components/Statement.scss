@@ -21,26 +21,41 @@
         flex: 1;
         padding: 0px 10px;
         color: #737373;
+        display: block;
 
         .label-budget {
           color: #737373;
+          float: left;
+          margin-top: 5px;
         }
 
         .select-account.Select {
-          display: inline-flex;
+          display: inline-block;
           width: 280px;
           margin-left: 5px;
+          float: left;
 
           .Select-control {
             background-color: darken(#F2F2F2, 1);
-            border-color: darken(#F2F2F2, 5);
+            border-color: #e6e6e6;
           }
 
           &.is-focused:not(.is-open) {
             .Select-control {
-                border-color: darken(#F2F2F2, 6);
-                box-shadow: 0px 0px 0px;
+              border-color: #d9d9d9;
+              box-shadow: 0px 0px 0px;
             }
+          }
+        }
+
+        .date-interval-picker-container {
+          display: inline-block;
+          float: right;
+
+          .selected-date-range-btn {
+            background-color: #EFEFEF;
+            border-color: #e6e6e6;
+            color: #404040;
           }
         }
       }
@@ -59,7 +74,7 @@
       justify-content: space-around;
       flex: 1;
       overflow-y: auto;
-      
+
       .statement {
 
         .statement-item {

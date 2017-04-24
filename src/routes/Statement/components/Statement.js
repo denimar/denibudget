@@ -5,7 +5,10 @@ import PageBody from '../../../components/PageBody';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import AccountService from '../../Account/modules/AccountService'
-
+import DateIntervalPicker from '../../../components/DateIntervalPicker';
+//import DateRangePicker from 'react-bootstrap-daterangepicker'
+// var DateRangePicker = require('react-bootstrap-daterangepicker');
+// import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
 
 class Statement extends React.Component {
 
@@ -19,21 +22,17 @@ class Statement extends React.Component {
   }
 
   currentAccountInputChange(account) {
-    let form = Object.assign({}, this.state.form, {currentAccount: account});
-    this.setState({form: form});
+    this.props.statement.currentAccount = account;
 
-    this.props.fetchStatement(account._id);
+    const startDate = Moment(new Date(2017, 3, 22));
+    const endDate = Moment(new Date(2017, 3, 22));
+
+    this.props.fetchStatement(account._id, startDate, endDate);
+    this.forceUpdate();
   }
 
   render() {
     let accountsObj = this.props.accounts;
-
-    // const accounts = accountsObj.data || [];
-    // const sortedAccounts = accounts.sort((account1, account2) => {
-    //   if (account1.name < account2.name) return -1;
-    //   if (account1.name > account2.name) return 1;
-    //   return 0;
-    // });
 
     const header = (
       <div className="page-header-elements">
@@ -45,9 +44,12 @@ class Statement extends React.Component {
             labelKey="name"
             valueKey="_id"
             clearable={false}
-            value={ this.state.form.currentAccount ? this.state.form.currentAccount._id : null }
+            value={ this.props.statement.currentAccount ? this.props.statement.currentAccount._id : null }
             onChange={ this.currentAccountInputChange.bind(this) }
           />
+
+          <DateIntervalPicker />
+
         </div>
       </div>
     );
@@ -58,10 +60,10 @@ class Statement extends React.Component {
       statmentItemsElem.push((
         <div className="statement-item" key={ statementItem._id }>
           <div className="statement-item-field date">{ Moment(new Date(statementItem.date)).format("MMMM, DD") }</div>
-          <div className="statement-item-field category">{statementItem.category.path }</div>
-          <div className="statement-item-field description">{statementItem.description }</div>
-          <div className="statement-item-field value">{statementItem.value }</div>
-          <div className="statement-item-field type">{statementItem.type }</div>
+          <div className="statement-item-field category">{ statementItem.category.path }</div>
+          <div className="statement-item-field description">{ statementItem.description }</div>
+          <div className="statement-item-field value">{ statementItem.value }</div>
+          <div className="statement-item-field type">{ statementItem.type }</div>
         </div>
       ));
     })

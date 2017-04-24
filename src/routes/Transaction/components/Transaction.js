@@ -29,9 +29,6 @@ class Transaction extends React.Component {
     if (this.props.transactions.data.length === 0) {
       this.props.fetchTransactions();
     }
-    if (this.props.transactions.currentBudget) {
-      this.currentBudgetInputChange(this.props.transactions.currentBudget);
-    }
   }
 
   removeTransactionItemClick(transactionId) {
@@ -49,7 +46,7 @@ class Transaction extends React.Component {
 
   newTransactionModal(budgetItem) {
     let me = this;
-    me.refs.TransactionModal.open(this.state.form.currentBudget, budgetItem)
+    me.refs.TransactionModal.open(this.props.transactions.currentBudget, budgetItem)
       .then(transactionToAdd => {
         me.props.addTransaction(transactionToAdd);
       });
@@ -92,15 +89,16 @@ class Transaction extends React.Component {
     const currentTransactionsSum = this.getTransactionsSum(currentTransactions);
 
     this.props.transactions.currentBudget = budget;
-    let form = Object.assign({}, this.state.form, {currentBudget: budget});
-    this.setState({form: form, currentTransactionsSum: currentTransactionsSum, currentBudgetItemsSum: currentBudgetItemsSum});
+    this.props.transactions.currentTransactionsSum = currentTransactionsSum;
+    this.props.transactions.currentBudgetItemsSum = currentBudgetItemsSum;
+    this.forceUpdate();
   }
 
   getBudgetTransactionsGraph(budgetItem) {
     let budgetTransactionsGraphBarArray = [];
     let transactions;
 
-    const greaterValue = this.state.currentTransactionsSum > this.state.currentBudgetItemsSum ? this.state.currentTransactionsSum : this.state.currentBudgetItemsSum;
+    const greaterValue = this.props.transactions.currentTransactionsSum > this.props.transactions.currentBudgetItemsSum ? this.props.transactions.currentTransactionsSum : this.props.transactions.currentBudgetItemsSum;
     const estimatedPercentage = budgetItem.value * 100 / greaterValue;
 
     if (budgetItem.budgetItemId) {
@@ -215,12 +213,12 @@ class Transaction extends React.Component {
             labelKey="description"
             valueKey="_id"
             clearable={false}
-            value={ this.state.form.currentBudget ? this.state.form.currentBudget._id : null }
+            value={ this.props.transactions.currentBudget ? this.props.transactions.currentBudget._id : null }
             onChange={ this.currentBudgetInputChange.bind(this) }
           />
         </div>
         <PageHeaderCrud
-          newRecordButtonClick={this.newTransactionModal.bind(this, null)}
+          newRecordButtonClick={ this.newTransactionModal.bind(this, null) }
         />
       </div>
     );
@@ -228,8 +226,8 @@ class Transaction extends React.Component {
     let budgetItems = [];
 
     //Set the budget items
-    if (this.state.form && this.state.form.currentBudget && this.state.form.currentBudget.details) {
-      this.state.form.currentBudget.details.forEach(budgetItem => {
+    if (this.state.form && this.props.transactions.currentBudget && this.props.transactions.currentBudget.details) {
+      this.props.transactions.currentBudget.details.forEach(budgetItem => {
         let itemToAdd = {
           budgetItemId: budgetItem._id,
           description: budgetItem.description,
@@ -238,7 +236,7 @@ class Transaction extends React.Component {
           value: budgetItem.value,
           transactions: []
         };
-        this.getCurrentTransactions(this.state.form.currentBudget).forEach(transactionItem => {
+        this.getCurrentTransactions(this.props.transactions.currentBudget).forEach(transactionItem => {
           if (transactionItem.budgetItem === budgetItem._id) {
             itemToAdd.transactions.push(transactionItem);
           }
@@ -265,7 +263,7 @@ class Transaction extends React.Component {
           })
         }
         {
-          this.getCurrentTransactions(this.state.form.currentBudget).map((transactionItem, index) => {
+          this.getCurrentTransactions(this.props.transactions.currentBudget).map((transactionItem, index) => {
             if (!transactionItem.budgetItem) {
               const budgetTranctionItems = this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id);
               return <div key={ transactionItem._id } className={ 'budget-item-container ' + transactionItem.type.toLowerCase() }>

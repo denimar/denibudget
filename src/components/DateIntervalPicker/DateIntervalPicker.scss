@@ -1,0 +1,27 @@
+.date-interval-picker-container {
+  width: 250px;
+
+  &:hover {
+    .glyphicon {
+      color: #808080;
+    }
+
+    .caret {
+      color: #808080 !important;
+    }
+
+  }
+
+
+  .glyphicon {
+    color: #999999;
+  }
+
+  .pull-right {
+
+    .caret {
+      margin-left: 12px;
+      color: #999999;
+    }
+  }
+}
