@@ -215,6 +215,7 @@ class Transaction extends React.Component {
             clearable={false}
             value={ this.props.transactions.currentBudget ? this.props.transactions.currentBudget._id : null }
             onChange={ this.currentBudgetInputChange.bind(this) }
+            placeholder="select a budget"
           />
         </div>
         <PageHeaderCrud

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.set('debug', true)
+//mongoose.set('debug', true)
 const model = require('./account.model');
 let Account = mongoose.model('Account');
 let repositoryHelper = require('../../helper/repository.helper')(Account);
@@ -105,7 +105,7 @@ module.exports = {
 
           transactionRepository.getTransactionsByAccount(id, startDate, endDate)
             .then((transactions) => {
-              
+
               transactions.forEach(transaction => {
                 statement.push(transaction);
               })

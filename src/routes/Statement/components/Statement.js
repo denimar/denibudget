@@ -14,7 +14,7 @@ class Statement extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { form: {} };
+    this.state = {};
   }
 
   componentWillMount() {
@@ -24,11 +24,23 @@ class Statement extends React.Component {
   currentAccountInputChange(account) {
     this.props.statement.currentAccount = account;
 
-    const startDate = Moment(new Date(2017, 3, 22));
-    const endDate = Moment(new Date(2017, 3, 22));
+    this.tryToGetAccountStatement();
+  }
 
-    this.props.fetchStatement(account._id, startDate, endDate);
-    this.forceUpdate();
+  dateIntervalChange(jsonDates) {
+    this.setState({
+      startDate: jsonDates.startDate,
+      endDate: jsonDates.endDate,
+    });
+
+    this.tryToGetAccountStatement();
+  }
+
+  tryToGetAccountStatement() {
+    if (this.props.statement.currentAccount && this.state.startDate && this.state.endDate) {
+      this.props.fetchStatement(this.props.statement.currentAccount._id, this.state.startDate, this.state.endDate);
+      this.forceUpdate();
+    }
   }
 
   render() {
@@ -46,9 +58,12 @@ class Statement extends React.Component {
             clearable={false}
             value={ this.props.statement.currentAccount ? this.props.statement.currentAccount._id : null }
             onChange={ this.currentAccountInputChange.bind(this) }
+            placeholder="select an account"
           />
 
-          <DateIntervalPicker />
+        <DateIntervalPicker
+          onChange={ this.dateIntervalChange.bind(this) }
+        />
 
         </div>
       </div>
