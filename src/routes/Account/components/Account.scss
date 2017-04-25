@@ -9,75 +9,95 @@
     //flex-direction: column !important;
     display: block !important;
     padding-top: 4px;
+    display: flex !important;
 
-    .column-headers {
-      border-bottom: solid 1px lighten(#f2f2f2, 2);
-      padding-left: 25px;
-      //font-weight: bold;
-      font-size: 12px;
+    .account-container {
+      justify-content: space-around;
+      flex: 1;
       display: flex;
+      flex-direction: column;
 
-      .column-header {
-        color: #c0c0c0;
+      .column-headers {
+        border-bottom: solid 1px lighten(#f2f2f2, 2);
+        padding-left: 25px;
+        //font-weight: bold;
+        font-size: 12px;
+        display: flex;
+        height: 20px;
 
-        &.account-name {
-          width: $account-name-column-width;
+        .column-header {
+          color: #c0c0c0;
+
+          &.account-name {
+            width: $account-name-column-width;
+          }
+
+          &.account-start-date {
+            width: $account-start-date-column-width;
+            text-align: center;
+          }
+
+          &.account-balance {
+            width: $account-balance-column-width;
+            text-align: right;
+          }
+
         }
-
-        &.account-start-date {
-          width: $account-start-date-column-width;
-          text-align: center;
-        }
-
-        &.account-balance {
-          width: $account-balance-column-width;
-          text-align: right;
-        }
-
-      }
-    }
-
-    .account-item {
-      //font-weight: bold;
-      padding: 8px 25px;
-      border-bottom: solid 1px darken($account-item-base-color, 1);
-      display: flex;
-      flex-direction: row;
-
-      .account-name {
-        width: $account-name-column-width;
       }
 
-      .account-start-date {
-        width: $account-start-date-column-width;
-        text-align: center;
-      }
-
-      .account-balance {
-        width: $account-balance-column-width;
-        text-align: right;
-      }
-
-      .action-buttons {
-        opacity: 0.4;
-        flex: 1;
+      .menu-items {
         justify-content: space-around;
+        flex: 1;
 
-        * {
-          margin-left: 10px;
-          cursor: pointer;
-          float: right;
+        .account-item {
+          //font-weight: bold;
+          padding: 8px 25px;
+          border-bottom: solid 1px darken($account-item-base-color, 1);
+          display: flex;
+          flex-direction: row;
+
+          .account-name {
+            width: $account-name-column-width;
+          }
+
+          .account-start-date {
+            width: $account-start-date-column-width;
+            text-align: center;
+          }
+
+          .account-balance {
+            width: $account-balance-column-width;
+            text-align: right;
+          }
+
+          .action-buttons {
+            opacity: 0.4;
+            flex: 1;
+            justify-content: space-around;
+
+            * {
+              margin-left: 10px;
+              cursor: pointer;
+              float: right;
+            }
+
+            &:hover {
+              opacity: 1;
+            }
+
+          }
+
+          &:hover {
+            background-color: lighten($account-item-base-color, 3);
+            color: #0d0d0d;
+          }
+
         }
-
-        &:hover {
-          opacity: 1;
-        }
-
       }
 
-      &:hover {
-        background-color: lighten($account-item-base-color, 3);
-        color: #0d0d0d;
+      .balance-graph {
+        border: solid 1px green;
+        height: 120px;
       }
 
     }

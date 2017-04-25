@@ -74,9 +74,10 @@ class Account extends React.Component {
           <div className="column-header account-balance">Balance</div>
         </div>
         <div className="menu-items">
-          <div>{mappedAccounts}</div>
+          <div>{ mappedAccounts }</div>
         </div>
-        <div className="account-statement">
+        <div className="balance-graph">
+          Gráfico aqui do Quanto eu tive de dinheiro em cada mês
         </div>
       </div>
     );

@@ -95,9 +95,9 @@ class TransactionModal extends React.Component {
       let form = this.getBudgetItemInfo(budgetItem);
       form.date = momentToday.toDate();
       this.setState({form: form});
-      setTimeout(() => {
-        this.refs.accountInput.select.focus();
-      }, 100)
+      // setTimeout(() => {
+      //   this.refs.accountInput.select.focus();
+      // }, 100)
     } else {
       this.setState({
         form: {
@@ -198,6 +198,7 @@ class TransactionModal extends React.Component {
                   autofocus
                   ref="budgetItemInput"
                   name="form-field-budgetitem"
+                  disabled={this.state.form.budgetItem !== null}
                   options={ this.budget ? this.budget.details : [] }
                   labelKey="description"
                   valueKey="_id"
@@ -230,6 +231,7 @@ class TransactionModal extends React.Component {
               </Col>
               <Col sm={9}>
                 <FormControl
+                  autoFocus={ this.state.form.budgetItem !== null }
                   ref="descriptionInput"
                   type="text"
                   value={this.state.form.description}
