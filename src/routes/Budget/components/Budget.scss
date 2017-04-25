@@ -13,6 +13,7 @@
 
     .column-headers {
       border-bottom: solid 1px lighten(#f2f2f2, 2);
+      //border-bottom: solid 1px darken($budget-item-base-color, 4);
       padding-left: 25px;
       //font-weight: bold;
       font-size: 12px;
@@ -41,7 +42,7 @@
     .budget-item-container {
       //font-weight: bold;
       padding: 8px 25px;
-      border-bottom: solid 1px darken($budget-item-base-color, 1);
+      border-bottom: solid 1px darken($budget-item-base-color, 4);
 
       &:hover {
         background-color: lighten($budget-item-base-color, 3);
@@ -100,7 +101,7 @@
       }
 
       .budget-detail-container {
-        margin-top: 4px;
+        margin-top: 15px;
         padding-left: 20px;
         margin-left: 20px;
         margin-right: 140px;

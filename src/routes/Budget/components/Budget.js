@@ -118,15 +118,15 @@ class Budget extends React.Component {
         let sortedDetails = details.sort((detail1, detail2) => {
           const string1 = detail1.type + '|' + detail1.description;
           const string2 = detail2.type + '|' + detail2.description;
-          if (string1 < string2.type) return -1;
+          if (string1 < string2) return -1;
           if (string1 > string2) return 1;
           return 0;
         });
         let detailItemsEl = sortedDetails ? sortedDetails.map((budgetItem, sortedIndex) => {
           return (
             <div key={sortedIndex} className={ 'budget-detail-item ' + budgetItem.type.toLowerCase() }>
-              <div className="budget-detail-field description">{ budgetItem.description }</div>
               <div className="budget-detail-field type">{ budgetItem.type }</div>
+              <div className="budget-detail-field description">{ budgetItem.description }</div>
               <div className="budget-detail-field value">{ routine.formatNumber(budgetItem.value) }</div>
               <div className="action-buttons">
                 <span onClick={ this.delBudgetItem.bind(this, budget, sortedIndex) }>
