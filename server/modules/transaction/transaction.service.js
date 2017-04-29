@@ -14,6 +14,12 @@ module.exports = {
     });
   },
 
+  updTransaction: (req, res) => {
+    transactionRepository.upd(req.body).then((updatedTransaction) => {
+      res.end(JSON.stringify(updatedTransaction, null, 2));
+    });
+  },
+
   delTransaction: (req, res) => {
     let id = req.params.id;
 

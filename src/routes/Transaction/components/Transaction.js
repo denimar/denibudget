@@ -14,7 +14,7 @@ import TransactionModal from './TransactionModal';
 import FaArrowRight from 'react-icons/lib/fa/arrow-right';
 import FaPlusCircle from 'react-icons/lib/fa/plus-circle'
 import Moment from 'moment';
-import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
+import { CRUD_ACTION_BUTTON_EDIT, CRUD_ACTION_BUTTON_DELETE } from '../../../constants'
 import commonConstant from '../../../../common/common.constant'
 import BudgetService from '../../Budget/modules/BudgetService'
 
@@ -49,6 +49,14 @@ class Transaction extends React.Component {
     me.refs.TransactionModal.open(this.props.transactions.currentBudget, budgetItem)
       .then(transactionToAdd => {
         me.props.addTransaction(transactionToAdd);
+      });
+  }
+
+  editTransactionModal(transaction) {
+    let me = this;
+    me.refs.TransactionModal.open(this.props.transactions.currentBudget, null, transaction)
+      .then(transactionToEdit => {
+        me.props.updTransaction(transactionToEdit);
       });
   }
 
@@ -172,6 +180,14 @@ class Transaction extends React.Component {
               <span className="value">{ routine.formatNumber(transactionOrBudgetItem.value) }</span>
 
                 <OverlayTrigger placement="top" overlay={(
+                    <Tooltip id="btnActionButtonDelTransactionTooltip">Edit this transaction item.</Tooltip>
+                  )}>
+                  <span className="action-button-edit-transaction" onClick={ this.editTransactionModal.bind(this, transactionOrBudgetItem) } >
+                    { (CRUD_ACTION_BUTTON_EDIT) }
+                  </span>
+                </OverlayTrigger>
+
+                <OverlayTrigger placement="top" overlay={(
                     <Tooltip id="btnActionButtonDelTransactionTooltip">Remove this transaction item.</Tooltip>
                   )}>
                   <span className="action-button-delete-transaction" onClick={ this.removeTransactionItemClick.bind(this, transactionOrBudgetItem._id) } >
@@ -195,8 +211,17 @@ class Transaction extends React.Component {
 
   getBudgetTranctionItems(budgetItem) {
     let budgetTranctionItems = [];
-    budgetItem.transactions.map((transactionItem, index) => {
-      budgetTranctionItems.push(this.getTransactionOrBudgetItem(transactionItem, false, true, transactionItem._id));
+    let transactions = budgetItem.transactions || [];
+    let sortedTransactions = transactions.sort((trans1, trans2) => {
+      const trans1Date = Moment(trans1.date);
+      const trans2Date = Moment(trans2.date);
+      const isSameOrBefore = trans1Date.isSameOrBefore(trans2Date);
+      if (isSameOrBefore) return -1;
+      if (!isSameOrBefore) return 1;
+      return 0;
+    });
+    sortedTransactions.map((transaction, index) => {
+      budgetTranctionItems.push(this.getTransactionOrBudgetItem(transaction, false, true, transaction._id));
     });
     return budgetTranctionItems;
   }

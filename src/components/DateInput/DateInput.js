@@ -16,7 +16,7 @@ class DateInput extends React.Component {
         value={this.props.value}
         onChange={this.props.onChange}
         initialOptions= {{
-          format: 'dddd, DD [de] MMMM [de] YYYY',
+          format: 'dddd, MMMM DD, YYYY',
         }}
       />
     )

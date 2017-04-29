@@ -129,6 +129,7 @@
             // justify-content: space-around;
             margin-bottom: 2px;
             align-items: center;
+            //border: solid 1px green;
 
             .category {
               //color: #b3b3b3;
@@ -142,13 +143,14 @@
 
              .date {
                width: 120px;
-               display: inline-flex;
+               display: inline-block;
              }
 
             .description {
-              display: inline-flex;
+              display: inline-block;
               font-weight: bold;
               align-items: center;
+              width: 300px;
 
               svg:not(:root) {
                 margin-left: 8px;
@@ -163,7 +165,7 @@
 
             .account {
               width: 150px;
-              display: inline-flex;
+              display: inline-block;
             }
 
             .value {
@@ -172,10 +174,26 @@
               display: inline-block;
             }
 
+            .action-button-edit-transaction {
+              display: inline-block;
+
+              svg:not(:root) {
+                margin-left: 40px;
+                margin-bottom: 4px;
+                cursor: pointer;
+                opacity: 0.4;
+                &:hover {
+                  opacity: 1;
+                }
+              }
+            }
+
             .action-button-delete-transaction {
+              display: inline-block;
+
               svg:not(:root) {
                 margin-top: -4px;
-                margin-left: 20px;
+                margin-left: 15px;
                 cursor: pointer;
                 opacity: 0.4;
                 &:hover {

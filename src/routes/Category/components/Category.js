@@ -54,20 +54,20 @@ class Category extends React.Component {
 
     const header = (
       <PageHeaderCrud
-        newRecordButtonClick={this.addCategoryClick.bind(this)}
+        newRecordButtonClick={ this.addCategoryClick.bind(this) }
       />
     );
 
-    const actionButtons = [CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT];
+    const actionButtons = [CRUD_ACTION_BUTTON_EDIT, CRUD_ACTION_BUTTON_DELETE];
 
     const body = (
       <DeniReactTreeView
         ref="treeview"
         json="/endpoints/category"
-        selectRow={true}
-        showRoot={false}
-        actionButtons={actionButtons}
-        onActionButtonClick={this.onActionButtonClick.bind(this)}
+        selectRow={ true }
+        showRoot={ false }
+        actionButtons={ actionButtons }
+        onActionButtonClick={ this.onActionButtonClick.bind(this) }
       />
     );
 

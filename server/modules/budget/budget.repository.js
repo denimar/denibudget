@@ -1,12 +1,25 @@
+import moment from 'moment'
 const mongoose = require('mongoose');
 const model = require('./budget.model');
-let Budget = mongoose.model('budget');
-let repositoryHelper = require('../../helper/repository.helper')(Budget);
+let Budget = mongoose.model('Budget');
+let repositoryBudgetHelper = require('../../helper/repository.helper')(Budget);
+let Transaction = mongoose.model('Transaction');
+let repositoryTransactionHelper = require('../../helper/repository.helper')(Transaction);
+let generalHelper = require('../general/general.helper');
+let accountRepository = require('../account/account.repository');
 
 module.exports = {
 
   getBudgets: () => {
-    return repositoryHelper.getAll({}, {startDate: -1}, null, null, (query) => {
+    return repositoryBudgetHelper.getAll({}, {startDate: -1}, null, null, (query) => {
+      query.populate('details.category');
+    });
+  },
+
+  getBudgetById: (budgetId) => {
+    return repositoryBudgetHelper.getAll({
+      _id: budgetId
+    }, {startDate: -1}, null, null, (query) => {
       query.populate('details.category');
     });
   },
@@ -73,4 +86,69 @@ module.exports = {
 
   },
 
+  getHowMuchMoneyIHadAtTheEndOfTheBudget: (budget) => {
+    return _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget);
+  },
+
+  getHowMuchMoneyAtTheEnd: () => {
+    let self = this;
+    let budgetAndHowMuchMoneyArray = [];
+    let budgetCount = 0;
+    return new Promise(success => {
+      repositoryBudgetHelper.getAll({}, {startDate: 1})
+        .then(budgets => {
+          budgets.forEach(budget => {
+            accountRepository.getAccounts()
+              .then(accounts => {
+                repositoryTransactionHelper.getAll({}, {date: 1}, null, null, (query) => {
+                  query.populate('account');
+                }).then(transactions => {
+
+                  _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget, accounts, transactions)
+                    .then(budgetAndHowMuchMoney => {
+                      budgetAndHowMuchMoneyArray.push(budgetAndHowMuchMoney);
+
+                      budgetCount++;
+                      if (budgetCount === budgets.length) {
+                        let sortedBudgetAndHowMuchMoneyArray = budgetAndHowMuchMoneyArray.sort((obj1, obj2) => {
+                          if (obj1.sortField < obj2.sortField) return -1;
+                          if (obj1.sortField > obj2.sortField) return 1;
+                          return 0;
+                        });
+
+                        //remove sort field
+                        sortedBudgetAndHowMuchMoneyArray.forEach(obj => {
+                          delete obj['sortField'];
+                        })
+                        success(sortedBudgetAndHowMuchMoneyArray);
+                      }
+                    })
+
+                });
+              });
+          })
+        });
+    });
+  }
+
+}
+
+function _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget, accounts, transactions) {
+  return new Promise(success => {
+
+    let momentEndDate = moment(budget.endDate).startOf('day');
+    let today = new Date();
+    if (momentEndDate.isAfter(today)) {
+      momentEndDate = moment(today).startOf('day');
+    }
+
+    generalHelper.getHowMuchMoneyIHadAtDate(momentEndDate.toDate(), accounts, transactions)
+      .then(howMuchMoney => {
+        success({
+          sortField: parseInt(momentEndDate.format('YYYYMMDD')),
+          description: momentEndDate.format('MM/DD/YYYY'),
+          value: howMuchMoney
+        });
+      })
+  })
 }

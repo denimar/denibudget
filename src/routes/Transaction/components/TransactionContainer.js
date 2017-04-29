@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchTransactions, addTransaction, delTransaction, showModal } from '../modules/transactionActions'
+import { fetchTransactions, addTransaction, updTransaction, delTransaction, showModal } from '../modules/transactionActions'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -15,6 +15,7 @@ import Transaction from './Transaction'
 const mapDispatchToProps = {
   fetchTransactions : () => fetchTransactions(),
   addTransaction : (transaction) => addTransaction(transaction),
+  updTransaction : (transaction) => updTransaction(transaction),
   delTransaction : (id) => delTransaction(id)
 }
 

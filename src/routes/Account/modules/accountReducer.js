@@ -40,6 +40,17 @@ export default function accountReducer (state = initialState, action) {
       }
     }
 
+    case 'UPD_ACCOUNT': {
+      let accountId = action.payload._id;
+      let accountIndex = state.data.findIndex(account => account._id === accountId);
+      state.data[accountIndex] = Object.assign(state.data[accountIndex], action.payload);
+
+      return {
+        ...state,
+        data: Object.assign(state.data)
+      }
+    }
+
     case 'DEL_ACCOUNT': {
       return {
         ...state,

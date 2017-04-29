@@ -46,6 +46,27 @@ export const addTransaction = (transaction) => {
   }
 }
 
+export const updTransaction = (transaction) => {
+  return (dispatch, getState) => {
+
+    const url = commonConstant.ENDPOINT.TRANSACTION + '/upd'
+    axios.post(url, transaction)
+      .then((response) => {
+        dispatch({
+          type : 'UPD_TRANSACTION',
+          payload : response.data
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: "UPD_TRANSACTION_ERROR",
+          payload: err
+        })
+      });
+
+  }
+}
+
 export const delTransaction = (id) => {
   return (dispatch, getState) => {
 
@@ -66,32 +87,3 @@ export const delTransaction = (id) => {
 
   }
 }
-
-// export const delTransaction = (id) => {
-//
-//   return (dispatch, getState) => {
-//     return new Promise((resolve) => {
-//
-//       const url = commonConstant.ENDPOINT.TRANSACTION + '/del/' + id
-//       fetch(url, {
-//         method: 'DELETE',
-//         headers: {
-//           'Accept': 'application/json',
-//           'Content-Type': 'application/json'
-//         }
-//       }).then(function(response) {
-//         return response.json()
-//       }).then(function(json) {
-//         dispatch({
-//           type    : DEL_TRANSACTION,
-//           payload : json
-//         })
-//         resolve()
-//       }).catch(function(ex) {
-//         console.log('parsing failed', ex)
-//       })
-//
-//     })
-//   }
-//
-// }

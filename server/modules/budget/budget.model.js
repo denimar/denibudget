@@ -6,7 +6,7 @@ require('mongoose-double')(mongoose);
 let budgetItemSchema = new Schema({
   budget: {
 		type: Schema.Types.ObjectId,
-		ref: 'budget'
+		ref: 'Budget'
 	},
   type: {
     type: String,
@@ -29,4 +29,4 @@ const budgetSchema = new Schema({
 });
 
 //Model
-mongoose.model('budget', budgetSchema);
+mongoose.model('Budget', budgetSchema);

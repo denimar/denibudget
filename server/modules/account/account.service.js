@@ -14,6 +14,12 @@ module.exports = {
     });
   },
 
+  updAccount: (req, res) => {
+    accountRepository.upd(req.body).then((updatedAccount) => {
+      res.end(JSON.stringify(updatedAccount, null, 2));
+    });
+  },
+
   delAccount: (req, res) => {
     let id = req.params.id;
 

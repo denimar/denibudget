@@ -38,13 +38,28 @@ module.exports = {
       newDocument.save(function(err) {
         if (err) return handleError(err);
 
-        Transaction.findById(newDocument._id)
-          .populate('category')
-          .populate('account')
-          .exec()
-            .then(function(data) {
-              success(data);
-            });
+        _getTransactionById(newDocument._id)
+          .then(data => {
+            success(data);
+          });
+
+      });
+
+    });
+
+  },
+
+  upd: (documentToUpd) => {
+    return new Promise(function(success) {
+
+      let updDocument = new Transaction(documentToUpd);
+      Transaction.findByIdAndUpdate(documentToUpd._id, documentToUpd, (err, updatedModel) => {
+        if (err) return handleError(err);
+
+        _getTransactionById(documentToUpd._id)
+          .then(data => {
+            success(data);
+          });
 
       });
 
@@ -74,5 +89,18 @@ module.exports = {
     });
 
   }
+
+}
+
+function _getTransactionById(id) {
+  return new Promise(success => {
+    Transaction.findById(id)
+      .populate('category')
+      .populate('account')
+      .exec()
+        .then(function(data) {
+          success(data);
+        });
+  });
 
 }

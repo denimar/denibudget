@@ -14,8 +14,7 @@
     .account-container {
       justify-content: space-around;
       flex: 1;
-      display: flex;
-      flex-direction: column;
+      display: block;
 
       .column-headers {
         border-bottom: solid 1px lighten(#f2f2f2, 2);
@@ -45,9 +44,7 @@
         }
       }
 
-      .menu-items {
-        justify-content: space-around;
-        flex: 1;
+      .accounts-items {
 
         .account-item {
           //font-weight: bold;
@@ -95,9 +92,16 @@
         }
       }
 
-      .balance-graph {
-        border: solid 1px green;
-        height: 120px;
+      .how-much-money {
+        display: flex;
+        flex-direction: column;
+        padding: 8px 25px;
+
+        .balance-graph {
+          //border: solid 1px darken($account-item-base-color, 1);
+          height: 400px;
+          padding: 20px 0px;
+        }
       }
 
     }

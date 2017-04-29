@@ -86,18 +86,19 @@ class TransactionModal extends React.Component {
     }
   }
 
-  open = function(budget, budgetItem) {
+  open = function(budget, budgetItem, transaction) {
     this.budget = budget;
-    this.budgetItem = budgetItem;
+    this.budgetItem = budgetItem || transaction.budgetItem;
     const momentToday = new moment().startOf('day');
 
     if (budgetItem) {
       let form = this.getBudgetItemInfo(budgetItem);
       form.date = momentToday.toDate();
       this.setState({form: form});
-      // setTimeout(() => {
-      //   this.refs.accountInput.select.focus();
-      // }, 100)
+    } else if (transaction) {
+        let form = this.getTransactionInfo(transaction);
+        //form.date = momentToday.toDate();
+        this.setState({form: form});
     } else {
       this.setState({
         form: {
@@ -147,6 +148,21 @@ class TransactionModal extends React.Component {
       budgetItem: null
     };
     return budgetItemInfo;
+  }
+
+  getTransactionInfo(transaction) {
+    let transactionInfo = transaction ? {
+      _id: transaction._id,
+      budgetItem: transaction.budgetItem,
+      type: transaction.type,
+      category: transaction.category._id,
+      account: transaction.account,
+      value: transaction.value,
+      description: transaction.description,
+      date: moment(transaction.date).toDate()
+    } : {
+    };
+    return transactionInfo;
   }
 
   budgetItemInputChange(budgetItem) {

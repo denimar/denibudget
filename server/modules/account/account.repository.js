@@ -31,6 +31,20 @@ module.exports = {
 
   },
 
+  upd: (documentToUpd) => {
+    return new Promise(function(success) {
+
+      let updDocument = new Account(documentToUpd);
+
+      Account.findByIdAndUpdate(documentToUpd._id, documentToUpd, (err, updatedModel) => {
+        if (err) return handleError(err);
+        success(documentToUpd);
+      });
+
+    });
+
+  },
+
   del: (id) => {
     return new Promise(function(success) {
 
@@ -66,7 +80,7 @@ module.exports = {
           const openingBalance = account.openingBalance;
           let balance = openingBalance;
 
-          transactionRepository.getTransactionsByAccount(account._id)
+          transactionRepository.getTransactionsByAccount(account._id, account.startDate, account.endDate)
             .then((transactions) => {
 
               transactions.forEach(transaction => {
@@ -123,6 +137,6 @@ module.exports = {
 
     });
 
-  }
+  },
 
 }

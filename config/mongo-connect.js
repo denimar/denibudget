@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
 import {
+  MONGODB_HOST,
+  MONGODB_PORT,
+  MONGODB_DATABASE,
   MONGODB_CONNECTION_TIMEOUT,
   MONGODB_REPLICA_SET,
   MONGODB_URI
@@ -32,12 +35,13 @@ mongoose.connect(MONGODB_URI, options);
 const db = mongoose.connection;
 
 console.log('----------------------------------------------------------');
-console.log('Mongo DB');
-console.log('Uri : ' + MONGODB_URI);
-console.log('Replacaset : ' + MONGODB_REPLICA_SET);
-console.log('Timeout : ' + MONGODB_CONNECTION_TIMEOUT);
+console.log(' Trying to connect to MongoDB:');
 console.log('----------------------------------------------------------');
-console.log('Trying to connect to MongoDB...');
+console.log(' Host : ' + MONGODB_HOST);
+console.log(' Port : ' + MONGODB_PORT);
+console.log(' Database : ' + MONGODB_DATABASE);
+console.log(' Timeout : ' + MONGODB_CONNECTION_TIMEOUT);
+console.log(' Replacaset : ' + MONGODB_REPLICA_SET);
 console.log('----------------------------------------------------------');
 
 db.on('error', err => {

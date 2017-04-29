@@ -55,7 +55,6 @@ class Budget extends React.Component {
   }
 
   budgetItemModal(budget, budgetItem, detailIndex) {
-    console.log(budgetItem)
     let me = this;
     me.refs.BudgetItemModal.open(budget, budgetItem)
       .then(budgetItemReturned => {
@@ -129,11 +128,11 @@ class Budget extends React.Component {
               <div className="budget-detail-field description">{ budgetItem.description }</div>
               <div className="budget-detail-field value">{ routine.formatNumber(budgetItem.value) }</div>
               <div className="action-buttons">
-                <span onClick={ this.delBudgetItem.bind(this, budget, sortedIndex) }>
-                  {(CRUD_ACTION_BUTTON_DELETE)}
-                </span>
                 <span onClick={ this.budgetItemModal.bind(this, budget, budgetItem, sortedIndex) }>
                   {(CRUD_ACTION_BUTTON_EDIT)}
+                </span>
+                <span onClick={ this.delBudgetItem.bind(this, budget, sortedIndex) }>
+                  {(CRUD_ACTION_BUTTON_DELETE)}
                 </span>
               </div>
             </div>
@@ -167,11 +166,11 @@ class Budget extends React.Component {
             <div className="budget-value">{ routine.formatNumber(budgetBalance.expenses) }</div>
             <div className={ "budget-value " + (budgetBalance.balance >= 0 ? "C" : "D") }>{ routine.formatNumber(budgetBalance.balance) }</div>
             <div className="action-buttons">
-              <span onClick={ this.budgetModal.bind(this, budget) }>
-                {(CRUD_ACTION_BUTTON_EDIT)}
-              </span>
               <span onClick={ this.delBudget.bind(this, budget._id) }>
                 {(CRUD_ACTION_BUTTON_DELETE)}
+              </span>
+              <span onClick={ this.budgetModal.bind(this, budget) }>
+                {(CRUD_ACTION_BUTTON_EDIT)}
               </span>
               <OverlayTrigger placement="left" overlay={(
                   <Tooltip id="btnCrudActionButtonAddDetailTooltip">Add a new item in this budget.</Tooltip>

@@ -48,6 +48,27 @@ export const addAccount = (account) => {
   }
 }
 
+export const updAccount = (account) => {
+  return (dispatch, getState) => {
+
+    const url = commonConstant.ENDPOINT.ACCOUNT + '/upd'
+    axios.post(url, account)
+      .then((response) => {
+        dispatch({
+          type : 'UPD_ACCOUNT',
+          payload : response.data
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: "UPD_ACCOUNT_ERROR",
+          payload: err
+        })
+      });
+
+  }
+}
+
 export const delAccount = (id) => {
   return (dispatch, getState) => {
 

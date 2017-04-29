@@ -1,8 +1,10 @@
+import moment from 'moment'
 import React from 'react'
 import { Modal, Button, Form, FormGroup, FormControl, Checkbox, Col, ButtonGroup, Input, ControlLabel, FieldGroup, Radio } from 'react-bootstrap';
 import CurrencyInput from 'react-currency-input';
 import 'bootstrap/dist/css/bootstrap.css'
 import './AccountModal.scss'
+import DateInput from '../../../components/DateInput'
 
 class AccountModal extends React.Component {
 
@@ -10,16 +12,11 @@ class AccountModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {showModal: false, form: {name: '', openingBalance: 0}};
+    this.state = {showModal: false, form: {}};
   }
 
   onShow = function() {
-    this.setState({
-      form: {
-        name: '',
-        openingBalance: 0
-      }
-    });
+    //
   }
 
   close = function() {
@@ -27,16 +24,27 @@ class AccountModal extends React.Component {
   }
 
   save = function() {
-    console.log('here')
     this.setState({ showModal: false });
     this.promiseModalSuccess(this.state.form);
   }
 
-  open = function() {
-    let vm = this;
+  open = function(account) {
+    let me = this;
     return new Promise(function(success) {
-      vm.setState({ showModal: true });
-      vm.promiseModalSuccess = success;
+      let state = {
+        showModal: true,
+        form: {},
+        openingBalance: 0
+      }
+      if (account) {
+        state.form['_id'] = account._id;
+        state.form['name'] = account.name;
+        const startDate = moment(account.startDate);
+        state.form['startDate'] = startDate.toDate();
+        state.form['openingBalance'] = account.openingBalance;
+      }
+      me.setState(state);
+      me.promiseModalSuccess = success;
     });
   };
 
@@ -44,12 +52,16 @@ class AccountModal extends React.Component {
     this.setState({form: Object.assign(this.state.form, {name: e.target.value})})
   }
 
+  startDateInputOnChange = function(date) {
+    this.setState({form: Object.assign(this.state.form, {startDate: date})})
+  }
+
   openingBalanceOnChange = function(e) {
     this.setState({form: Object.assign(this.state.form, {openingBalance: Number.parseFloat(e)})});
 
   }
 
-  render(){
+  render() {
 
     return (
       <Modal className="account-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
@@ -65,6 +77,20 @@ class AccountModal extends React.Component {
               </Col>
               <Col sm={8}>
                 <FormControl ref="nameInput" type="text" value={this.state.form.name} onChange={this.nameInputOnChange.bind(this)} placeholder="Name" autoFocus />
+              </Col>
+            </FormGroup>
+
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={4}>
+                Start Date
+              </Col>
+              <Col sm={8}>
+                <DateInput
+                  className="form-control"
+                  value={ this.state.form.startDate }
+                  onChange={ this.startDateInputOnChange.bind(this) }
+                />
+
               </Col>
             </FormGroup>
 

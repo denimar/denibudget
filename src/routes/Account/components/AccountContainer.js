@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { fetchAccounts, addAccount, delAccount } from '../modules/accountActions'
+import { fetchAccounts, addAccount, updAccount, delAccount } from '../modules/accountActions'
+import { fetchHowMuchMoneyReducerAtTheEndOfBudgets } from '../modules/howMuchMoneyBudgetsActions'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -14,12 +15,15 @@ import Account from './Account'
 
 const mapDispatchToProps = {
   fetchAccounts : () => fetchAccounts(),
+  fetchHowMuchMoneyReducerAtTheEndOfBudgets : () => fetchHowMuchMoneyReducerAtTheEndOfBudgets(),
   addAccount : (account) => addAccount(account),
+  updAccount : (account) => updAccount(account),
   delAccount : (id) => delAccount(id),
 }
 
 const mapStateToProps = (state) => ({
-  accounts : state.accounts
+  accounts : state.accounts,
+  howMuchMoneyBudgets : state.howMuchMoneyBudgets
 })
 
 

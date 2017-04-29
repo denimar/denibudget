@@ -6,42 +6,28 @@
     flex: 1;
     justify-content: space-around;
     height: 100%;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ededed;
+      outline: 1px solid slategrey;
+      border-radius: 10px;
+    }
+
 
     .deni-react-treeview-item-container {
+      .action-button {
+        margin-left: 10px;
 
-      .icon-and-text {
-        cursor: default !important;
-      }
-
-      .treeview-item-example {
-        display: flex;
-
-        .treeview-item-example-text {
-          flex: 1;
-          justify-content: space-around;
-        }
-
-        .actionButton {
-          margin-right: 5px;
-          cursor: pointer;
-          display: none;
-
-          &.trash {
-            color: #ff6666;
-          }
-
-          &.edit {
-            color: #006699; //#00cc44;
-            margin-top: 1px;
-          }
+        &:nth-last-child(1) {
+          margin-right: 25px !important;
         }
       }
 
-      &:hover {
-        .actionButton {
-          display: inline-block;
-        }
-      }
     }
 
   }

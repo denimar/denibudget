@@ -9,5 +9,6 @@ module.exports = function(app) {
   app.post(commonConstant.ENDPOINT.BUDGET + '/add', jsonParser, budgetService.addBudget);
   app.post(commonConstant.ENDPOINT.BUDGET + '/upd', jsonParser, budgetService.updBudget);
   app.delete(commonConstant.ENDPOINT.BUDGET + '/del/:id', budgetService.delBudget);
+  app.get(commonConstant.ENDPOINT.BUDGET + '/how-much-money-at-the-end', budgetService.getHowMuchMoneyAtTheEnd);
 
 }

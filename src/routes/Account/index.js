@@ -10,10 +10,12 @@ export default (store) => ({
       /*  Webpack - use require callback to define
           dependencies for bundling   */
       const accountContainer = require('./components/AccountContainer').default
-      const reducer = require('./modules/accountReducer').default
+      const accountReducer = require('./modules/accountReducer').default
+      const howMuchMoneyBudgetsReducer = require('./modules/howMuchMoneyBudgetsReducer').default
 
       /*  Add the reducer to the store on key 'counter'  */
-      injectReducer(store, { key: 'accounts', reducer })
+      injectReducer(store, { key: 'accounts', reducer: accountReducer })
+      injectReducer(store, { key: 'howMuchMoneyBudgets', reducer: howMuchMoneyBudgetsReducer })
 
       /*  Return getComponent   */
       cb(null, accountContainer )

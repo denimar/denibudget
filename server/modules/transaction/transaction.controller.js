@@ -7,6 +7,7 @@ module.exports = function(app) {
 
   app.get(commonConstant.ENDPOINT.TRANSACTION, transactionService.getTransactions);
   app.post(commonConstant.ENDPOINT.TRANSACTION + '/add', jsonParser, transactionService.addTransaction);
+  app.post(commonConstant.ENDPOINT.TRANSACTION + '/upd', jsonParser, transactionService.updTransaction);
   app.delete(commonConstant.ENDPOINT.TRANSACTION + '/del/:id', transactionService.delTransaction);
 
 }

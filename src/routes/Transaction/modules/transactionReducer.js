@@ -40,6 +40,17 @@ export default function transactionReducer (state = initialState, action) {
       }
     }
 
+    case 'UPD_TRANSACTION': {
+      let transactionId = action.payload._id;
+      let transactionIndex = state.data.findIndex(transaction => transaction._id === transactionId);
+      state.data[transactionIndex] = action.payload;
+
+      return {
+        ...state,
+        data: Object.assign(state.data)
+      }
+    }
+
     case 'DEL_TRANSACTION': {
       let transactionId = action.payload._id;
       let transactionIndex = state.data.findIndex(transaction => transaction._id === transactionId);
