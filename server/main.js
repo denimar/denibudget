@@ -61,8 +61,8 @@ if (project.env === 'development') {
   // Serving ~/dist by default. Ideally these files should be served by
   // the web server and not the app server, but this helps to demo the
   // server in production.
-  app.use(express.static(project.paths.dist()))
 }
+  app.use(express.static(project.paths.dist()))
 
   // This rewrites all routes requests to the root /index.html file
   // (ignoring file requests). If you want to implement universal
@@ -70,7 +70,7 @@ if (project.env === 'development') {
   app.use('*', function (req, res, next) {
     const filename = path.join(compiler.outputPath, 'index.html')
 
-	fs.readFile('index.html', "utf8", function(err, result) {
+	fs.readFile(filename, "utf8", function(err, result) {
     //compiler.outputFileSystem.readFile(filename, (err, result) => {
       if (err) {
         return next(err)
