@@ -45,6 +45,22 @@ if (project.env === 'development') {
     path: '/__webpack_hmr'
   }))
 
+
+} else {
+  debug(
+    'Server is being run outside of live development mode, meaning it will ' +
+    'only serve the compiled application bundle in ~/dist. Generally you ' +
+    'do not need an application server for this and can instead use a web ' +
+    'server such as nginx to serve your static files. See the "deployment" ' +
+    'section in the README for more information on deployment strategies.'
+  )
+
+  // Serving ~/dist by default. Ideally these files should be served by
+  // the web server and not the app server, but this helps to demo the
+  // server in production.
+  app.use(express.static(project.paths.dist()))
+}
+
   // This rewrites all routes requests to the root /index.html file
   // (ignoring file requests). If you want to implement universal
   // rendering, you'll want to remove this middleware.
@@ -60,19 +76,5 @@ if (project.env === 'development') {
       res.end()
     })
   })
-} else {
-  debug(
-    'Server is being run outside of live development mode, meaning it will ' +
-    'only serve the compiled application bundle in ~/dist. Generally you ' +
-    'do not need an application server for this and can instead use a web ' +
-    'server such as nginx to serve your static files. See the "deployment" ' +
-    'section in the README for more information on deployment strategies.'
-  )
-
-  // Serving ~/dist by default. Ideally these files should be served by
-  // the web server and not the app server, but this helps to demo the
-  // server in production.
-  app.use(express.static(project.paths.dist()))
-}
 
 module.exports = app
