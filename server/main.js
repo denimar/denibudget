@@ -44,6 +44,9 @@ if (project.env === 'development') {
     lazy        : false,
     stats       : project.compiler_stats
   }))
+  app.use(require('webpack-hot-middleware')(compiler, {
+    path: '/__webpack_hmr'
+  }))
 
 
 } else {
@@ -59,35 +62,10 @@ if (project.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
 }
-  app.use(require('webpack-hot-middleware')(compiler, {
-    path: '/__webpack_hmr'
-  }))
-
   app.use(express.static(project.paths.dist()))
 
   // This rewrites all routes requests to the root /index.html file
   // (ignoring file requests). If you want to implement universal
   // rendering, you'll want to remove this middleware.
-  app.use('*', function (req, res, next) {
-    const filename = path.join(compiler.outputPath, 'index.html')
-	  console.log('***********************************')
-	  console.log('here 02...')
-	  console.log('**********************************')
-
-	//fs.readFile(filename, "utf8", function(err, result) {
-    compiler.outputFileSystem.readFile(filename, (err, result) => {
-      if (err) {
-        return next(err)
-      }
-	  
-	  console.log('***********************************')
-	  console.log(result)
-	  console.log('**********************************')
-	  
-      res.set('content-type', 'text/html')
-      res.send(result)
-      res.end()
-    })
-  })
 
 module.exports = app
