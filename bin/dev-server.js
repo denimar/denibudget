@@ -5,7 +5,7 @@ const debug = require('debug')('app:bin:dev-server')
 
 //For avoidong Heroku $PORT error
 server.get('/', function(request, response) {
-    res.sendFile('/index.html');
+    res.render('index.html');
 }).listen(process.env.PORT || 3000, function(err) {
 	console.log('****************************************')
 	console.log(err)
