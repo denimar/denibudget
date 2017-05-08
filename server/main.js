@@ -62,6 +62,7 @@ if (project.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
 }
+
   app.use(express.static(project.paths.dist()))
 
   // This rewrites all routes requests to the root /index.html file
@@ -78,7 +79,7 @@ if (project.env === 'development') {
 	  
 	  console.log('***********************************')
 	  console.log(result)
-	  console.log('***********************************')
+	  console.log('**********************************')
 	  
       res.set('content-type', 'text/html')
       res.send(result)
