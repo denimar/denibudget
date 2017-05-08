@@ -1,18 +1,21 @@
+console.log('-------------------')
+console.log(`PORT -> : ${process.env.PORT}`);
+console.log('-------------------')
+
 const project = require('../config/project.config')
 const server = require('../server/main')
 const debug = require('debug')('app:bin:dev-server')
 
-console.log('-------------------')
-console.log(server.get('port'));
-console.log('-------------------')
-
-//For avoidong Heroku $PORT error
-server.get('/', function(request, response) {
-    response.send('App is running...');
-}).listen(server.get('port') || 3000, function(err) {
-	console.log('****************************************')
-	console.log(err)
-	console.log('****************************************')
-	
-  debug(`Server is now running at http://0.0.0.0:${project.server_port}.`)
+server.listen(process.env.PORT || 3000, function(err) {
+  if (err) {
+    debug(`Error serving ion port ${process.env.PORT}.`)
+    return;
+  }
+  debug(`Server is now running on port ${process.env.PORT}.`)
 })
+
+setInterval(function() {
+  console.log('-------------------')
+  console.log(`PORT -> : ${process.env.PORT}`);
+  console.log('-------------------')
+}, 10000)
