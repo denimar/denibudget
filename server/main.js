@@ -24,12 +24,13 @@ app.use(compress())
 // when the application is compiled.
 app.use(express.static(project.paths.public()))
 
+  const compiler = webpack(webpackConfig)
+
 
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
 if (project.env === 'development') {
-  const compiler = webpack(webpackConfig)
 
   debug('Enabling webpack dev and HMR middleware')
   app.use(require('webpack-dev-middleware')(compiler, {
