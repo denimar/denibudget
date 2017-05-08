@@ -5,11 +5,6 @@ const path = require('path');
 
 //For avoidong Heroku $PORT error
 server.get('/', function(request, response) {
-	console.log('+++++++++++++++++++++++++++++')
-	console.log(path.join(__dirname + './index.html'))
-    console.log('+++++++++++++++++++++++++++++')
-	
-	response.sendFile(path.join(__dirname + './index.html'));
 
 }).listen(process.env.PORT || 3000, function(err) {
 	console.log('****************************************')
