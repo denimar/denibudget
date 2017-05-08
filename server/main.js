@@ -1,3 +1,9 @@
+console.log('+++++++++++++++++++++++++++')
+console.log('+++++++++++++++++++++++++++')
+console.log('PASSOU AQUI 11111111111')
+console.log('+++++++++++++++++++++++++++')
+console.log('+++++++++++++++++++++++++++')
+
 const express = require('express')
 const debug = require('debug')('app:server')
 const path = require('path')
