@@ -7,9 +7,9 @@ const path = require('path');
 server.get('/', function(request, response) {
 
 }).listen(process.env.PORT || 3000, function(err) {
-	console.log('****************************************')
+	console.log('************************************')
 	console.log(err)
-	console.log('****************************************')
+	console.log('************************************')
 	
 	  debug(`Server is now running on :${process.env.PORT}.`)
 })
