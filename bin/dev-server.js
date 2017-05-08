@@ -1,7 +1,7 @@
 const project = require('../config/project.config')
 const server = require('../server/main')
 const debug = require('debug')('app:bin:dev-server')
-
+const path = require('path');
 
 //For avoidong Heroku $PORT error
 server.get('/', function(request, response) {
