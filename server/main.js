@@ -10,6 +10,8 @@ import '../config/mongo-connect'
 
 const app = express()
 
+app.set('port', (process.env.PORT || 5000));
+
 //routes
 require('./routes.js')(app);
 
