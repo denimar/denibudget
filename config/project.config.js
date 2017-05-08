@@ -3,9 +3,7 @@ const path = require('path')
 const debug = require('debug')('app:config:project')
 const argv = require('yargs').argv
 const ip = require('ip')
-const env = require('../env').default
-
-debugger;
+const env = require('../env')
 
 debug('Creating default configuration.')
 
@@ -118,6 +116,7 @@ function base () {
 config.paths = {
   base   : base,
   client : base.bind(null, config.dir_client),
+  server: base.bind(null, config.dir_server),
   public : base.bind(null, config.dir_public),
   dist   : base.bind(null, config.dir_dist)
 }

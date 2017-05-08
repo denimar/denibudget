@@ -16,12 +16,12 @@ export default class CategoryHelper {
     })
   }
 
-  getCategoriesList() {
+  getCategoriesList(onlyLeafItems) {
     return new Promise(success => {
       repositoryHelper.getAll()
         .then(categories => {
-          const allLeafItems = _getAllLeafItems(categories);
-          const allCategoriesPath = _getAllCategoriesPath(categories, allLeafItems);
+          const items = (onlyLeafItems ? _getAllLeafItems(categories) : categories);
+          const allCategoriesPath = _getAllCategoriesPath(categories, items);
           success(allCategoriesPath);
         });
     });
@@ -67,28 +67,27 @@ function _getAllCategoriesPath(categories, leafs) {
 }
 
 function _getCategoryPath(categories, leaf) {
-  //let itemsPath = [];
   let pathStr = leaf.text.replace(/\//g, ',');
 
-  let parentId = leaf.parent.toString();
-  let i = 0;
-  while (i < categories.length) {
-    const category = categories[i];
-    i++;
+  if (leaf.parent) {
+    let parentId = leaf.parent.toString();
+    let i = 0;
+    while (i < categories.length) {
+      const category = categories[i];
+      i++;
 
-    if (category._id.toString() === parentId) {
-      if (category.parent) {
-        pathStr = category.text + ' » ' + pathStr;
-        parentId = category.parent.toString();
-        i = 0;
-      } else {
-        break;
+      if (category._id.toString() === parentId) {
+        if (category.parent) {
+          pathStr = category.text + ' » ' + pathStr;
+          parentId = category.parent.toString();
+          i = 0;
+        } else {
+          break;
+        }
       }
+
     }
-
   }
-
-    //paths.push(_getCategoryPath(categories, leaf));
   return pathStr;
 }
 

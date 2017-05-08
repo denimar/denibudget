@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getCategories, addCategory, delCategory } from '../modules/categoryActions'
+import { fetchCategories, addCategory, delCategory } from '../modules/categoryActions'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,7 +13,7 @@ import Category from './Category'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  getCategories : () => getCategories(),
+  fetchCategories : () => fetchCategories(),
   addCategory : (treeview, parentId, text, isLeaf) => addCategory(treeview, parentId, text, isLeaf),
   delCategory: (treeview, id) => delCategory(treeview, id),
 }

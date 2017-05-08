@@ -2,31 +2,11 @@ import React from 'react'
 import { Modal, Button, Form, FormGroup, FormControl, Checkbox, Col, ButtonGroup, Input, ControlLabel, FieldGroup, Radio } from 'react-bootstrap';
 import CurrencyInput from 'react-currency-input';
 import moment from 'moment'
-import axios from 'axios';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
 import './BudgetItemModal.scss'
-
-let getCategories = (input, callback) => {
-
-  const url = commonConstant.ENDPOINT.CATEGORY_LIST
-
-  axios.get(url)
-    .then((response) => {
-
-      callback(null, {
-        options: response.data,
-        complete: true
-      });
-
-    })
-    .catch((err) => {
-      console.warn(err);
-    });
-
-}
+import CategoryService from '../../Category/modules/CategoryService'
 
 class BudgetModal extends React.Component {
 
@@ -38,13 +18,7 @@ class BudgetModal extends React.Component {
   }
 
   onShow = function() {
-    // this.setState({
-    //   form: {
-    //     description: '',
-    //     type: 'D',
-    //     value: 0
-    //   }
-    // });
+    //
   }
 
   close = function() {
@@ -116,7 +90,7 @@ class BudgetModal extends React.Component {
                   autofocus
                   ref="categoryInput"
                   name="form-field-name"
-                  loadOptions={getCategories}
+                  loadOptions={ CategoryService.getCategoriesForSelects }
                   value={this.state.form.category}
                   onChange={this.categoryInputChange.bind(this)}
                 />

@@ -1,0 +1,16 @@
+.category-modal-container {
+
+  .modal-dialog {
+    display: table;
+
+    .modal-content {
+      width: 800px;
+
+      .modal-header {
+        background-color: lighten(silver, 15%);
+      }
+
+    }
+  }
+
+}

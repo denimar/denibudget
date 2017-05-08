@@ -2,6 +2,7 @@ import React from 'react'
 import './Category.scss';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
+import CategoryModal from './CategoryModal'
 import DeniReactTreeView from 'deni-react-treeview';
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -13,9 +14,18 @@ class Category extends React.Component {
     super(props);
   }
 
-  addCategoryClick() {
-    let selectedItem = this.refs.treeview.api.getSelectedItem() || this.refs.treeview.api.getRootNode();
-    this.props.addCategory(this.refs.treeview, selectedItem.id, 'Now Denimar', false);
+  componentWillMount() {
+    if (this.props.categories.data.length === 0) {
+      this.props.fetchCategories();
+    }
+  }
+
+  categoryModal(category, parent) {
+    let parentCategory = parent || this.refs.treeview.api.getSelectedItem() || this.refs.treeview.api.getRootNode();
+    this.refs.CategoryModal.open(category, parentCategory)
+      .then(categoryReturned => {
+        this.props.addCategory(this.refs.treeview, parentCategory.id, categoryReturned.text, false);
+      })
   }
 
   delCategoryClick(id) {
@@ -31,10 +41,6 @@ class Category extends React.Component {
     })
   }
 
-  editItemClick() {
-    alert('editing routine here...')
-  }
-
   onActionButtonClick(item, actionButton) {
     const buttonName = actionButton.type.name;
 
@@ -44,7 +50,7 @@ class Category extends React.Component {
         event.preventDefault();
         break;
       case 'FaEdit':
-        this.editItemClick(item.id)
+        this.categoryModal(item)
         break;
       default:
     }
@@ -54,25 +60,30 @@ class Category extends React.Component {
 
     const header = (
       <PageHeaderCrud
-        newRecordButtonClick={ this.addCategoryClick.bind(this) }
+        newRecordButtonClick={ this.categoryModal.bind(this, null, null) }
       />
     );
 
     const actionButtons = [CRUD_ACTION_BUTTON_EDIT, CRUD_ACTION_BUTTON_DELETE];
 
+    const items = this.props.categories.data.children ? this.props.categories.data : null;
+
     const body = (
-      <DeniReactTreeView
-        ref="treeview"
-        json="/endpoints/category"
-        selectRow={ true }
-        showRoot={ false }
-        actionButtons={ actionButtons }
-        onActionButtonClick={ this.onActionButtonClick.bind(this) }
-      />
+      items ? (
+        <DeniReactTreeView
+          ref="treeview"
+          items={ items }
+          selectRow={ true }
+          showRoot={ false }
+          actionButtons={ actionButtons }
+          onActionButtonClick={ this.onActionButtonClick.bind(this) }
+        />
+      ) : null
     );
 
     return (
       <div className="category-viewport">
+        <CategoryModal ref='CategoryModal'/>
         <Dialog ref='dialog'/>
         <PageBody header={header} body={body} />
       </div>

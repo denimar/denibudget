@@ -10,7 +10,8 @@ module.exports = {
   },
 
   getCategoriesList: (req, res) => {
-    categoryRepository.getCategoriesList()
+    const onlyLeafItems = req.params.onlyleaf === 'true';
+    categoryRepository.getCategoriesList(onlyLeafItems)
       .then((categories) => {
         res.end(JSON.stringify(categories, null, 2));
       });

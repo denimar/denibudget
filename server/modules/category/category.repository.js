@@ -10,8 +10,8 @@ module.exports = {
     return categoryHelper.getCategories();
   },
 
-  getCategoriesList: () => {
-    return categoryHelper.getCategoriesList();
+  getCategoriesList: (onlyLeafItems) => {
+    return categoryHelper.getCategoriesList(onlyLeafItems);
   },
 
   add: function(body) {

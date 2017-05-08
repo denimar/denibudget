@@ -29,7 +29,7 @@ let getAccounts = (input, callback) => {
 
 let getCategories = (input, callback) => {
 
-  const url = commonConstant.ENDPOINT.CATEGORY_LIST
+  const url = commonConstant.ENDPOINT.CATEGORY_LIST + '/true'
 
   axios.get(url)
     .then((response) => {
@@ -88,7 +88,7 @@ class TransactionModal extends React.Component {
 
   open = function(budget, budgetItem, transaction) {
     this.budget = budget;
-    this.budgetItem = budgetItem || transaction.budgetItem;
+    this.budgetItem = budgetItem || (transaction ? transaction.budgetItem : null);
     const momentToday = new moment().startOf('day');
 
     if (budgetItem) {

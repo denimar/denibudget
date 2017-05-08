@@ -39,27 +39,6 @@ export default function categoryReducer (state = initialState, action) {
         data: Object.assign({}, action.payload)
       }
     }
-    //
-    // case "UPDATE_CATEGORY": {
-    //   const id = action.payload.id
-    //   const newCustomers = [...state.data]
-    //   const customerIndexToUpdate = newCustomers.findIndex(customer => customer.id === id)
-    //   if (customerIndexToUpdate != -1) {
-    //     newCustomers[customerIndexToUpdate] = Object.assign(newCustomers[customerIndexToUpdate], action.payload);
-    //   }
-    //
-    //   return {
-    //     ...state,
-    //     data: newCustomers,
-    //   }
-    // }
-    //
-    // case "DELETE_CATEGORY": {
-    //   return {
-    //     ...state,
-    //     data: state.data.filter(customer => customer.id !== action.payload.id),
-    //   }
-    // }
 
   }
 

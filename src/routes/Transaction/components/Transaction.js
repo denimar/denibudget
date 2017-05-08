@@ -292,7 +292,7 @@ class Transaction extends React.Component {
           this.getCurrentTransactions(this.props.transactions.currentBudget).map((transactionItem, index) => {
             if (!transactionItem.budgetItem) {
               const budgetTranctionItems = this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id);
-              return <div key={ transactionItem._id } className={ 'budget-item-container ' + transactionItem.type.toLowerCase() }>
+              return <div key={ transactionItem._id } className={ 'budget-item-container is-unforecasted ' + transactionItem.type.toLowerCase() }>
                        <div className="transactions-items">
                          { budgetTranctionItems }
                        </div>

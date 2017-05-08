@@ -3,11 +3,10 @@ import './Account.scss';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
 import AccountModal from './AccountModal'
-import {CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT} from '../../../constants'
+import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import Dialog from 'react-bootstrap-dialog'
 import Moment from 'moment'
 import routine from '../../../../common/common.routine';
-import {defaults, Bar} from 'react-chartjs-2';
 import ReactEcharts from 'echarts-for-react';
 
 class Account extends React.Component {

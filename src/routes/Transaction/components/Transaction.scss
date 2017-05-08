@@ -55,21 +55,35 @@
       padding: 7px 10px;
 
       .budget-item-container {
+        $base-color-credit: #339966;
+        $base-color-debt: #ff0000;
+
         border: solid 1px; // #dbe3f0; //#c9d5e8; //#f2f2f2;
         padding: 15px 15px 5px 15px;
         margin-top: 2px;
         margin-bottom : 6px;
         border-radius: 8px;
 
+        &.is-unforecasted {
+          border-width: 2px;
+
+          &.c {
+            border-color: lighten($base-color-credit, 36%);
+          }
+
+          &.d {
+            border-color: lighten($base-color-debt, 37%);
+          }
+
+        }
+
         &.c {
-          $base-color-credit: #339966;
           //color: lighten($base-color-credit, 10%);
           background-color: lighten($base-color-credit, 57%);
           border-color: lighten($base-color-credit, 50%);
         }
 
         &.d {
-          $base-color-debt: #ff0000;
           //color: lighten($base-color-debt, 25%);
           background-color: lighten($base-color-debt, 46%);
           border-color: lighten($base-color-debt, 43%);

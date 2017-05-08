@@ -7,11 +7,15 @@ const project = require('../config/project.config')
 const compress = require('compression')
 import '../config/mongo-connect'
 
-// const mongoose = require('mongoose');
-// //mongoose.connect('mongodb://denimar:dm90460@ds117109.mlab.com:17109/budget'); //prod
-// mongoose.connect('mongodb://127.0.0.1/budget');
 
 const app = express()
+
+console.log('+++++++++++++++++++++++++++')
+console.log('+++++++++++++++++++++++++++')
+console.log('PASSOU AQUI')
+console.log('+++++++++++++++++++++++++++')
+console.log('+++++++++++++++++++++++++++')
+
 
 //routes
 require('./routes.js')(app);
@@ -19,10 +23,16 @@ require('./routes.js')(app);
 // Apply gzip compression
 app.use(compress())
 
+// Serve static assets from ~/public since Webpack is unaware of
+// these files. This middleware doesn't need to be enabled outside
+// of development since this directory will be copied into ~/dist
+// when the application is compiled.
+app.use(express.static(project.paths.public()))
+
+
 // ------------------------------------
 // Apply Webpack HMR Middleware
 // ------------------------------------
-console.log(project.env)
 if (project.env === 'development') {
   const compiler = webpack(webpackConfig)
 
@@ -39,12 +49,6 @@ if (project.env === 'development') {
   app.use(require('webpack-hot-middleware')(compiler, {
     path: '/__webpack_hmr'
   }))
-
-  // Serve static assets from ~/public since Webpack is unaware of
-  // these files. This middleware doesn't need to be enabled outside
-  // of development since this directory will be copied into ~/dist
-  // when the application is compiled.
-  app.use(express.static(project.paths.public()))
 
   // This rewrites all routes requests to the root /index.html file
   // (ignoring file requests). If you want to implement universal
