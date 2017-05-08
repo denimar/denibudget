@@ -44,9 +44,6 @@ if (project.env === 'development') {
     lazy        : false,
     stats       : project.compiler_stats
   }))
-  app.use(require('webpack-hot-middleware')(compiler, {
-    path: '/__webpack_hmr'
-  }))
 
 
 } else {
@@ -62,6 +59,9 @@ if (project.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
 }
+  app.use(require('webpack-hot-middleware')(compiler, {
+    path: '/__webpack_hmr'
+  }))
 
   app.use(express.static(project.paths.dist()))
 
@@ -74,8 +74,8 @@ if (project.env === 'development') {
 	  console.log('here 02...')
 	  console.log('**********************************')
 
-	fs.readFile(filename, "utf8", function(err, result) {
-    //compiler.outputFileSystem.readFile(filename, (err, result) => {
+	//fs.readFile(filename, "utf8", function(err, result) {
+    compiler.outputFileSystem.readFile(filename, (err, result) => {
       if (err) {
         return next(err)
       }
