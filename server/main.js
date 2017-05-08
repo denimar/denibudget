@@ -5,6 +5,8 @@ const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
+const fs = require('fs-extra')
+
 import '../config/mongo-connect'
 
 
@@ -66,11 +68,10 @@ if (project.env === 'development') {
   // (ignoring file requests). If you want to implement universal
   // rendering, you'll want to remove this middleware.
   app.use('*', function (req, res, next) {
-	  console.log('here 1')
     const filename = path.join(compiler.outputPath, 'index.html')
-	console.log(filename);
 
-    compiler.outputFileSystem.readFile(filename, (err, result) => {
+	fs.readFile(filename, "utf8", function(err, result) {
+    //compiler.outputFileSystem.readFile(filename, (err, result) => {
       if (err) {
         return next(err)
       }
