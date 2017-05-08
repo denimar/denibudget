@@ -6,6 +6,6 @@ console.log('-------------------')
 console.log(process.env.PORT);
 console.log('-------------------')
 
-server.listen(project.server_port, function(err) {
+server.listen(process.env.PORT || 3000, function(err) {
   debug(`Server is now running at http://localhost:${project.server_port}.`)
 })

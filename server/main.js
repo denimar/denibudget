@@ -1,9 +1,3 @@
-console.log('+++++++++++++++++++++++++++')
-console.log('+++++++++++++++++++++++++++')
-console.log('PASSOU AQUI 11111111111')
-console.log('+++++++++++++++++++++++++++')
-console.log('+++++++++++++++++++++++++++')
-
 const express = require('express')
 const debug = require('debug')('app:server')
 const path = require('path')
@@ -15,13 +9,6 @@ import '../config/mongo-connect'
 
 
 const app = express()
-
-console.log('+++++++++++++++++++++++++++')
-console.log('+++++++++++++++++++++++++++')
-console.log('PASSOU AQUI')
-console.log('+++++++++++++++++++++++++++')
-console.log('+++++++++++++++++++++++++++')
-
 
 //routes
 require('./routes.js')(app);
