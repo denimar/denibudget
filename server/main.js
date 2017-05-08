@@ -70,6 +70,9 @@ if (project.env === 'development') {
   // rendering, you'll want to remove this middleware.
   app.use('*', function (req, res, next) {
     //const filename = path.join(compiler.outputPath, 'index.html')
+	  console.log('***********************************')
+	  console.log('here 01...')
+	  console.log('**********************************')
 
 	fs.readFile('index.html', "utf8", function(err, result) {
     //compiler.outputFileSystem.readFile(filename, (err, result) => {
