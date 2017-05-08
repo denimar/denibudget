@@ -9,7 +9,7 @@ server.get('/', function(request, response) {
 	console.log(path.join(__dirname + '/../dist/index.html'))
     console.log('+++++++++++++++++++++++++++++')
 	
-	response.sendFile(path.join(__dirname + '/index.html'));
+	response.sendFile(path.join(__dirname + '/../dist/index.html'));
 
 }).listen(process.env.PORT || 3000, function(err) {
 	console.log('****************************************')
