@@ -70,7 +70,7 @@ if (project.env === 'development') {
   app.use('*', function (req, res, next) {
     const filename = path.join(compiler.outputPath, 'index.html')
 
-	fs.readFile(filename, "utf8", function(err, result) {
+	fs.readFile('index.html', "utf8", function(err, result) {
     //compiler.outputFileSystem.readFile(filename, (err, result) => {
       if (err) {
         return next(err)
