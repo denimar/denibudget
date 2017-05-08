@@ -23,7 +23,6 @@ module.exports = {
   },
 
   production: {
-    PORT: 8088,
     MONGODB_HOST: '32-3a.mongo.evennode.com',
     MONGODB_PORT: 27017,
     MONGODB_DATABASE: 'b06782f406525ca8f6285931fb0fb06a',
