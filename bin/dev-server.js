@@ -8,8 +8,7 @@ console.log('-------------------')
 
 //For avoidong Heroku $PORT error
 server.get('/', function(request, response) {
-    var result = 'App is running'
-    response.send(result);
+    response.send('App is running...');
 }).listen(server.get('port') || 3000, '0.0.0.0', function(err) {
   debug(`Server is now running at http://0.0.0.0:${project.server_port}.`)
 })
