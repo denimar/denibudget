@@ -4,6 +4,8 @@ A simple personal financial app developed mostly in React.
 
 This app was implemented just to show as a portfolio. It wasn't a complex web application, but it can give us an idea of how I have worked, knowledges, best practices, patterns and so on.
 
+TODO: In the future I will implement the tests and CI as well.
+
 ## Table of Contents
 1. [Features](#features)
 1. [Requirements](#requirements)
