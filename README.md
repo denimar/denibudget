@@ -12,17 +12,13 @@ This app was implemented just to show as a portfolio. It wasn't a complex web ap
 1. [Development](#development)
   1. [Developer Tools](#developer-tools)
   1. [Routing](#routing)
-1. [Testing](#testing)
 1. [Deployment](#deployment)
 1. [Build System](#build-system)
   1. [Configuration](#configuration)
   1. [Globals](#globals)
-  1. [Styles](#styles)
   1. [Server](#server)
   1. [Production Optimization](#production-optimization)
-1. [Learning Resources](#learning-resources)
-1. [FAQ](#troubleshooting)
-1. [Thank You](#thank-you)
+1. [Author](#author)
 
 ## Features
 * [react](https://github.com/facebook/react)
