@@ -31,12 +31,11 @@ This app was implemented just to show as a portfolio. It wasn't a complex web ap
 * [webpack](https://github.com/webpack/webpack)
 * [babel](https://github.com/babel/babel)
 * [express](https://github.com/expressjs/express)
-* [karma](https://github.com/karma-runner/karma)
 * [eslint](http://eslint.org)
 
 ## Requirements
 * node `^4.5.0`
-* yarn `^0.17.0` or npm `^3.0.0`
+* npm `^3.0.0`
 
 ## Getting Started
 
