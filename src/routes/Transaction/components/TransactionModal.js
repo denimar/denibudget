@@ -69,20 +69,19 @@ class TransactionModal extends React.Component {
     this.setState({ showModal: false });
   }
 
-  consisteData() {
+  consistForm() {
     return true;
     //
   }
 
   save() {
-    if (this.consisteData()) {
+    if (this.consistForm()) {
       this.setState({ showModal: false });
 
-      let momentDate = moment(this.state.form.date);
-      console.log(momentDate.toISOString())
-      //this.state.form.date = momentDate.toISOString();
-
-      this.promiseModalSuccess(this.state.form);
+      let form = Object.assign({}, this.state.form, {
+        date: moment(this.state.form.date).format('YYYY-MM-DD')
+      });
+      this.promiseModalSuccess(form);
     }
   }
 

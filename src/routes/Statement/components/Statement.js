@@ -6,9 +6,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import AccountService from '../../Account/modules/AccountService'
 import DateIntervalPicker from '../../../components/DateIntervalPicker';
-//import DateRangePicker from 'react-bootstrap-daterangepicker'
-// var DateRangePicker = require('react-bootstrap-daterangepicker');
-// import 'react-bootstrap-daterangepicker/css/daterangepicker.css';
+import routine from '../../../../common/common.routine';
 
 class Statement extends React.Component {
 
@@ -36,11 +34,37 @@ class Statement extends React.Component {
     this.tryToGetAccountStatement();
   }
 
+  getAcccountBalances(account) {
+    AccountService.getAccountBalance(account._id, this.state.startDate)
+      .then((startAccountBalance) => {
+        this.setState({
+          startAccountBalance: startAccountBalance
+        })
+      })
+
+    AccountService.getAccountBalance(account._id, this.state.endDate)
+      .then((endAccountBalance) => {
+        this.setState({
+          endAccountBalance: endAccountBalance
+        })
+      })
+  }
+
   tryToGetAccountStatement() {
     if (this.props.statement.currentAccount && this.state.startDate && this.state.endDate) {
       this.props.fetchStatement(this.props.statement.currentAccount._id, this.state.startDate, this.state.endDate);
+      this.getAcccountBalances(this.props.statement.currentAccount);
       this.forceUpdate();
     }
+  }
+
+  getAccounts() {
+    return AccountService.getAccountsForSelects(this.refs.selectAccount, (data) => {
+      if (!this.props.statement.currentAccount) {
+        this.props.statement.currentAccount = data[0]
+        this.currentAccountInputChange(data[0]);
+      }
+    })
   }
 
   render() {
@@ -51,8 +75,9 @@ class Statement extends React.Component {
         <div className="page-header-content">
           <span className="label-budget">Account :</span>
           <Select.Async
+            ref="selectAccount"
             className="select-account"
-            loadOptions={ AccountService.getAccountsForSelects }
+            loadOptions={ this.getAccounts.bind(this) }
             labelKey="name"
             valueKey="_id"
             clearable={false}
@@ -72,24 +97,32 @@ class Statement extends React.Component {
     let statmentItems = this.props.statement ? this.props.statement.data : [];
     let statmentItemsElem = [];
     statmentItems.map(statementItem => {
+      let statementItemDate = routine.parseDateWithTimeZone(statementItem.date);
+
       statmentItemsElem.push((
         <div className="statement-item" key={ statementItem._id }>
-          <div className="statement-item-field date">{ Moment(new Date(statementItem.date)).format("MMMM, DD") }</div>
+          <div className="statement-item-field date">{ statementItemDate.format("MM/DD/YYYY") }</div>
           <div className="statement-item-field category">{ statementItem.category.path }</div>
           <div className="statement-item-field description">{ statementItem.description }</div>
-          <div className="statement-item-field value">{ statementItem.value }</div>
+          <div className="statement-item-field value">{ routine.formatNumber(statementItem.value) }</div>
           <div className="statement-item-field type">{ statementItem.type }</div>
         </div>
       ));
     })
 
-    const body = (
+    const body = this.props.statement.currentAccount ? (
       <div className="statement-container">
+        <div className="previous-balance">
+          <span className="value">{ routine.formatNumber(this.state.startAccountBalance) }</span>
+        </div>
         <div className="statement">
           { statmentItemsElem }
         </div>
+        <div className="current-balance">
+          <span className="value">{ routine.formatNumber(this.state.endAccountBalance) }</span>
+        </div>
       </div>
-    );
+    ) : null;
 
     return (
       <div className="statement-viewport">

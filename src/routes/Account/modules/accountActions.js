@@ -1,5 +1,6 @@
 import axios from "axios";
 const commonConstant = require('../../../../common/common.constant');
+import AccountService from './AccountService';
 
 export const fetchAccounts = () => {
   return (dispatch, getState) => {
@@ -93,7 +94,6 @@ export const delAccount = (id) => {
 function _fillCurrentAccountBalance(accountsData) {
   return new Promise(function(success, reject) {
     let accountsWithBalance = accountsData;
-    const url = commonConstant.ENDPOINT.ACCOUNT + '/balance/'
     let allAccountsHaveBalance = (accounts) => {
       for (let i = 0 ; i < accounts.length ; i++) {
         let account = accounts[i];
@@ -105,16 +105,16 @@ function _fillCurrentAccountBalance(accountsData) {
     };
 
     accountsWithBalance.forEach(account => {
-      axios.get(url + account._id)
-      .then((response) => {
-        account.currentBalance = response.data.currentBalance;
-        if (allAccountsHaveBalance(accountsWithBalance)) {
-          success(accountsWithBalance);
-        }
-      })
-      .catch((err) => {
-        reject(err)
-      });
+      AccountService.getAccountBalance(account._id)
+        .then((currentBalance) => {
+          account.currentBalance = currentBalance;
+          if (allAccountsHaveBalance(accountsWithBalance)) {
+            success(accountsWithBalance);
+          }
+        })
+        .catch((err) => {
+          reject(err)
+        });
     });
 
   });

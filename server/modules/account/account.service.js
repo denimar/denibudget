@@ -39,6 +39,18 @@ module.exports = {
     });
   },
 
+  getAccountBalanceAtDate: (req, res) => {
+    let id = req.params.id;
+    let date = req.params.date;
+
+    accountRepository.getAccountBalanceAtDate(id, date).then((balance) => {
+      let currentBalanceJson = {
+        currentBalance: balance
+      }
+      res.end(JSON.stringify(currentBalanceJson, null, 2));
+    });
+  },
+
   getAccountStatement: (req, res) => {
     let id = req.params.id;
     let startDate = req.params.startdate;
@@ -48,6 +60,38 @@ module.exports = {
       .then((accountStatement) => {
         res.end(JSON.stringify(accountStatement, null, 2));
       });
-  }
+  },
+
+  getTransfers: (req, res) => {
+    accountRepository.getTransfers()
+      .then((transfers) => {
+        res.end(JSON.stringify(transfers, null, 2));
+      });
+  },
+
+  getTransfersByAccount: (req, res) => {
+    let accountId = req.params.accountid;
+
+    accountRepository.getTransfersByAccount(accountId)
+      .then((transfers) => {
+        res.end(JSON.stringify(transfers, null, 2));
+      });
+  },
+
+  addTransfer: (req, res) => {
+    accountRepository.addTransfer(req.body)
+      .then((addedTransfer) => {
+          res.end(JSON.stringify(addedTransfer, null, 2));
+      });
+  },
+
+  delTransfer: (req, res) => {
+    let id = req.params.id;
+
+    accountRepository.delTransfer(id)
+      .then((deletedTransfer) => {
+        res.end(JSON.stringify(deletedTransfer, null, 2));
+      });
+  },
 
 }

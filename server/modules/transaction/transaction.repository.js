@@ -1,5 +1,6 @@
 import moment from 'moment'
 const mongoose = require('mongoose');
+//mongoose.set('debug', true);
 const model = require('./transaction.model');
 let Transaction = mongoose.model('Transaction');
 let repositoryHelper = require('../../helper/repository.helper')(Transaction);
@@ -20,6 +21,7 @@ module.exports = {
     if (startDate && endDate) {
       const momentStartDate = moment(startDate).startOf('day');
       const momentEndDate = moment(endDate).startOf('day');
+
       where.date = {
         $gte: momentStartDate.toISOString(),
         $lte: momentEndDate.toISOString(),
@@ -32,7 +34,6 @@ module.exports = {
 
   add: (documentToAdd) => {
     return new Promise(function(success) {
-
       let newDocument = new Transaction(documentToAdd);
 
       newDocument.save(function(err) {

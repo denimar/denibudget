@@ -1,8 +1,9 @@
-var moment = require('moment');
+const moment = require('moment');
 import React from 'react'
-var BS = require('react-bootstrap');
-var DateRangePicker = require('react-bootstrap-daterangepicker/lib');
+import { Glyphicon, Button } from 'react-bootstrap';
+const DateRangePicker = require('react-bootstrap-daterangepicker/lib');
 import './daterangepicker.css';
+import FaCalendarMinusO from 'react-icons/lib/fa/calendar';
 import './DateIntervalPicker.scss';
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -33,7 +34,7 @@ class DateIntervalPicker extends React.Component {
     			endDate: this.state.endDate
         });
       }
-    }, 100)    
+    }, 100)
   }
 
 	onApplyEvent(event, picker) {
@@ -64,9 +65,9 @@ class DateIntervalPicker extends React.Component {
         ranges={ this.state.ranges }
         onApply={ this.onApplyEvent.bind(this) }
       >
-				<BS.Button className="selected-date-range-btn" style={{width:'100%'}}>
+				<Button className="selected-date-range-btn" style={{width:'100%'}}>
 					<div className="pull-left">
-            <BS.Glyphicon glyph="calendar" />
+            <FaCalendarMinusO />
           </div>
 					<div className="pull-right">
 						<span>
@@ -74,7 +75,7 @@ class DateIntervalPicker extends React.Component {
 						</span>
 						<span className="caret"></span>
 					</div>
-				</BS.Button>
+				</Button>
 			</DateRangePicker>
     )
   }

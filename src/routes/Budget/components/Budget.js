@@ -99,6 +99,16 @@ class Budget extends React.Component {
     this.forceUpdate();
   }
 
+  howManyBudgetsExpanded(budgets) {
+    let howMany = 0;
+    budgets.forEach(budget => {
+      if (budget.expanded) {
+        howMany++;
+      }
+    })
+    return howMany;
+  }
+
   render() {
     let budgets = this.props.budgets;
     // if (budgets && budgets.data && budgets.data.length > 0) {
@@ -106,6 +116,12 @@ class Budget extends React.Component {
     // }
 
     const mappedBudgets = budgets.data.map((budget, index) => {
+      if ((index === 0) && (!this.rendered)) {
+        if ((this.howManyBudgetsExpanded(budgets.data) === 0)) {
+          budget.expanded = true;
+        }  
+        this.rendered = true;
+      }
       let startDate = Moment(budget.startDate);
       let endDate = Moment(budget.endDate);
       let detailEl = null;
@@ -211,6 +227,12 @@ class Budget extends React.Component {
       </div>
     );
 
+    // if (budgets.data.length > 0) {
+    //   let firstBudget = budgets.data[0];
+    //   setTimeout(() => {
+    //     this.expandButtonClick(firstBudget);
+    //   }, 3000);
+    // }
 
     return (
 

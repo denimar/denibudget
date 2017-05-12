@@ -22,7 +22,8 @@ class Transaction extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { form: {} };
+    this.state = { form: {}, filter: {} };
+    this.props.transactions.filter = this.props.transactions.filter || {};
   }
 
   componentWillMount() {
@@ -149,6 +150,26 @@ class Transaction extends React.Component {
     let categoryElem = onlyTransactionItem ? null : (
       <span className="category">{ transactionOrBudgetItem.category.path }</span>
     );
+    let editAndDeleteElements = (
+      <span>
+        <OverlayTrigger placement="top" overlay={(
+            <Tooltip id="btnActionButtonDelTransactionTooltip">Edit this transaction item.</Tooltip>
+          )}>
+          <span className="action-button-edit-transaction" onClick={ this.editTransactionModal.bind(this, transactionOrBudgetItem) } >
+            { (CRUD_ACTION_BUTTON_EDIT) }
+          </span>
+        </OverlayTrigger>
+
+        <OverlayTrigger placement="top" overlay={(
+            <Tooltip id="btnActionButtonDelTransactionTooltip">Remove this transaction item.</Tooltip>
+          )}>
+          <span className="action-button-delete-transaction" onClick={ this.removeTransactionItemClick.bind(this, transactionOrBudgetItem._id) } >
+            { (CRUD_ACTION_BUTTON_DELETE) }
+          </span>
+        </OverlayTrigger>
+      </span>
+    );
+
     let descriptionElem = (
       <div className="transaction-items-fields">
         { onlyTransactionItem ? (
@@ -163,7 +184,7 @@ class Transaction extends React.Component {
           <span>{ transactionOrBudgetItem.description }</span>
           { (onlyTransactionItem || isUnforecasted) ? null : (
             <OverlayTrigger placement="top" overlay={(
-                <Tooltip id="btnActionButtonAddTransactionTooltip">Add a transaction in this budget.</Tooltip>
+                <Tooltip id="btnActionButtonAddTransactionTooltip">Add a transaction concerning this budget.</Tooltip>
               )}>
                 <FaPlusCircle
                   color={ transactionOrBudgetItem.type.toLowerCase() === 'c' ? '#00cc00' : '#ff4d4d' }
@@ -173,27 +194,18 @@ class Transaction extends React.Component {
               </OverlayTrigger>
             )
           }
+          {
+            isUnforecasted ? (
+              editAndDeleteElements
+            ) : null
+          }
         </div>
         { onlyTransactionItem ? (
             <div>
               <span className="account">{ transactionOrBudgetItem.account.name }</span>
               <span className="value">{ routine.formatNumber(transactionOrBudgetItem.value) }</span>
 
-                <OverlayTrigger placement="top" overlay={(
-                    <Tooltip id="btnActionButtonDelTransactionTooltip">Edit this transaction item.</Tooltip>
-                  )}>
-                  <span className="action-button-edit-transaction" onClick={ this.editTransactionModal.bind(this, transactionOrBudgetItem) } >
-                    { (CRUD_ACTION_BUTTON_EDIT) }
-                  </span>
-                </OverlayTrigger>
-
-                <OverlayTrigger placement="top" overlay={(
-                    <Tooltip id="btnActionButtonDelTransactionTooltip">Remove this transaction item.</Tooltip>
-                  )}>
-                  <span className="action-button-delete-transaction" onClick={ this.removeTransactionItemClick.bind(this, transactionOrBudgetItem._id) } >
-                    { (CRUD_ACTION_BUTTON_DELETE) }
-                  </span>
-                </OverlayTrigger>
+              { editAndDeleteElements }
 
             </div>
           ) : null
@@ -226,6 +238,148 @@ class Transaction extends React.Component {
     return budgetTranctionItems;
   }
 
+  getBudgets() {
+    return BudgetService.getBudgetsForSelects(this.refs.selectBudget, (data) => {
+      if (!this.props.transactions.currentBudget) {
+        this.currentBudgetInputChange(data[0]);
+      }
+    })
+  }
+
+  getTotalizerItemElement(name, incomes, expenses) {
+    const checkboxName = name.toLowerCase();
+
+    const isChecked = (checkName, type) => {
+      return (this.props.transactions.filter[checkName] && this.props.transactions.filter[checkName][type]);
+    };
+
+    const onChangeCheckboxIncomes = () => {
+      this.props.transactions.filter[checkboxName] = this.props.transactions.filter[checkboxName] || {};
+      this.props.transactions.filter[checkboxName]['incomes'] = !this.props.transactions.filter[checkboxName]['incomes'];
+      this.forceUpdate()
+    };
+
+    const onChangeCheckboxExpenses = () => {
+      this.props.transactions.filter[checkboxName] = this.props.transactions.filter[checkboxName] || {};
+      this.props.transactions.filter[checkboxName]['expenses'] = !this.props.transactions.filter[checkboxName]['expenses'];
+      this.forceUpdate()
+    };
+
+    return (
+      <div className="totalizer-item">
+        <div className="total-label">{ name }</div>
+        <div className="total-values">
+          <div className="total-values-line">
+            <input type="checkbox" checked={ isChecked(checkboxName, 'incomes') } onChange={ onChangeCheckboxIncomes } />
+            <span className="total-values-label">incomes</span>
+            <span className="total-values-value">{ routine.formatNumber(incomes) }</span>
+          </div>
+          <div className="total-values-line">
+            <input type="checkbox" checked={ isChecked(checkboxName, 'expenses') } onChange={ onChangeCheckboxExpenses } />
+            <span className="total-values-label">expenses</span>
+            <span className="total-values-value">{ routine.formatNumber(expenses) }</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  hasToFilter() {
+    const filter = this.props.transactions.filter;
+    const keys = Object.keys(filter) || [];
+    for (let i = 0 ; i < keys.length ; i++) {
+      let key = keys[i];
+      if (filter[key]['incomes'] || filter[key]['expenses']) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getTotalizerElements(budgetItems, transactions) {
+    let forecasted = {
+      incomes: 0,
+      expenses: 0
+    };
+    let actual = {
+      incomes: 0,
+      expenses: 0
+    };
+    let missing = {
+      incomes: 0,
+      expenses: 0
+    };
+    let unforecasted = {
+      incomes: 0,
+      expenses: 0
+    };
+    let currentBalance = 0;
+    budgetItems.forEach(budgetItem => {
+      //budget (forecasted)
+      if (budgetItem.type === 'C') {
+        forecasted.incomes += budgetItem.value;
+      } else {
+        forecasted.expenses += budgetItem.value;
+      }
+
+      //future transactions missing in budget
+      if (budgetItem.transactions.length === 0) {
+        if (budgetItem.type === 'C') {
+          missing.incomes += budgetItem.value;
+        } else {
+          missing.expenses += budgetItem.value;
+        }
+      }
+
+      budgetItem.transactions.forEach(transactionItem => {
+        if (transactionItem.type === 'C') {
+          currentBalance += transactionItem.value;
+          actual.incomes += transactionItem.value;
+        } else {
+          currentBalance -= transactionItem.value;
+          actual.expenses += transactionItem.value;
+        }
+      });
+    })
+    transactions.forEach(transactionItem => {
+      if (!transactionItem.budgetItem) {
+        if (transactionItem.type === 'C') {
+          unforecasted.incomes += transactionItem.value;
+          currentBalance += transactionItem.value;
+        } else {
+          unforecasted.expenses += transactionItem.value;
+          currentBalance -= transactionItem.value;
+        }
+      }
+    })
+    return (
+      <div className="totalizers">
+
+        {
+          this.getTotalizerItemElement('Forecasted', forecasted.incomes, forecasted.expenses)
+        }
+        {
+          this.getTotalizerItemElement('Actual', actual.incomes, actual.expenses)
+        }
+        {
+          this.getTotalizerItemElement('Missing', missing.incomes, missing.expenses)
+        }
+        {
+          this.getTotalizerItemElement('Unforecasted', unforecasted.incomes, unforecasted.expenses)
+        }
+
+        <div className="totalizer-item">
+          <div className="total-label">Current Balance</div>
+          <div className="total-values">
+            <div className="total-values-line">
+              <span className={ 'total-balance ' + (currentBalance >= 0 ? 'c' : 'd') }>{ routine.formatNumber(currentBalance) }</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   render() {
 
     const header = (
@@ -233,8 +387,9 @@ class Transaction extends React.Component {
         <div className="page-header-content">
           <span className="label-budget">Budget :</span>
           <Select.Async
+            ref="selectBudget"
             className="select-budget"
-            loadOptions={ BudgetService.getBudgetsForSelects }
+            loadOptions={ this.getBudgets.bind(this) }
             labelKey="description"
             valueKey="_id"
             clearable={false}
@@ -271,38 +426,60 @@ class Transaction extends React.Component {
       });
     }
 
-    const body = (
-      <div className="budgets-and-transactions-items">
-        {
-          budgetItems.map((budgetItem, index) => {
-            const budgetTranctionItems = this.getBudgetTranctionItems(budgetItem);
-            return <div key={ budgetItem.budgetItemId } className={ 'budget-item-container ' + budgetItem.type.toLowerCase() }>
-                    { this.getTransactionOrBudgetItem(budgetItem, false, false, 'budget-' + budgetItem.budgetItemId) }
-                    {
-                      budgetTranctionItems.length > 0 ? (
-                        <div className="transactions-items with-budget">
-                          { budgetTranctionItems }
-                        </div>
-                      ) : null
-                    }
-                  </div>
-          })
-        }
-        {
-          this.getCurrentTransactions(this.props.transactions.currentBudget).map((transactionItem, index) => {
-            if (!transactionItem.budgetItem) {
-              const budgetTranctionItems = this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id);
-              return <div key={ transactionItem._id } className={ 'budget-item-container is-unforecasted ' + transactionItem.type.toLowerCase() }>
-                       <div className="transactions-items">
-                         { budgetTranctionItems }
-                       </div>
-                     </div>
-            }
-          })
-        }
-      </div>
-    );
+    const currentTransactions = this.getCurrentTransactions(this.props.transactions.currentBudget);
+    const hasToFilter = this.hasToFilter();
+    const body = (budgetItems && budgetItems.length > 0) ? (
+      <div className="transactions-body">
+        <div className="totalizers-container">
+          { this.getTotalizerElements(budgetItems, currentTransactions) }
+        </div>
+        <div className="budgets-and-transactions-items">
+          {
+            budgetItems.map((budgetItem, index) => {
+              const budgetTranctionItems = this.getBudgetTranctionItems(budgetItem);
+              const type = budgetItem.type.toLowerCase() === 'c' ? 'incomes' : 'expenses';
+              const forecastedFilter = (this.props.transactions.filter.forecasted && this.props.transactions.filter.forecasted[type]);
+              const actualFilter = (this.props.transactions.filter.actual && this.props.transactions.filter.actual[type]) && (budgetTranctionItems.length > 0) ;
+              const missingFilter = (this.props.transactions.filter.missing && this.props.transactions.filter.missing[type]) && (budgetTranctionItems.length === 0);
+              const hasToShow = ((!hasToFilter) || (forecastedFilter || (actualFilter) || (missingFilter)));
 
+              if (hasToShow) {
+                return <div key={ budgetItem.budgetItemId } className={ 'budget-item-container ' + budgetItem.type.toLowerCase() }>
+                        { this.getTransactionOrBudgetItem(budgetItem, false, false, 'budget-' + budgetItem.budgetItemId) }
+                        {
+                          budgetTranctionItems.length > 0 ? (
+                            <div className="transactions-items with-budget">
+                              { budgetTranctionItems }
+                            </div>
+                          ) : null
+                        }
+                      </div>
+              } else {
+                return null;
+              }
+            })
+          }
+          {
+            currentTransactions.map((transactionItem, index) => {
+              if (!transactionItem.budgetItem) {
+                const type = transactionItem.type.toLowerCase() === 'c' ? 'incomes' : 'expenses';
+                const hasToShow = ((!hasToFilter) || (this.props.transactions.filter.unforecasted && this.props.transactions.filter.unforecasted[type]));
+                if (hasToShow) {
+                  const budgetTranctionItems = this.getTransactionOrBudgetItem(transactionItem, true, false, 'trans-' + transactionItem._id);
+                  return <div key={ transactionItem._id } className={ 'budget-item-container is-unforecasted ' + transactionItem.type.toLowerCase() }>
+                           <div className="transactions-items">
+                             { budgetTranctionItems }
+                           </div>
+                         </div>
+                } else {
+                  return null;
+                }
+              }
+            })
+          }
+        </div>
+      </div>
+    ) : null;
 
     return (
 

@@ -3,11 +3,13 @@ import './Account.scss';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
 import AccountModal from './AccountModal'
-import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
+import AccountTransferModal from './AccountTransferModal'
+import { CRUD_ACTION_BUTTON_TRANSFER, CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import Dialog from 'react-bootstrap-dialog'
 import Moment from 'moment'
 import routine from '../../../../common/common.routine';
 import ReactEcharts from 'echarts-for-react';
+import FaExchange from 'react-icons/lib/fa/exchange';
 
 class Account extends React.Component {
 
@@ -16,8 +18,7 @@ class Account extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchAccounts();
-    this.props.fetchHowMuchMoneyReducerAtTheEndOfBudgets();
+    _initialization(this);
   }
 
   accountModal(account) {
@@ -30,6 +31,12 @@ class Account extends React.Component {
           me.props.addAccount(accountReturned);
         }
       });
+  }
+
+  accountTransferModal() {
+    this.refs.AccountTransferModal.open(this.props.accounts.data, () => {
+      _initialization(this);
+    });
   }
 
   delAccountClick(id) {
@@ -126,11 +133,10 @@ class Account extends React.Component {
 
     const mappedAccounts = accounts.data.map((account, index) => {
       howMuchMoneyIHaveToday += account.currentBalance;
-      let startDate = Moment(account.startDate);
       return (
         <div className="account-item" key={index}>
           <div className="account-name">{ account.name }</div>
-          <div className="account-start-date">{ startDate.format('MM/DD/YYYY') }</div>
+          <div className="account-start-date">{ routine.formatDate(account.startDate, 'MM/DD/YYYY') }</div>
           <div className="account-balance">{ routine.formatNumber(account.currentBalance) }</div>
           <div className="action-buttons">
             <span onClick={ this.delAccountClick.bind(this, account._id) }>
@@ -144,7 +150,20 @@ class Account extends React.Component {
       )
     });
 
-    const header = (<PageHeaderCrud newRecordButtonClick={ this.accountModal.bind(this, null) }/>);
+    const additionalButtons = [
+      (
+        <div className="button" onClick={ this.accountTransferModal.bind(this) }>
+          <FaExchange color='#006699' size="22" />
+          <span className="button-text">Transfers</span>
+        </div>
+      )
+    ];
+
+    const header = (
+      <div>
+        <PageHeaderCrud additionalButtons={ additionalButtons } newRecordButtonClick={ this.accountModal.bind(this, null) }/>
+      </div>
+    );
 
     let labelsGraph = [];
     let dataGraph = [];
@@ -178,6 +197,7 @@ class Account extends React.Component {
     return (
       <div className="account-viewport">
         <AccountModal ref='AccountModal'/>
+        <AccountTransferModal ref='AccountTransferModal'/>
         <Dialog ref='dialog'/>
 
         <PageBody header={header} body={body}/>
@@ -187,5 +207,11 @@ class Account extends React.Component {
   }
 
 }
+
+function _initialization(self) {
+  self.props.fetchAccounts();
+  self.props.fetchHowMuchMoneyReducerAtTheEndOfBudgets();
+}
+
 
 export default Account

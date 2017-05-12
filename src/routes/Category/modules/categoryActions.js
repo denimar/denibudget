@@ -8,18 +8,18 @@ export const fetchCategories = () => {
       dispatch({type: 'FETCH_CATEGORIES'});
 
       axios.get(url)
-      .then((response) => {
-        dispatch({
-          type    : 'FETCH_CATEGORIES_FULFILLED',
-          payload : response.data
+        .then((response) => {
+          dispatch({
+            type    : 'FETCH_CATEGORIES_FULFILLED',
+            payload : response.data
+          })
         })
-      })
-      .catch((err) => {
-        dispatch({
-          type: "FETCH_CATEGORIES_REJECTED",
-          payload: err
-        })
-      });
+        .catch((err) => {
+          dispatch({
+            type: "FETCH_CATEGORIES_REJECTED",
+            payload: err
+          })
+        });
 
   }
 }
@@ -30,6 +30,7 @@ export const addCategory = (treeview, parentId, text, isLeaf) => {
     const url = commonConstant.ENDPOINT.CATEGORY + '/add'
     axios.post(url, {parent: parentId, text: text})
       .then((response) => {
+        treeview.api.selectItem(parentId);
         let item = treeview.api.addItem(text, isLeaf);
         item.id = response.data._id;
 

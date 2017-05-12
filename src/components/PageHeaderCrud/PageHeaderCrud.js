@@ -9,13 +9,15 @@ class PageHeaderCrud extends React.Component {
   }
 
   render() {
+
     return (
       <div className="page-header-crud-viewport">
         <div className="buttons">
-          <div className="header-button" onClick={this.props.newRecordButtonClick}>
-            <div className="button">
-              <FaPlusCircle color='#006699' size="22" />
-            </div>
+          {
+            this.props.additionalButtons
+          }
+          <div className="button" onClick={this.props.newRecordButtonClick}>
+            <FaPlusCircle color='#006699' size="22" />
           </div>
         </div>
       </div>
@@ -25,7 +27,8 @@ class PageHeaderCrud extends React.Component {
 }
 
 PageHeaderCrud.propTypes = {
-  newRecordButtonClick: React.PropTypes.func
+  newRecordButtonClick: React.PropTypes.func,
+  additionalButtons: React.PropTypes.array
 }
 
 export default PageHeaderCrud

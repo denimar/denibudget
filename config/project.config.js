@@ -55,15 +55,8 @@ const config = {
     'react-redux',
     'react-router',
     'redux'
-  ],
-
-  // ----------------------------------
-  // Test Configuration
-  // ----------------------------------
-  coverage_reporters : [
-    { type : 'text-summary' },
-    { type : 'lcov', dir : 'coverage' }
   ]
+
 }
 
 /************************************************
@@ -84,8 +77,6 @@ config.globals = {
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
-  '__TEST__'     : config.env === 'test',
-  '__COVERAGE__' : !argv.watch && config.env === 'test',
   '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
 }
 
@@ -124,14 +115,14 @@ config.paths = {
 // ========================================================
 // Environment Configuration
 // ========================================================
-debug(`Looking for environment overrides for NODE_ENV "${config.env}".`)
-const environments = require('./environments.config')
-const overrides = environments[config.env]
-if (overrides) {
-  debug('Found overrides, applying to default configuration.')
-  Object.assign(config, overrides(config))
-} else {
-  debug('No environment overrides found, defaults will be used.')
-}
+// debug(`Looking for environment overrides for NODE_ENV "${config.env}".`)
+// const environments = require('./environments.config')
+// const overrides = environments[config.env]
+// if (overrides) {
+//   debug('Found overrides, applying to default configuration.')
+//   Object.assign(config, overrides(config))
+// } else {
+//   debug('No environment overrides found, defaults will be used.')
+// }
 
 module.exports = config

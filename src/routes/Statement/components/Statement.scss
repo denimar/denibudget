@@ -38,6 +38,11 @@
           .Select-control {
             background-color: darken(#F2F2F2, 1);
             border-color: #e6e6e6;
+
+            .Select-value-label {
+              color: #3d668f;
+              font-weight: bold;
+            }
           }
 
           &.is-focused:not(.is-open) {
@@ -54,8 +59,9 @@
 
           .selected-date-range-btn {
             background-color: #EFEFEF;
+            font-weight: bold;
             border-color: #e6e6e6;
-            color: #404040;
+            color: #3d668f;
           }
         }
       }
@@ -74,6 +80,45 @@
       justify-content: space-around;
       flex: 1;
       overflow-y: auto;
+
+      .previous-balance {
+        font-size: 12px;
+        font-weight: bold;
+        border-bottom: solid 1px #d3e9fd;
+        padding-bottom: 4px;
+        color: black;
+
+        .value {
+          display: inline-block;
+          text-align: right;
+          width: 790px;
+
+          &:before {
+            content: 'Previous Balance :';
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .current-balance {
+        font-size: 12px;
+        font-weight: bold;
+        border-top: solid 1px #d3e9fd;
+        padding-top: 5px;
+        color: black;
+        margin-top: -1px;
+
+        .value {
+          display: inline-block;
+          text-align: right;
+          width: 790px;
+
+          &:before {
+            content: 'Current Balance :';
+            margin-right: 10px;
+          }
+        }
+      }
 
       .statement {
 

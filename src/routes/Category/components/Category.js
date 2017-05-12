@@ -21,11 +21,16 @@ class Category extends React.Component {
   }
 
   categoryModal(category, parent) {
-    let parentCategory = parent || this.refs.treeview.api.getSelectedItem() || this.refs.treeview.api.getRootNode();
-    this.refs.CategoryModal.open(category, parentCategory)
-      .then(categoryReturned => {
-        this.props.addCategory(this.refs.treeview, parentCategory.id, categoryReturned.text, false);
-      })
+    let selectedItem = this.refs.treeview.api.getSelectedItem();
+    if (selectedItem) {
+      let parentCategory = parent || selectedItem || this.refs.treeview.api.getRootNode();
+      this.refs.CategoryModal.open(category, parentCategory)
+        .then(categoryReturned => {
+          this.props.addCategory(this.refs.treeview, categoryReturned.parent, categoryReturned.text, false);
+        })
+    } else {
+      this.refs.dialog.showAlert('You have to select a category!')
+    }
   }
 
   delCategoryClick(id) {

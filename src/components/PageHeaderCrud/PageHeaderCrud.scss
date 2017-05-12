@@ -4,27 +4,34 @@
     display: flex;
     flex-direction: row;
 
-    .header-button {
+    .button {
       $base-color-category-link: #006699;
       align-items: center;
       display: inline-flex;
       cursor: pointer;
-      padding: 4px 6px;
+      margin-left: 3px;
+      //padding: 4px 6px;
       border-radius: 3px;
       flex-direction: row;
       opacity: 0.6;
+      padding: 3px 5px;
+      background-color: lighten($base-color-category-link, 67%);
+      border: solid 1px lighten($base-color-category-link, 52%);
 
       &:hover {
         background-color: lighten($base-color-category-link, 65%);
         border: solid 1px lighten($base-color-category-link, 45%);
-        padding: 3px 5px;
         opacity: 1;
       }
 
-      span {
-        color: $base-color-category-link;
-        font-size: 14px;
+      .button-text {
+        margin-left: 4px;
       }
+
+      // span {
+      //   color: $base-color-category-link;
+      //   font-size: 14px;
+      // }
     }
   }
 

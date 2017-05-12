@@ -6,20 +6,20 @@ class BudgetService {
   /**
    * function used to get budgets for select element
    */
-  static getBudgetsForSelects(selectElem, callback) {
+  static getBudgetsForSelects(selectElem, callbackFn) {
 
-    const url = commonConstant.ENDPOINT.BUDGET;
+    return new Promise((success, error) => {
+      const url = commonConstant.ENDPOINT.BUDGET;
 
-    axios.get(url)
-      .then((response) => {
-        callback(null, {
-          options: response.data,
-          complete: true
+      axios.get(url)
+        .then((response) => {
+          success({options: response.data})
+          callbackFn(response.data);
+        })
+        .catch((err) => {
+          error(err);
         });
-      })
-      .catch((err) => {
-        console.warn(err);
-      });
+    });
 
   }
 

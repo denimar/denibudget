@@ -10,7 +10,7 @@ module.exports = function(model) {
       limit = parseInt(limit || 0); //0 used to ignore limit property when it wasn't set
 
       return new Promise(function(success) {
-        model.count(where, function( err, count){
+        //model.count(where, function( err, count){
 
           let query = model.find(where)
                         .sort(sort)
@@ -28,7 +28,7 @@ module.exports = function(model) {
             });
 
         });
-      });
+      //});
     },
 
     // add: function(newDocumentJson) {
