@@ -1,6 +1,6 @@
 # DeniBudget
 
-A simple personal financial app developed mostly in React.
+A simple personal financial app developed mostly in React. [see it hosted on EvenNode](http://denibudget.us-1.evennode.com)
 
 This app was implemented just to show as a portfolio. It wasn't a complex web application, but it can give us an idea of how I have worked, knowledges, best practices, patterns and so on.
 
@@ -60,7 +60,7 @@ While developing, you will probably rely mostly on `npm start`; however, there a
 |`deploy:dev`|Same as `deploy` but overrides `NODE_ENV` to "development".|
 |`deploy:prod`|Same as `deploy` but overrides `NODE_ENV` to "production".|
 |`lint`|Lint all `.js` files.|
-|`lint:fix`|Lint and fix all `.js` files. [Read more on this](http://eslint.org/docs/user-guide/command-line-interface.html#fix).|
+|`lint:fix`|Lint and fix all `.js` files. [Read more on this](http://eslint.org/docs/user-guide/command-line-interface.html#fix).
 
 ## Application Structure
 
