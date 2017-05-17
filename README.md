@@ -6,7 +6,7 @@ This app was implemented just to show as a portfolio. It wasn't a complex web ap
 
 TODO: In the future I will implement the tests, CI and the User Experiences as well, including a resposive layout.
 
-![alt text](https://drive.google.com/file/d/0B6WapjXIIlDGRjJjbkUyYk1YTDg/view?usp=sharing)
+![alt text](http://denibudget.us-1.evennode.com/budget.png)
 
 ## Table of Contents
 1. [Features](#features)
