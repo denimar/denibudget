@@ -1,6 +1,6 @@
 # DeniBudget
 
-A simple personal financial app developed mostly in React. [see it hosted on EvenNode](http://denibudget.us-1.evennode.com)
+A simple personal financial app developed mostly in React. [see it hosted on EvenNode](http://denibudget.us-1.evennode.com) and in a [video demo](https://www.youtube.com/watch?v=lNcZQd2ef2k)
 
 This app was implemented just to show as a portfolio. It wasn't a complex web application, but it can give us an idea of how I have worked, knowledges, best practices, patterns and so on.
 
