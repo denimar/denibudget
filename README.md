@@ -6,7 +6,7 @@ This app was implemented just to show as a portfolio. It wasn't a complex web ap
 
 TODO: In the future I will implement the tests, CI and the User Experiences as well, including a resposive layout.
 
-![alt text](https://denimar.github.io/ui-deni-grid/examples/images/basic-array-grid.gif)
+![alt text](https://drive.google.com/open?id=0B6WapjXIIlDGRjJjbkUyYk1YTDg)
 
 ## Table of Contents
 1. [Features](#features)
