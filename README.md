@@ -138,3 +138,5 @@ Babel is configured to use [babel-plugin-transform-runtime](https://www.npmjs.co
 ## Author
 
 [Denimar de Moraes](http://github.com/denimar) (denimar@gmail.com) is a full-stack developper at the HBSis IT Solutions, Blumenau, Santa Catarina, Brazil.
+
+![alt text](https://raw.githubusercontent.com/denimar/denibudget/master/linkedin-profile.png)
