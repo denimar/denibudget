@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { fetchCategories, addCategory, delCategory } from '../modules/categoryActions'
+import { fetchCategories, addCategory, updCategory, delCategory } from '../modules/categoryActions'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -15,6 +15,7 @@ import Category from './Category'
 const mapDispatchToProps = {
   fetchCategories : () => fetchCategories(),
   addCategory : (treeview, parentId, text, isLeaf) => addCategory(treeview, parentId, text, isLeaf),
+  updCategory : (category) => updCategory(category),
   delCategory: (treeview, id) => delCategory(treeview, id),
 }
 

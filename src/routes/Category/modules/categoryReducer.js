@@ -40,6 +40,13 @@ export default function categoryReducer (state = initialState, action) {
       }
     }
 
+    case 'UPD_CATEGORY': {
+      return {
+        ...state,
+        data: Object.assign(state.data)
+      }
+    }
+
   }
 
   return state

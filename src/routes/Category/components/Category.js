@@ -26,7 +26,13 @@ class Category extends React.Component {
       let parentCategory = parent || selectedItem || this.refs.treeview.api.getRootNode();
       this.refs.CategoryModal.open(category, parentCategory)
         .then(categoryReturned => {
-          this.props.addCategory(this.refs.treeview, categoryReturned.parent, categoryReturned.text, false);
+          if (category) {
+            categoryReturned._id = selectedItem.id;
+            this.props.updCategory(categoryReturned);
+            selectedItem.text = categoryReturned.text;
+          } else {
+            this.props.addCategory(this.refs.treeview, categoryReturned.parent, categoryReturned.text, false);
+          }
         })
     } else {
       this.refs.dialog.showAlert('You have to select a category!')
@@ -47,15 +53,13 @@ class Category extends React.Component {
   }
 
   onActionButtonClick(item, actionButton) {
-    const buttonName = actionButton.type.name;
-
-    switch (buttonName) {
+    switch (actionButton.props.name) {
       case 'FaTrashO':
         this.delCategoryClick(item.id)
         event.preventDefault();
         break;
       case 'FaEdit':
-        this.categoryModal(item)
+        this.categoryModal(item, this.refs.treeview.api.getParentNode(item))
         break;
       default:
     }

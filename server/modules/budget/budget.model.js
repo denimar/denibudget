@@ -18,6 +18,7 @@ let budgetItemSchema = new Schema({
 		ref: 'Category'
 	},
   value: Schema.Types.Double,
+  path: String
 });
 
 //Schema Budget

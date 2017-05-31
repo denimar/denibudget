@@ -111,19 +111,20 @@ class Budget extends React.Component {
 
   render() {
     let budgets = this.props.budgets;
-    // if (budgets && budgets.data && budgets.data.length > 0) {
-    //   budgets.data[0].expanded = true;
-    // }
 
     const mappedBudgets = budgets.data.map((budget, index) => {
-      if ((index === 0) && (!this.rendered)) {
-        if ((this.howManyBudgetsExpanded(budgets.data) === 0)) {
-          budget.expanded = true;
-        }  
-        this.rendered = true;
-      }
       let startDate = Moment(budget.startDate);
       let endDate = Moment(budget.endDate);
+
+      if (!this.rendered) {
+        if ((this.howManyBudgetsExpanded(budgets.data) === 0)) {
+          let today = Moment(new Date());
+          if (today.isAfter(startDate) && today.isBefore(endDate)) {
+            budget.expanded = true;
+            this.rendered = true;
+          }
+        }
+      }
       let detailEl = null;
       let expandButton;
 

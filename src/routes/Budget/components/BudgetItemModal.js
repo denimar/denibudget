@@ -27,7 +27,11 @@ class BudgetModal extends React.Component {
 
   save = function() {
     this.setState({ showModal: false });
-    this.promiseModalSuccess(this.state.form);
+    CategoryService.getCategoryById(this.state.form.category)
+      .then((category) => {
+        this.state.form.category = category;
+        this.promiseModalSuccess(this.state.form);
+      })
   }
 
   open = function(budget, budgetItem) {
@@ -42,7 +46,7 @@ class BudgetModal extends React.Component {
       };
       if (budgetItem) {
         state.form['description'] = budgetItem.description;
-        state.form['category'] = budgetItem.category._id;
+        state.form['category'] = budgetItem.category ? budgetItem.category._id : null;
         state.form['type'] = budgetItem.type;
         state.form['value'] = budgetItem.value;
       }

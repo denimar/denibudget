@@ -23,6 +23,20 @@ class CategoryService {
       });
   }
 
+  static getCategoryById(categoryId) {
+    return new Promise((success, error) => {
+      const url = commonConstant.ENDPOINT.CATEGORY + '/' + categoryId
+
+      axios.get(url)
+        .then((response) => {
+          success(response.data);
+        })
+        .catch((err) => {
+          error(err);
+        });
+    })
+  }
+
 }
 
 export default CategoryService;

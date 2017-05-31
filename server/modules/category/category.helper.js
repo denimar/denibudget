@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const Category = mongoose.model('Category');
 const repositoryHelper = require('../../helper/repository.helper')(Category);
+const CategoryCache = require('./category.cache').default;
 
-export default class CategoryHelper {
+class CategoryHelper {
 
   constructor() {
   }
@@ -16,6 +17,17 @@ export default class CategoryHelper {
     })
   }
 
+  getCategoryById(id) {
+    return new Promise(success => {
+      repositoryHelper.getAll({
+        _id: id
+      })
+        .then(categories => {
+          success(categories[0]);
+        });
+    });
+  }
+
   getCategoriesList(onlyLeafItems) {
     return new Promise(success => {
       repositoryHelper.getAll()
@@ -25,9 +37,38 @@ export default class CategoryHelper {
           success(allCategoriesPath);
         });
     });
+  }
+
+  setCategoryPath(categoryId) {
+    return new Promise(success => {
+      // CategoryCache.clear();
+      // _getAllCategories()
+      //   .then(categories => {
+          let category = _getCategoryById(categories.children, categoryId);
+          //category.path = _getCategoryPath(categories, category)
+          success(category);
+        //})
+    })
 
   }
 
+}
+
+function _getCategoryById(categories, categoryId) {
+  for (let i = 0 ; i < categories.length ; i++) {
+    const category = categories[i];
+    if (category.id.toString() === categoryId) {
+      return category;
+    } else {
+      if (category.children && category.children.length > 0) {
+        const categoryFound = _getCategoryById(category.children, categoryId);
+        if (categoryFound) {
+          return categoryFound;
+        }
+      }
+    }
+  }
+  return null;
 }
 
 function _getAllLeafItems(categories) {
@@ -93,7 +134,7 @@ function _getCategoryPath(categories, leaf) {
 
 function _getAllCategories() {
   return new Promise((success) => {
-    repositoryHelper.getAll()
+    CategoryCache.getAll()
       .then(categories => {
         const rootId = '58cff2abc337ff1d8cc7e49e';
         let categoriesResp = {
@@ -112,42 +153,6 @@ function _getAllCategories() {
       });
   })
 }
-//
-// function _getCategoriesPath(category) {
-//   let categoriesPath = [category];
-//   const categoryChildren = category.children || [];
-//   categoryChildren.forEach(child => {
-//     categoriesPath = categoriesPath.concat(_getCategoriesPath(child))
-//     // if (childChildren.length === 0) {
-//     //   categoriesPath.push(_getCategoryPath(child));
-//     // } else {
-//     //   categoriesPath.push(_getCategoriesPath(child));
-//     // }
-//
-//     //categoryPath += ' » ' + _getCategoryPath(child);
-//   });
-//
-//   return categoriesPath;
-// }
-//
-// function _getCategoryPath(category) {
-//   let categoryPath = category.text;
-//   // while (category.parent) {
-//   //   categoryPath += ' » ' + child.text;
-//   //   category = category.parent;
-//   // }
-//
-//   return categoryPath;
-//
-//   // let categoryPath = category.text;
-//   // let children = category.children || [];
-//   //
-//   // children.forEach(child => {
-//   //   categoryPath += ' » ' + _getCategoryPath(child);
-//   // });
-//   //
-//   // return categoryPath;
-// }
 
 function _getCategoryItem(categories, category) {
   let item = {
@@ -155,7 +160,8 @@ function _getCategoryItem(categories, category) {
     text: category.text,
     parent: category.parent,
     children: [],
-    isLeaf: false
+    isLeaf: false,
+    path: _getCategoryPath(categories, category)
   };
 
   for (let i = 0 ; i < categories.length ; i++) {
@@ -167,3 +173,5 @@ function _getCategoryItem(categories, category) {
 
   return item;
 }
+
+export default CategoryHelper;

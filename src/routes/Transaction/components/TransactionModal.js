@@ -154,7 +154,7 @@ class TransactionModal extends React.Component {
       _id: transaction._id,
       budgetItem: transaction.budgetItem,
       type: transaction.type,
-      category: transaction.category._id,
+      category: transaction.category ? transaction.category._id : null,
       account: transaction.account,
       value: transaction.value,
       description: transaction.description,
@@ -233,7 +233,6 @@ class TransactionModal extends React.Component {
                     name="form-field-name"
                     loadOptions={getCategories}
                     clearable={false}
-                    disabled={this.state.form.budgetItem !== null}
                     value={this.state.form.category}
                     onChange={this.categoryInputChange.bind(this)}
                 />

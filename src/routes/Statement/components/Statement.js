@@ -7,6 +7,7 @@ import 'react-select/dist/react-select.css';
 import AccountService from '../../Account/modules/AccountService'
 import DateIntervalPicker from '../../../components/DateIntervalPicker';
 import routine from '../../../../common/common.routine';
+import FaFileTextO from 'react-icons/lib/fa/file-text-o';
 
 class Statement extends React.Component {
 
@@ -67,6 +68,10 @@ class Statement extends React.Component {
     })
   }
 
+  onClickDetails(transactionId) {
+    alert('Show the details here... Under Construction...');
+  }
+
   render() {
     let accountsObj = this.props.accounts;
 
@@ -102,10 +107,14 @@ class Statement extends React.Component {
       statmentItemsElem.push((
         <div className="statement-item" key={ statementItem._id }>
           <div className="statement-item-field date">{ statementItemDate.format("MM/DD/YYYY") }</div>
-          <div className="statement-item-field category">{ statementItem.category.path }</div>
           <div className="statement-item-field description">{ statementItem.description }</div>
           <div className="statement-item-field value">{ routine.formatNumber(statementItem.value) }</div>
           <div className="statement-item-field type">{ statementItem.type }</div>
+          {
+            statementItem._id ? (
+              <div className="statement-item-field details" onClick={ this.onClickDetails.bind(this, statementItem._id) }><FaFileTextO /></div>
+            ) : null
+          }
         </div>
       ));
     })

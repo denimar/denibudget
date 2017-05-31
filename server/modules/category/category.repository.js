@@ -3,11 +3,16 @@ const model = require('./category.model');
 const Category = mongoose.model('Category');
 const CategoryHelper = require('./category.helper').default;
 const categoryHelper = new CategoryHelper();
+const CategoryCache = require('./category.cache').default;
 
 module.exports = {
 
   getCategories: () => {
     return categoryHelper.getCategories();
+  },
+
+  getCategoryById: (id) => {
+    return categoryHelper.getCategoryById(id);
   },
 
   getCategoriesList: (onlyLeafItems) => {
@@ -25,12 +30,38 @@ module.exports = {
 
       newDocument.save(function(err) {
         if (err) return handleError(err);
-        success(newDocument);
+
+        _getCategoryById(newDocument._id)
+          .then(data => {
+            //CategoryCache.clear();
+            success(data);
+          });
+
       });
 
     });
 
   },
+
+  upd: function(documentToUpd) {
+    return new Promise(function(success) {
+
+      let updDocument = new Category(documentToUpd);
+      Category.findByIdAndUpdate(documentToUpd._id, documentToUpd, (err, updatedModel) => {
+        if (err) return handleError(err);
+
+        _getCategoryById(documentToUpd._id)
+          .then(data => {
+            //CategoryCache.clear();
+            success(data);
+          });
+
+      });
+
+    });
+
+  },
+
 
   del: function(id) {
     return new Promise(function(success) {
@@ -44,5 +75,16 @@ module.exports = {
     });
 
   },
+
+}
+
+function _getCategoryById(id) {
+  return new Promise(success => {
+    Category.findById(id)
+      .exec()
+        .then(function(data) {
+          success(data);
+        });
+  });
 
 }

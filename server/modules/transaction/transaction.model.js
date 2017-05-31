@@ -22,7 +22,8 @@ let transactionSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'Category'
 	},
-  value: Schema.Types.Double
+  value: Schema.Types.Double,
+  path: String,
 });
 
 //Model

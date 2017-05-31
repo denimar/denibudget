@@ -49,6 +49,27 @@ export const addCategory = (treeview, parentId, text, isLeaf) => {
   }
 }
 
+export const updCategory = (category) => {
+  return (dispatch, getState) => {
+
+    const url = commonConstant.ENDPOINT.CATEGORY + '/upd';
+    axios.post(url, category)
+      .then((response) => {
+        dispatch({
+          type : 'UPD_CATEGORY',
+          payload : response.data
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: "UPD_CATEGORY_ERROR",
+          payload: err
+        });
+      });
+
+  }
+}
+
 export const delCategory = (treeview, id) => {
   return (dispatch, getState) => {
 

@@ -7,12 +7,21 @@ let Transaction = mongoose.model('Transaction');
 let repositoryTransactionHelper = require('../../helper/repository.helper')(Transaction);
 let generalHelper = require('../general/general.helper');
 let accountRepository = require('../account/account.repository');
+let categoryRepository = require('../category/category.repository');
 
 module.exports = {
 
   getBudgets: () => {
-    return repositoryBudgetHelper.getAll({}, {startDate: -1}, null, null, (query) => {
-      query.populate('details.category');
+    return new Promise(function(success) {
+      repositoryBudgetHelper.getAll({}, {startDate: -1}, null, null, (query) => {
+        query.populate('details.category');
+      }).then(budgets => {
+        categoryRepository.getCategories()
+          .then(categories => {
+            _setCategoriesPath(budgets, categories.children);
+            success(budgets)
+          });
+      });
     });
   },
 
@@ -150,5 +159,42 @@ function _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget, accounts, transactions)
           value: howMuchMoney
         });
       })
+  })
+}
+
+function _getBudgetById(id) {
+  return repositoryBudgetHelper.getAll({
+    _id: budgetId
+  }, {startDate: -1}, null, null, (query) => {
+    query.populate('details.category');
+  });
+}
+
+function _getCategoryById(categories, categoryId) {
+  for (let i = 0 ; i < categories.length ; i++) {
+    const category = categories[i];
+    if (category.id.toString() === categoryId) {
+      return category;
+    } else {
+      if (category.children && category.children.length > 0) {
+        const categoryFound = _getCategoryById(category.children, categoryId);
+        if (categoryFound) {
+          return categoryFound;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+function _setCategoriesPath(budgets, categories) {
+  budgets.forEach(budget => {
+    let budgetItems = budget.details || [];
+    budgetItems.forEach(budgetItem => {
+      if (budgetItem.category) {
+        let cat = _getCategoryById(categories, budgetItem.category._id.toString());
+        budgetItem.path = cat.path;
+      }
+    })
   })
 }

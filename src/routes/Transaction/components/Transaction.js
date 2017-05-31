@@ -144,11 +144,15 @@ class Transaction extends React.Component {
     );
   }
 
+  getPathCategory(transactionOrBudgetItem) {
+    return transactionOrBudgetItem.path;
+  }
+
   getTransactionOrBudgetItem(transactionOrBudgetItem, isUnforecasted, isTransactionItem, index) {
     let onlyTransactionItem = (!isUnforecasted && isTransactionItem);
     let budgetTransactionsGraph = onlyTransactionItem ? null : this.getBudgetTransactionsGraph(transactionOrBudgetItem);
     let categoryElem = onlyTransactionItem ? null : (
-      <span className="category">{ transactionOrBudgetItem.category.path }</span>
+      <span className="category">{ this.getPathCategory(transactionOrBudgetItem) }</span>
     );
     let editAndDeleteElements = (
       <span>
@@ -241,7 +245,16 @@ class Transaction extends React.Component {
   getBudgets() {
     return BudgetService.getBudgetsForSelects(this.refs.selectBudget, (data) => {
       if (!this.props.transactions.currentBudget) {
-        this.currentBudgetInputChange(data[0]);
+        let today = Moment(new Date());
+        for (let i = 0 ; i < data.length ; i++) {
+          let budget = data[i];
+          let startDate = Moment(budget.startDate);
+          let endDate = Moment(budget.endDate);
+          if (today.isAfter(startDate) && today.isBefore(endDate)) {
+            this.currentBudgetInputChange(budget);
+            break;
+          }
+        }
       }
     })
   }
@@ -415,6 +428,7 @@ class Transaction extends React.Component {
           type: budgetItem.type,
           category: budgetItem.category,
           value: budgetItem.value,
+          path: budgetItem.path,
           transactions: []
         };
         this.getCurrentTransactions(this.props.transactions.currentBudget).forEach(transactionItem => {
