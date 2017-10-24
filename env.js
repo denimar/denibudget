@@ -18,6 +18,7 @@ module.exports = {
     MONGODB_REPLICA_SET: false
   },
 
+/*
   production: {
     //PORT: 3000,
     MONGODB_HOST: '32-3a.mongo.evennode.com',
@@ -28,7 +29,8 @@ module.exports = {
     MONGODB_USER: 'b06782f406525ca8f6285931fb0fb06a',
     MONGODB_PASSWORD: 'dm90460'
   }
-/*
+*/
+
   production: {
     //PORT: 3000,
     MONGODB_HOST: 'ds117109.mlab.com',
@@ -39,6 +41,5 @@ module.exports = {
     MONGODB_USER: 'denimar',
     MONGODB_PASSWORD: 'dm90460'
   }
-*/
 
 }

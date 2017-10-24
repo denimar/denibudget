@@ -7,7 +7,7 @@ const env = require('../env')
 
 debug('Creating default configuration.')
 
-let nodeENV = process.env.NODE_ENV || 'development';
+const nodeENV = process.env.NODE_ENV || 'development';
 process.env = Object.assign(process.env, env[nodeENV]);
 
 // ========================================================
