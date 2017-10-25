@@ -10,6 +10,7 @@ import Moment from 'moment'
 import routine from '../../../../common/common.routine';
 import ReactEcharts from 'echarts-for-react';
 import FaExchange from 'react-icons/lib/fa/exchange';
+var Translate = require('react-redux-i18n').Translate;
 
 class Account extends React.Component {
 
@@ -176,7 +177,7 @@ class Account extends React.Component {
     const body = (
       <div className="account-container">
         <div className="column-headers">
-          <div className="column-header account-name">Name</div>
+          <div className="column-header account-name"><Translate value="account.name"/></div>
           <div className="column-header account-start-date">Start Date</div>
           <div className="column-header account-balance">Balance</div>
         </div>

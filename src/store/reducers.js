@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import locationReducer from './location'
+import { i18nReducer } from 'react-redux-i18n';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
-    ...asyncReducers
+    ...asyncReducers,
+    i18n: i18nReducer
   })
 }
 
