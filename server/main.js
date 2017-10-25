@@ -6,6 +6,12 @@ const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
 import '../config/mongo-connect'
+import { I18n } from 'react-redux-i18n';
+
+//Set the i18n
+import lang from '../lang';
+I18n.loadTranslations(lang);
+I18n.setLocale('ptBR');
 
 const app = express()
 

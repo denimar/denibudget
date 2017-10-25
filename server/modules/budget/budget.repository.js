@@ -8,6 +8,7 @@ let repositoryTransactionHelper = require('../../helper/repository.helper')(Tran
 let generalHelper = require('../general/general.helper');
 let accountRepository = require('../account/account.repository');
 let categoryRepository = require('../category/category.repository');
+import { I18n } from 'react-redux-i18n';
 
 module.exports = {
 
@@ -144,7 +145,6 @@ module.exports = {
 
 function _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget, accounts, transactions) {
   return new Promise(success => {
-
     let momentEndDate = moment(budget.endDate).startOf('day');
     let today = new Date();
     if (momentEndDate.isAfter(today)) {
@@ -155,7 +155,7 @@ function _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget, accounts, transactions)
       .then(howMuchMoney => {
         success({
           sortField: parseInt(momentEndDate.format('YYYYMMDD')),
-          description: momentEndDate.format('MM/DD/YYYY'),
+          description: momentEndDate.format(I18n.t('date.short')),
           value: howMuchMoney
         });
       })

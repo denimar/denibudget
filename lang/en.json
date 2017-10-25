@@ -1,0 +1,13 @@
+{
+  "account": {
+    "name": "Account",
+    "startDate": "Start Date",
+    "balance": "Balance",
+    "howMuchMoneyDoIHave": "How Much Money do I Have?",
+    "todayIHave": "Today: $%{value}",
+    "transfers": "Transfers"
+  },
+  "date": {
+    "short": "MM/DD/YYYY"
+  }
+}

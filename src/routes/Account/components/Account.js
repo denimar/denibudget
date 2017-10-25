@@ -10,7 +10,7 @@ import Moment from 'moment'
 import routine from '../../../../common/common.routine';
 import ReactEcharts from 'echarts-for-react';
 import FaExchange from 'react-icons/lib/fa/exchange';
-var Translate = require('react-redux-i18n').Translate;
+import { I18n, Translate } from 'react-redux-i18n';
 
 class Account extends React.Component {
 
@@ -62,8 +62,8 @@ class Account extends React.Component {
     return {
       title: {
         x: 'center',
-        text: 'How Much Money do I Have?',
-        subtext: 'Today: $' + routine.formatNumber(howMuchMoneyIHaveToday)
+        text: I18n.t('account.howMuchMoneyDoIHave'),
+        subtext: I18n.t('account.todayIHave', {value: routine.formatNumber(howMuchMoneyIHaveToday)})
       },
       tooltip: {
         trigger: 'item'
@@ -137,7 +137,7 @@ class Account extends React.Component {
       return (
         <div className="account-item" key={index}>
           <div className="account-name">{ account.name }</div>
-          <div className="account-start-date">{ routine.formatDate(account.startDate, 'MM/DD/YYYY') }</div>
+          <div className="account-start-date">{ routine.formatDate(account.startDate, I18n.t('date.short')) }</div>
           <div className="account-balance">{ routine.formatNumber(account.currentBalance) }</div>
           <div className="action-buttons">
             <span onClick={ this.delAccountClick.bind(this, account._id) }>
@@ -155,7 +155,7 @@ class Account extends React.Component {
       (
         <div className="button" onClick={ this.accountTransferModal.bind(this) }>
           <FaExchange color='#006699' size="22" />
-          <span className="button-text">Transfers</span>
+          <span className="button-text"><Translate value="account.transfers"/></span>
         </div>
       )
     ];
@@ -178,8 +178,8 @@ class Account extends React.Component {
       <div className="account-container">
         <div className="column-headers">
           <div className="column-header account-name"><Translate value="account.name"/></div>
-          <div className="column-header account-start-date">Start Date</div>
-          <div className="column-header account-balance">Balance</div>
+          <div className="column-header account-start-date"><Translate value="account.startDate"/></div>
+          <div className="column-header account-balance"><Translate value="account.balance"/></div>
         </div>
         <div className="accounts-items">
           <div>{mappedAccounts}</div>
