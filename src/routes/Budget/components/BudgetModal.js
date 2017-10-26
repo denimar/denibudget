@@ -8,6 +8,7 @@ import 'react-select/dist/react-select.css';
 import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
 import './BudgetModal.scss'
+import { I18n, Translate } from 'react-redux-i18n';
 
 class BudgetModal extends React.Component {
 
@@ -76,23 +77,23 @@ class BudgetModal extends React.Component {
     return (
       <Modal className="budget-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
         <Modal.Header closeButton>
-          <Modal.Title>Budget</Modal.Title>
+          <Modal.Title><Translate value="budget.modal.title" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal ref='Form'>
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={3}>
-                Description
+                <Translate value="budget.modal.description" />
               </Col>
               <Col sm={9}>
-                <FormControl autoFocus ref="descriptionInput" type="text" value={this.state.form.description} onChange={this.descriptionInputOnChange.bind(this)} placeholder="Description" />
+                <FormControl autoFocus ref="descriptionInput" type="text" value={this.state.form.description} onChange={this.descriptionInputOnChange.bind(this)} placeholder={ I18n.t("budget.modal.descriptionPlaceHolder") } />
               </Col>
             </FormGroup>
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={3}>
-                Start Date
+                <Translate value="budget.modal.startDate" />
               </Col>
               <Col sm={9}>
                 <DateInput
@@ -106,7 +107,7 @@ class BudgetModal extends React.Component {
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={3}>
-                End Date
+                <Translate value="budget.modal.endDate" />
               </Col>
               <Col sm={9}>
                 <DateInput
@@ -121,8 +122,8 @@ class BudgetModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={this.save.bind(this)}>Save</Button>
-          <Button bsStyle="warning" onClick={this.close.bind(this)}>Cancel</Button>
+          <Button bsStyle="primary" onClick={this.save.bind(this)}><Translate value="budget.modal.buttons.save" /></Button>
+          <Button bsStyle="warning" onClick={this.close.bind(this)}><Translate value="budget.modal.buttons.cancel" /></Button>
         </Modal.Footer>
       </Modal>
     )

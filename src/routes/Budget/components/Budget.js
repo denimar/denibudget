@@ -14,8 +14,8 @@ import FaMinus from 'react-icons/lib/fa/minus';
 import Moment from 'moment';
 import routine from '../../../../common/common.routine';
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT, CRUD_ACTION_BUTTON_ADD_DETAIL } from '../../../constants'
-
 import BudgetService from '../modules/BudgetService'
+import { I18n, Translate } from 'react-redux-i18n';
 
 class Budget extends React.Component {
 
@@ -31,7 +31,7 @@ class Budget extends React.Component {
 
   onDeleteClick(id) {
     this.refs.dialog.show({
-      body: 'Confirm Budget Deletion?',
+      body: I18n.t('budget.confirmDeletion'),
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
@@ -69,7 +69,7 @@ class Budget extends React.Component {
 
   delBudget(budgetId) {
     this.refs.dialog.show({
-      body: 'Confirm Budget Deletion?',
+      body: I18n.t('budget.confirmDeletion'),
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
@@ -82,7 +82,7 @@ class Budget extends React.Component {
 
   delBudgetItem(budget, budgetItemIndex) {
     this.refs.dialog.show({
-      body: 'Confirm Budget Item Deletion?',
+      body: I18n.t('budget.confirmDeletionItem'),
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
@@ -214,11 +214,11 @@ class Budget extends React.Component {
     const body = (
       <div className="budget-container">
         <div className="column-headers">
-          <div className="column-header budget-description">Description</div>
-          <div className="column-header budget-period">Period</div>
-          <div className="column-header budget-value">Incomes</div>
-          <div className="column-header budget-value">Expenses</div>
-          <div className="column-header budget-value">Balance</div>
+          <div className="column-header budget-description"><Translate value="budget.description" /></div>
+          <div className="column-header budget-period"><Translate value="budget.period" /></div>
+          <div className="column-header budget-value"><Translate value="budget.incomes" /></div>
+          <div className="column-header budget-value"><Translate value="budget.expenses" /></div>
+          <div className="column-header budget-value"><Translate value="budget.balance" /></div>
         </div>
         <div className="menu-items">
           <div>{ mappedBudgets }</div>

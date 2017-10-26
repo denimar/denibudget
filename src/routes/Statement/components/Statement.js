@@ -8,6 +8,7 @@ import AccountService from '../../Account/modules/AccountService'
 import DateIntervalPicker from '../../../components/DateIntervalPicker';
 import routine from '../../../../common/common.routine';
 import FaFileTextO from 'react-icons/lib/fa/file-text-o';
+import { Translate } from 'react-redux-i18n';
 
 class Statement extends React.Component {
 
@@ -122,12 +123,14 @@ class Statement extends React.Component {
     const body = this.props.statement.currentAccount ? (
       <div className="statement-container">
         <div className="previous-balance">
+          <span className="title"><Translate value="statement.previousBalance" /> :</span>
           <span className="value">{ routine.formatNumber(this.state.startAccountBalance) }</span>
         </div>
         <div className="statement">
           { statmentItemsElem }
         </div>
         <div className="current-balance">
+          <span className="title"><Translate value="statement.currentBalance" /> :</span>
           <span className="value">{ routine.formatNumber(this.state.endAccountBalance) }</span>
         </div>
       </div>

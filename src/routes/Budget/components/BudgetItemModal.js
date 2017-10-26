@@ -7,6 +7,7 @@ import 'react-select/dist/react-select.css';
 import DateInput from '../../../components/DateInput'
 import './BudgetItemModal.scss'
 import CategoryService from '../../Category/modules/CategoryService'
+import { Translate } from 'react-redux-i18n';
 
 class BudgetModal extends React.Component {
 
@@ -80,14 +81,14 @@ class BudgetModal extends React.Component {
     return (
       <Modal className="budget-item-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
         <Modal.Header closeButton>
-          <Modal.Title>Budget Item</Modal.Title>
+          <Modal.Title><Translate value="budget.itemModal.title" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal ref='Form'>
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={2}>
-                Category
+                <Translate value="budget.itemModal.category" />
               </Col>
               <Col sm={10}>
                 <Select.Async
@@ -103,7 +104,7 @@ class BudgetModal extends React.Component {
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={2}>
-                Description
+                <Translate value="budget.itemModal.description" />
               </Col>
               <Col sm={10}>
                 <FormControl ref="descriptionInput" type="text" value={this.state.form.description} onChange={this.descriptionInputOnChange.bind(this)} placeholder="Description" />
@@ -112,7 +113,7 @@ class BudgetModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={2}>
-                Value
+                <Translate value="budget.itemModal.value" />
               </Col>
               <Col sm={3}>
                 <CurrencyInput
@@ -126,16 +127,16 @@ class BudgetModal extends React.Component {
 
             <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)}>
               <Col smOffset={2} sm={10}>
-                <Radio name="type" value="C" inline defaultChecked={ this.state.form.type === "C" }>Income</Radio>
-                <Radio name="type" value="D" inline defaultChecked={ this.state.form.type === "D" }>Expense</Radio>
+                <Radio name="type" value="C" inline defaultChecked={ this.state.form.type === "C" }><Translate value="budget.itemModal.income" /></Radio>
+                <Radio name="type" value="D" inline defaultChecked={ this.state.form.type === "D" }><Translate value="budget.itemModal.expense" /></Radio>
               </Col>
             </FormGroup>
 
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={this.save.bind(this)}>Save</Button>
-          <Button bsStyle="warning" onClick={this.close.bind(this)}>Cancel</Button>
+          <Button bsStyle="primary" onClick={this.save.bind(this)}><Translate value="budget.itemModal.buttons.save" /></Button>
+          <Button bsStyle="warning" onClick={this.close.bind(this)}><Translate value="budget.itemModal.buttons.cancel" /></Button>
         </Modal.Footer>
       </Modal>
     )

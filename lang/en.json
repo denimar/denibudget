@@ -1,4 +1,48 @@
 {
+  "lang": "en",
+  "tabs": {
+    "budgets": "Budgets",
+    "transactions": "Transactions",
+    "statements": "Statements",
+    "accounts": "Accounts",
+    "categories": "Categories"
+  },
+  "budget": {
+    "description": "Description",
+    "period": "Period",
+    "incomes": "Incomes",
+    "expenses": "Expenses",
+    "balance": "Balance",
+    "confirmDeletion": "Confirm Budget Deletion?",
+    "confirmDeletionItem": "Confirm Budget Item Deletion?",
+    "modal": {
+        "title": "Budget",
+        "description": "Description",
+        "descriptionPlaceHolder": "Budget Description",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "buttons": {
+          "save": "Save",
+          "cancel": "Cancel"
+        }
+    },
+    "itemModal": {
+        "title": "Budget Item",
+        "category": "Category",
+        "description": "Description",
+        "value": "Value",
+        "income": "Income",
+        "expense": "Expense",
+        "buttons": {
+          "save": "Save",
+          "cancel": "Cancel"
+        }
+    }
+  },
+  "statement": {
+    "previousBalance": "Previous Balance",
+    "currentBalance": "Current Balance"
+  },
   "account": {
     "name": "Account",
     "startDate": "Start Date",
@@ -9,5 +53,12 @@
   },
   "date": {
     "short": "MM/DD/YYYY"
+  },
+  "calendar": {
+    "previousMonth" : "Previous Month",
+    "nextMonth"     : "Next Month",
+    "months"        : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    "weekdays"      : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+    "weekdaysShort" : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
   }
 }
