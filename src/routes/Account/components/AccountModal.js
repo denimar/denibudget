@@ -4,7 +4,8 @@ import { Modal, Button, Form, FormGroup, FormControl, Checkbox, Col, ButtonGroup
 import CurrencyInput from 'react-currency-input';
 import 'bootstrap/dist/css/bootstrap.css'
 import './AccountModal.scss'
-import DateInput from '../../../components/DateInput'
+import DateInput from '../../../components/DateInput';
+import { Translate } from 'react-redux-i18n';
 
 class AccountModal extends React.Component {
 
@@ -66,14 +67,14 @@ class AccountModal extends React.Component {
     return (
       <Modal className="account-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
         <Modal.Header closeButton>
-          <Modal.Title>Account</Modal.Title>
+          <Modal.Title><Translate value="account.modal.title" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal ref='Form'>
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={4}>
-                Name
+                <Translate value="account.modal.name" />
               </Col>
               <Col sm={8}>
                 <FormControl ref="nameInput" type="text" value={this.state.form.name} onChange={this.nameInputOnChange.bind(this)} placeholder="Name" autoFocus />
@@ -82,7 +83,7 @@ class AccountModal extends React.Component {
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={4}>
-                Start Date
+                <Translate value="account.modal.startDate" />
               </Col>
               <Col sm={8}>
                 <DateInput
@@ -96,7 +97,7 @@ class AccountModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={4}>
-                Opening Balance
+                <Translate value="account.modal.openingBalance" />
               </Col>
               <Col sm={3}>
                 <CurrencyInput ref="openingBalanceInput" className="form-control" value={this.state.form.openingBalance} onChange={this.openingBalanceOnChange.bind(this)} />
@@ -106,8 +107,8 @@ class AccountModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={this.save.bind(this)}>Save</Button>
-          <Button bsStyle="warning" onClick={this.close.bind(this)}>Cancel</Button>
+          <Button bsStyle="primary" onClick={this.save.bind(this)}><Translate value="account.modal.buttons.save" /></Button>
+          <Button bsStyle="warning" onClick={this.close.bind(this)}><Translate value="account.modal.buttons.cancel" /></Button>
         </Modal.Footer>
       </Modal>
     )

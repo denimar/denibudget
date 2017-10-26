@@ -7,6 +7,7 @@ import DeniReactTreeView from 'deni-react-treeview';
 import { CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
 import 'bootstrap/dist/css/bootstrap.css'
 import Dialog from 'react-bootstrap-dialog'
+import { I18n } from 'react-redux-i18n';
 
 class Category extends React.Component {
 
@@ -41,7 +42,7 @@ class Category extends React.Component {
 
   delCategoryClick(id) {
     this.refs.dialog.show({
-      body: 'Confirm Category Deletion?',
+      body: I18n.t('category.confirmDeletion'),
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {

@@ -11,6 +11,7 @@ import Dialog from 'react-bootstrap-dialog'
 import './AccountTransferModal.scss'
 import AccountService from '../modules/AccountService'
 import routine from '../../../../common/common.routine';
+import { Translate } from 'react-redux-i18n';
 
 class AccountTransferModal extends React.Component {
 
@@ -131,14 +132,14 @@ class AccountTransferModal extends React.Component {
     return (
       <Modal className="account-transfer-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} autoFocus >
         <Modal.Header closeButton>
-          <Modal.Title>Transfer Between Accounts</Modal.Title>
+          <Modal.Title><Translate value="account.transferModal.title" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal ref='Form'>
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={2}>
-                Date
+                <Translate value="account.transferModal.date" />
               </Col>
               <Col sm={10}>
                 <DateInput
@@ -152,7 +153,7 @@ class AccountTransferModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={2}>
-                From
+                <Translate value="account.transferModal.from" />
               </Col>
               <Col sm={10}>
                 <Select
@@ -169,7 +170,7 @@ class AccountTransferModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={2}>
-                To
+                <Translate value="account.transferModal.to" />
               </Col>
               <Col sm={10}>
                 <Select
@@ -184,7 +185,7 @@ class AccountTransferModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={2}>
-                Value
+                <Translate value="account.transferModal.value" />
               </Col>
               <Col sm={3}>
                 <CurrencyInput
@@ -194,7 +195,7 @@ class AccountTransferModal extends React.Component {
                 />
               </Col>
               <Col sm={3}>
-                <Button bsStyle="success" disabled={ !this.canTransfer() } onClick={ this.transfer.bind(this) }><FaCheck /><span className="transfer-button-text">Apply Transfer</span></Button>
+                <Button bsStyle="success" disabled={ !this.canTransfer() } onClick={ this.transfer.bind(this) }><FaCheck /><span className="transfer-button-text"><Translate value="account.transferModal.applyTransfer" /></span></Button>
               </Col>
             </FormGroup>
 
@@ -202,10 +203,10 @@ class AccountTransferModal extends React.Component {
 
           <div className="data-grid">
             <div className="data-grid-header">
-              <span className="data-grid-header-field column-date">Date</span>
-              <span className="data-grid-header-field column-from">From</span>
-              <span className="data-grid-header-field column-to">To</span>
-              <span className="data-grid-header-field column-value">Value</span>
+              <span className="data-grid-header-field column-date"><Translate value="account.transferModal.date" /></span>
+              <span className="data-grid-header-field column-from"><Translate value="account.transferModal.from" /></span>
+              <span className="data-grid-header-field column-to"><Translate value="account.transferModal.to" /></span>
+              <span className="data-grid-header-field column-value"><Translate value="account.transferModal.value" /></span>
             </div>
             <div className="data-grid-body">
               {
@@ -231,7 +232,7 @@ class AccountTransferModal extends React.Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="default" onClick={this.close.bind(this)}>Close</Button>
+          <Button bsStyle="default" onClick={this.close.bind(this)}><Translate value="account.transferModal.buttons.close" /></Button>
         </Modal.Footer>
 
         <Dialog ref='dialog'/>

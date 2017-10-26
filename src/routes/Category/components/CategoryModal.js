@@ -5,6 +5,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import CategoryService from '../modules/CategoryService'
 import './CategoryModal.scss'
+import { Translate } from 'react-redux-i18n';
 
 class CategoryModal extends React.Component {
 
@@ -62,14 +63,14 @@ class CategoryModal extends React.Component {
     return (
       <Modal className="category-modal-container" show={this.state.showModal} autoFocus >
         <Modal.Header closeButton>
-          <Modal.Title>Category</Modal.Title>
+          <Modal.Title><Translate value="category.modal.title" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal ref='Form'>
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={2}>
-                Parent
+                <Translate value="category.modal.parent" />
               </Col>
               <Col sm={10}>
                 <Select.Async
@@ -85,7 +86,7 @@ class CategoryModal extends React.Component {
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={2}>
-                Description
+                <Translate value="category.modal.description" />
               </Col>
               <Col sm={10}>
                 <FormControl ref="textInput" type="text" value={this.state.form.text} onChange={this.textInputOnChange.bind(this)} placeholder="Category Description" autoFocus />
@@ -97,8 +98,8 @@ class CategoryModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={this.save.bind(this)}>Save</Button>
-          <Button bsStyle="warning" onClick={this.close.bind(this)}>Cancel</Button>
+          <Button bsStyle="primary" onClick={this.save.bind(this)}><Translate value="category.modal.buttons.save" /></Button>
+          <Button bsStyle="warning" onClick={this.close.bind(this)}><Translate value="category.modal.buttons.cancel" /></Button>
         </Modal.Footer>
 
       </Modal>

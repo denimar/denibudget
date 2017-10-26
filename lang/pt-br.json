@@ -14,29 +14,29 @@
     "expenses": "Despesas",
     "balance": "Saldo",
     "confirmDeletion": "Confirmar exclusão de orçamento?",
-    "confirmDeletionItem": "Confirmar exclusão de item do orçamento?",    
+    "confirmDeletionItem": "Confirmar exclusão de item do orçamento?",
     "modal": {
-        "title": "Orçamento",
-        "description": "Descrição",
-        "descriptionPlaceHolder": "Descrição do Orçamento",
-        "startDate": "Data Inicial",
-        "endDate": "Data Final",
-        "buttons": {
-          "save": "Salvar",
-          "cancel": "Cancelar"
-        }
+      "title": "Orçamento",
+      "description": "Descrição",
+      "descriptionPlaceHolder": "Descrição do Orçamento",
+      "startDate": "Data Inicial",
+      "endDate": "Data Final",
+      "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
     },
     "itemModal": {
-        "title": "Item do Orçamento",
-        "category": "Categoria",
-        "description": "Descrição",
-        "value": "Valor",
-        "income": "Receita",
-        "expense": "Despesa",
-        "buttons": {
-          "save": "Salvar",
-          "cancel": "Cancelar"
-        }
+      "title": "Item do Orçamento",
+      "category": "Categoria",
+      "description": "Descrição",
+      "value": "Valor",
+      "income": "Receita",
+      "expense": "Despesa",
+      "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
     }
   },
   "statement": {
@@ -49,16 +49,78 @@
     "balance": "Saldo",
     "howMuchMoneyDoIHave": "Quantos de dinheiro eu tenho?",
     "todayIHave": "Hoje: R$%{value}",
-    "transfers": "Transferências"
+    "transfers": "Transferências",
+    "modal": {
+      "title": "Conta",
+      "name": "Nome",
+      "startDate": "Data Inicial",
+      "openingBalance": "Saldo Inicial",
+      "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
+    },
+    "transferModal": {
+      "title": "Transferência Entre Contas",
+      "date": "Data",
+      "from": "De",
+      "to": "Para",
+      "value": "Valor",
+      "applyTransfer": "Aplicar Transferência",
+      "buttons": {
+        "close": "Fechar"
+      }
+    }
+  },
+  "category": {
+    "confirmDeletion": "Confirmar exclusão de categoria?",
+    "modal": {
+      "title": "Categoria",
+      "parent": "Pai",
+      "description": "Descrição",
+      "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
+    }
   },
   "date": {
     "short": "DD/MM/YYYY"
   },
   "calendar": {
-    "previousMonth" : "Mês Anterior",
-    "nextMonth"     : "Mês Seguinte",
-    "months"        : ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
-    "weekdays"      : ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"],
-    "weekdaysShort" : ["Dom","Seg","Ter","Qua","Qui","Sex","Sab"]
+    "previousMonth": "Mês Anterior",
+    "nextMonth": "Mês Seguinte",
+    "months": [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
+    ],
+    "weekdays": [
+      "Domingo",
+      "Segunda-feira",
+      "Terça-feira",
+      "Quarta-feira",
+      "Quinta-feira",
+      "Sexta-feira",
+      "Sábado"
+    ],
+    "weekdaysShort": [
+      "Dom",
+      "Seg",
+      "Ter",
+      "Qua",
+      "Qui",
+      "Sex",
+      "Sab"
+    ]
   }
 }

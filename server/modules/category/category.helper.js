@@ -30,7 +30,7 @@ class CategoryHelper {
 
   getCategoriesList(onlyLeafItems) {
     return new Promise(success => {
-      repositoryHelper.getAll()
+      repositoryHelper.getAll({}, {'text': 1})
         .then(categories => {
           const items = (onlyLeafItems ? _getAllLeafItems(categories) : categories);
           const allCategoriesPath = _getAllCategoriesPath(categories, items);
@@ -134,7 +134,7 @@ function _getCategoryPath(categories, leaf) {
 
 function _getAllCategories() {
   return new Promise((success) => {
-    CategoryCache.getAll()
+    CategoryCache.getAll({}, {text: 1})
       .then(categories => {
         const rootId = '58cff2abc337ff1d8cc7e49e';
         let categoriesResp = {
@@ -143,12 +143,14 @@ function _getAllCategories() {
           text: 'Categories',
           children: []
         };
-        categories.filter(category => {
-          return (category.parent && category.parent.toString() === rootId);
-        }).forEach(filteredCategory => {
-          //categoriesResp.children.push(_getCategoryItem(filteredCategory));
-          categoriesResp.children.push(_getCategoryItem(categories, filteredCategory));
-        });
+        categories
+          .filter(category => {
+            return (category.parent && category.parent.toString() === rootId);
+          })
+          .forEach(filteredCategory => {
+            //categoriesResp.children.push(_getCategoryItem(filteredCategory));
+            categoriesResp.children.push(_getCategoryItem(categories, filteredCategory));
+          });
         success(categoriesResp);
       });
   })

@@ -15,8 +15,12 @@ class CategoryCache {
       //if (this.categories === null) {
         repositoryHelper.getAll()
           .then(categories => {
-            this.categories = categories;
-            success(categories)
+            this.categories = categories.sort((category1, category2) => {
+              if (category1.text < category2.text) return -1;
+              if (category1.text > category2.text) return 1;
+              return 0;
+            });
+            success(this.categories)
           });
       //} else {
       //  success(this.categories)
