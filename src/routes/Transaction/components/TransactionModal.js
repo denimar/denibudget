@@ -7,7 +7,8 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
-import { Translate } from 'react-redux-i18n';
+import { Translate, I18n } from 'react-redux-i18n';
+import Dialog from 'react-bootstrap-dialog'
 
 let getAccounts = (input, callback) => {
 
@@ -70,13 +71,24 @@ class TransactionModal extends React.Component {
     this.setState({ showModal: false });
   }
 
-  consistForm() {
+  consistForm(form) {
+    let formDate = form.date;
+    let budgetStartDate = moment(this.budget.startDate).toDate();
+    let budgetEndDate = moment(this.budget.endDate).toDate();
+
+    let isValidDate = (formDate >= budgetStartDate && formDate <= budgetEndDate);
+
+    if (!isValidDate) {
+      this.refs.dialog.showAlert(I18n.t('transaction.invalidDate', {startDate: this.budget.startDate, endDate: TERMINAR AQUI}));
+      return false;
+    }
+
     return true;
     //
   }
 
   save() {
-    if (this.consistForm()) {
+    if (this.consistForm(this.state.form)) {
       this.setState({ showModal: false });
 
       let form = Object.assign({}, this.state.form, {
@@ -185,6 +197,7 @@ class TransactionModal extends React.Component {
 
     return (
       <Modal className="transaction-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
+        <Dialog ref='dialog'/>
         <Modal.Header closeButton>
           <Modal.Title><Translate value="transaction.modal.title" /></Modal.Title>
         </Modal.Header>

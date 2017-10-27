@@ -15,7 +15,7 @@
     "balance": "Saldo",
     "addBudgetTooltip": "Adicionar um novo item neste orçamento",
     "delBudgetTooltip": "Excluir este orçamento",
-    "editBudgetTooltip": "Alterar este orçamento",    
+    "editBudgetTooltip": "Alterar este orçamento",
     "confirmDeletion": "Confirmar exclusão de orçamento?",
     "confirmDeletionItem": "Confirmar exclusão de item do orçamento?",
     "modal": {
@@ -50,6 +50,7 @@
     "editTransactionTooltip": "Editar este item de orçamento.",
     "removeTransactionTooltip": "Remover este item de orçamento.",
     "confirmDeletion": "Confirmar exclusão de transação?",
+    "invalidDate": "Data da transação precisa estar dentro do período do orçamento",
     "filter": {
       "forecasted": "Previsto",
       "actual": "Realizado",

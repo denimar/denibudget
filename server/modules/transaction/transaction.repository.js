@@ -44,6 +44,12 @@ module.exports = {
     return new Promise(function(success) {
       let newDocument = new Transaction(documentToAdd);
 
+      console.log('-----------------------------------');
+      console.log('-----------------------------------');
+      console.log(documentToAdd);
+      console.log('-----------------------------------');
+      console.log('-----------------------------------');
+
       newDocument.save(function(err) {
         if (err) return handleError(err);
 

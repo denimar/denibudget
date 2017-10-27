@@ -50,6 +50,7 @@
     "editTransactionTooltip": "Edit this transaction item.",
     "removeTransactionTooltip": "Remove this transaction item.",
     "confirmDeletion": "Confirm Transaction Deletion?",
+    "invalidDate": "Date must be between budget dates",
     "filter": {
       "forecasted": "Forecasted",
       "actual": "Actual",
