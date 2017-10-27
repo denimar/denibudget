@@ -7,6 +7,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
+import { Translate } from 'react-redux-i18n';
 
 let getAccounts = (input, callback) => {
 
@@ -185,14 +186,14 @@ class TransactionModal extends React.Component {
     return (
       <Modal className="transaction-modal-container" show={this.state.showModal} onHide={this.close.bind(this)} onShow={this.onShow.bind(this)} autoFocus >
         <Modal.Header closeButton>
-          <Modal.Title>Transaction</Modal.Title>
+          <Modal.Title><Translate value="transaction.modal.title" /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal ref='Form'>
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={3}>
-                Date
+                <Translate value="transaction.modal.date" />
               </Col>
               <Col sm={9}>
                 <DateInput
@@ -206,7 +207,7 @@ class TransactionModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={3}>
-                Budget Item
+                <Translate value="transaction.modal.budgetItem" />
               </Col>
               <Col sm={9}>
                 <Select
@@ -225,7 +226,7 @@ class TransactionModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={3}>
-                Category
+                <Translate value="transaction.modal.category" />
               </Col>
               <Col sm={9}>
                 <Select.Async
@@ -241,7 +242,7 @@ class TransactionModal extends React.Component {
 
             <FormGroup>
               <Col componentClass={ControlLabel} sm={3}>
-                Description
+                <Translate value="transaction.modal.description" />
               </Col>
               <Col sm={9}>
                 <FormControl
@@ -256,7 +257,7 @@ class TransactionModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={3}>
-                Account
+                <Translate value="transaction.modal.account" />
               </Col>
               <Col sm={9}>
                 <Select.Async
@@ -274,7 +275,7 @@ class TransactionModal extends React.Component {
 
             <FormGroup >
               <Col componentClass={ControlLabel} sm={3}>
-                Value
+                <Translate value="transaction.modal.value" />
               </Col>
               <Col sm={3}>
                 <CurrencyInput
@@ -288,16 +289,16 @@ class TransactionModal extends React.Component {
 
             <FormGroup ref="typeRadioGroup" value={this.state.form.type} onChange={this.typeOnChange.bind(this)} >
               <Col smOffset={2} sm={10}>
-                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} disabled={this.state.form.budgetItem !== null}>Income</Radio>
-                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"} disabled={this.state.form.budgetItem !== null}>Expense</Radio>
+                <Radio name="type" value="C" inline defaultChecked={this.state.form.type === "C"} disabled={this.state.form.budgetItem !== null}><Translate value="transaction.modal.income" /></Radio>
+                <Radio name="type" value="D" inline defaultChecked={this.state.form.type === "D"} disabled={this.state.form.budgetItem !== null}><Translate value="transaction.modal.expense" /></Radio>
               </Col>
             </FormGroup>
 
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="primary" onClick={this.save.bind(this)}>Save</Button>
-          <Button bsStyle="warning" onClick={this.close.bind(this)}>Cancel</Button>
+          <Button bsStyle="primary" onClick={this.save.bind(this)}><Translate value="transaction.modal.buttons.save" /></Button>
+          <Button bsStyle="warning" onClick={this.close.bind(this)}><Translate value="transaction.modal.buttons.cancel" /></Button>
         </Modal.Footer>
       </Modal>
     )

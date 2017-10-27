@@ -183,14 +183,22 @@ class Budget extends React.Component {
             <div className="budget-value">{ routine.formatNumber(budgetBalance.expenses) }</div>
             <div className={ "budget-value " + (budgetBalance.balance >= 0 ? "C" : "D") }>{ routine.formatNumber(budgetBalance.balance) }</div>
             <div className="action-buttons">
-              <span onClick={ this.delBudget.bind(this, budget._id) }>
-                {(CRUD_ACTION_BUTTON_DELETE)}
-              </span>
-              <span onClick={ this.budgetModal.bind(this, budget) }>
-                {(CRUD_ACTION_BUTTON_EDIT)}
-              </span>
               <OverlayTrigger placement="left" overlay={(
-                  <Tooltip id="btnCrudActionButtonAddDetailTooltip">Add a new item in this budget.</Tooltip>
+                  <Tooltip id="btnCrudActionButtonDelDetailTooltip"><Translate value="budget.delBudgetTooltip" /></Tooltip>
+                )}>
+                <span onClick={ this.delBudget.bind(this, budget._id) }>
+                  {(CRUD_ACTION_BUTTON_DELETE)}
+                </span>
+              </OverlayTrigger>
+              <OverlayTrigger placement="left" overlay={(
+                  <Tooltip id="btnCrudActionButtonEditDetailTooltip"><Translate value="budget.editBudgetTooltip" /></Tooltip>
+                )}>
+                <span onClick={ this.budgetModal.bind(this, budget) }>
+                  {(CRUD_ACTION_BUTTON_EDIT)}
+                </span>
+              </OverlayTrigger>
+              <OverlayTrigger placement="left" overlay={(
+                  <Tooltip id="btnCrudActionButtonAddDetailTooltip"><Translate value="budget.addBudgetTooltip" /></Tooltip>
                 )}>
                 <span onClick={ this.budgetItemModal.bind(this, budget, null) }>
                   {(CRUD_ACTION_BUTTON_ADD_DETAIL)}

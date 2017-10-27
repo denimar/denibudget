@@ -153,7 +153,7 @@ class Account extends React.Component {
 
     const additionalButtons = [
       (
-        <div className="button" onClick={ this.accountTransferModal.bind(this) }>
+        <div key="1" className="button" onClick={ this.accountTransferModal.bind(this) }>
           <FaExchange color='#006699' size="22" />
           <span className="button-text"><Translate value="account.transfers"/></span>
         </div>

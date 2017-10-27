@@ -36,7 +36,7 @@ class Category extends React.Component {
           }
         })
     } else {
-      this.refs.dialog.showAlert('You have to select a category!')
+      this.refs.dialog.showAlert(I18n.t('category.youHaveToSelect'));
     }
   }
 

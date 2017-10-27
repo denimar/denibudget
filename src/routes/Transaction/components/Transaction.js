@@ -17,6 +17,7 @@ import Moment from 'moment';
 import { CRUD_ACTION_BUTTON_EDIT, CRUD_ACTION_BUTTON_DELETE } from '../../../constants'
 import commonConstant from '../../../../common/common.constant'
 import BudgetService from '../../Budget/modules/BudgetService'
+import { Translate, I18n } from 'react-redux-i18n';
 
 class Transaction extends React.Component {
 
@@ -34,7 +35,7 @@ class Transaction extends React.Component {
 
   removeTransactionItemClick(transactionId) {
     this.refs.dialog.show({
-      body: 'Confirm Transaction Deletion?',
+      body: I18n.t('transaction.confirmDeletion'),
       actions: [
         Dialog.CancelAction(),
         Dialog.DefaultAction('Confirm', () => {
@@ -157,7 +158,7 @@ class Transaction extends React.Component {
     let editAndDeleteElements = (
       <span>
         <OverlayTrigger placement="top" overlay={(
-            <Tooltip id="btnActionButtonDelTransactionTooltip">Edit this transaction item.</Tooltip>
+            <Tooltip id="btnActionButtonDelTransactionTooltip"><Translate value="transaction.editTransactionTooltip" /></Tooltip>
           )}>
           <span className="action-button-edit-transaction" onClick={ this.editTransactionModal.bind(this, transactionOrBudgetItem) } >
             { (CRUD_ACTION_BUTTON_EDIT) }
@@ -165,7 +166,7 @@ class Transaction extends React.Component {
         </OverlayTrigger>
 
         <OverlayTrigger placement="top" overlay={(
-            <Tooltip id="btnActionButtonDelTransactionTooltip">Remove this transaction item.</Tooltip>
+            <Tooltip id="btnActionButtonDelTransactionTooltip"><Translate value="transaction.removeTransactionTooltip" /></Tooltip>
           )}>
           <span className="action-button-delete-transaction" onClick={ this.removeTransactionItemClick.bind(this, transactionOrBudgetItem._id) } >
             { (CRUD_ACTION_BUTTON_DELETE) }
@@ -188,7 +189,7 @@ class Transaction extends React.Component {
           <span>{ transactionOrBudgetItem.description }</span>
           { (onlyTransactionItem || isUnforecasted) ? null : (
             <OverlayTrigger placement="top" overlay={(
-                <Tooltip id="btnActionButtonAddTransactionTooltip">Add a transaction concerning this budget.</Tooltip>
+                <Tooltip id="btnActionButtonAddTransactionTooltip"><Translate value="transaction.addTransactionTooltip" /></Tooltip>
               )}>
                 <FaPlusCircle
                   color={ transactionOrBudgetItem.type.toLowerCase() === 'c' ? '#00cc00' : '#ff4d4d' }
@@ -284,12 +285,12 @@ class Transaction extends React.Component {
         <div className="total-values">
           <div className="total-values-line">
             <input type="checkbox" checked={ isChecked(checkboxName, 'incomes') } onChange={ onChangeCheckboxIncomes } />
-            <span className="total-values-label">incomes</span>
+            <span className="total-values-label"><Translate value="transaction.filter.incomes" /></span>
             <span className="total-values-value">{ routine.formatNumber(incomes) }</span>
           </div>
           <div className="total-values-line">
             <input type="checkbox" checked={ isChecked(checkboxName, 'expenses') } onChange={ onChangeCheckboxExpenses } />
-            <span className="total-values-label">expenses</span>
+            <span className="total-values-label"><Translate value="transaction.filter.expenses" /></span>
             <span className="total-values-value">{ routine.formatNumber(expenses) }</span>
           </div>
         </div>
@@ -369,20 +370,20 @@ class Transaction extends React.Component {
       <div className="totalizers">
 
         {
-          this.getTotalizerItemElement('Forecasted', forecasted.incomes, forecasted.expenses)
+          this.getTotalizerItemElement(I18n.t('transaction.filter.forecasted'), forecasted.incomes, forecasted.expenses)
         }
         {
-          this.getTotalizerItemElement('Actual', actual.incomes, actual.expenses)
+          this.getTotalizerItemElement(I18n.t('transaction.filter.actual'), actual.incomes, actual.expenses)
         }
         {
-          this.getTotalizerItemElement('Missing', missing.incomes, missing.expenses)
+          this.getTotalizerItemElement(I18n.t('transaction.filter.missing'), missing.incomes, missing.expenses)
         }
         {
-          this.getTotalizerItemElement('Unforecasted', unforecasted.incomes, unforecasted.expenses)
+          this.getTotalizerItemElement(I18n.t('transaction.filter.unforecasted'), unforecasted.incomes, unforecasted.expenses)
         }
 
         <div className="totalizer-item">
-          <div className="total-label">Current Balance</div>
+          <div className="total-label"><Translate value="transaction.currentBalance" /></div>
           <div className="total-values">
             <div className="total-values-line">
               <span className={ 'total-balance ' + (currentBalance >= 0 ? 'c' : 'd') }>{ routine.formatNumber(currentBalance) }</span>
@@ -398,7 +399,7 @@ class Transaction extends React.Component {
     const header = (
       <div className="page-header-elements">
         <div className="page-header-content">
-          <span className="label-budget">Budget :</span>
+          <span className="label-budget"><Translate value="transaction.budget" /> :</span>
           <Select.Async
             ref="selectBudget"
             className="select-budget"
@@ -408,7 +409,7 @@ class Transaction extends React.Component {
             clearable={false}
             value={ this.props.transactions.currentBudget ? this.props.transactions.currentBudget._id : null }
             onChange={ this.currentBudgetInputChange.bind(this) }
-            placeholder="select a budget"
+            placeholder={ I18n.t('transaction.budgetPlaceHolder') }
           />
         </div>
         <PageHeaderCrud

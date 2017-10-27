@@ -13,6 +13,9 @@
     "incomes": "Incomes",
     "expenses": "Expenses",
     "balance": "Balance",
+    "addBudgetTooltip": "Add a new item in this budget",
+    "delBudgetTooltip": "Remove this budget",
+    "editBudgetTooltip": "Edit this budget",
     "confirmDeletion": "Confirm Budget Deletion?",
     "confirmDeletionItem": "Confirm Budget Item Deletion?",
     "modal": {
@@ -39,7 +42,40 @@
       }
     }
   },
+  "transaction": {
+    "budget": "Budget",
+    "budgetPlaceHolder": "select a budget",
+    "currentBalance": "Current Balance",
+    "addTransactionTooltip": "Add a transaction concerning this budget item.",
+    "editTransactionTooltip": "Edit this transaction item.",
+    "removeTransactionTooltip": "Remove this transaction item.",
+    "confirmDeletion": "Confirm Transaction Deletion?",
+    "filter": {
+      "forecasted": "Forecasted",
+      "actual": "Actual",
+      "missing": "Missing",
+      "unforecasted": "Uforecasted",
+      "incomes": "incomes",
+      "expenses": "expenses"
+    },
+    "modal": {
+      "title": "Transação",
+      "date": "Data",
+      "budgetItem": "Item Orçamento",
+      "category": "Categoria",
+      "description": "Descrição",
+      "account": "Conta",
+      "value": "Valor",
+      "income": "Receita",
+      "expense": "Despesa",
+      "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
+    }
+  },
   "statement": {
+    "account": "Account",
     "previousBalance": "Previous Balance",
     "currentBalance": "Current Balance"
   },
@@ -74,6 +110,7 @@
   },
   "category": {
     "confirmDeletion": "Confirm Category Deletion?",
+    "youHaveToSelect": "You have to select a category",
     "modal": {
       "title": "Category",
       "parent": "Parent",

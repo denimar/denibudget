@@ -79,7 +79,7 @@ class Statement extends React.Component {
     const header = (
       <div className="page-header-elements">
         <div className="page-header-content">
-          <span className="label-budget">Account :</span>
+          <span className="label-budget"><Translate value="statement.account" /> :</span>
           <Select.Async
             ref="selectAccount"
             className="select-account"

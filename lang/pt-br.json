@@ -13,6 +13,9 @@
     "incomes": "Receitas",
     "expenses": "Despesas",
     "balance": "Saldo",
+    "addBudgetTooltip": "Adicionar um novo item neste orçamento",
+    "delBudgetTooltip": "Excluir este orçamento",
+    "editBudgetTooltip": "Alterar este orçamento",    
     "confirmDeletion": "Confirmar exclusão de orçamento?",
     "confirmDeletionItem": "Confirmar exclusão de item do orçamento?",
     "modal": {
@@ -39,7 +42,40 @@
       }
     }
   },
+  "transaction": {
+    "budget": "Orçamento",
+    "budgetPlaceHolder": "selecione um orçamento",
+    "currentBalance": "Saldo Atual",
+    "addTransactionTooltip": "Adiciona uma transação referente a este item de orçamento.",
+    "editTransactionTooltip": "Editar este item de orçamento.",
+    "removeTransactionTooltip": "Remover este item de orçamento.",
+    "confirmDeletion": "Confirmar exclusão de transação?",
+    "filter": {
+      "forecasted": "Previsto",
+      "actual": "Realizado",
+      "missing": "Faltando",
+      "unforecasted": "Imprevisto",
+      "incomes": "receitas",
+      "expenses": "despesas"
+    },
+    "modal": {
+      "title": "Transação",
+      "date": "Data",
+      "budgetItem": "Item Orçamento",
+      "category": "Categoria",
+      "description": "Descrição",
+      "account": "Conta",
+      "value": "Valor",
+      "income": "Receita",
+      "expense": "Despesa",
+      "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      }
+    }
+  },
   "statement": {
+    "account": "Conta",
     "previousBalance": "Saldo Anterior",
     "currentBalance": "Saldo Atual"
   },
@@ -74,6 +110,7 @@
   },
   "category": {
     "confirmDeletion": "Confirmar exclusão de categoria?",
+    "youHaveToSelect": "Você precisa selecionar uma categoria",
     "modal": {
       "title": "Categoria",
       "parent": "Pai",
