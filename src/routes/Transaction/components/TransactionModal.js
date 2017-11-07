@@ -1,6 +1,7 @@
 import React from 'react'
 import { Modal, Button, Form, FormGroup, FormControl, Checkbox, Col, ButtonGroup, Input, ControlLabel, FieldGroup, Radio } from 'react-bootstrap';
 import CurrencyInput from 'react-currency-input';
+var jsonParser = require('moment-json-parser');
 import moment from 'moment'
 import axios from 'axios';
 import Select from 'react-select';
@@ -9,6 +10,7 @@ import commonConstant from '../../../../common/common.constant'
 import DateInput from '../../../components/DateInput'
 import { Translate, I18n } from 'react-redux-i18n';
 import Dialog from 'react-bootstrap-dialog'
+import routine from '../../../../common/common.routine';
 
 let getAccounts = (input, callback) => {
 
@@ -79,7 +81,10 @@ class TransactionModal extends React.Component {
     let isValidDate = (formDate >= budgetStartDate && formDate <= budgetEndDate);
 
     if (!isValidDate) {
-      this.refs.dialog.showAlert(I18n.t('transaction.invalidDate', {startDate: this.budget.startDate, endDate: TERMINAR AQUI}));
+      this.refs.dialog.showAlert(I18n.t('transaction.invalidDate', {
+        startDate: routine.formatDate(this.budget.startDate, I18n.t('date.short')),
+        endDate: routine.formatDate(this.budget.endDate, I18n.t('date.short'))
+      }));
       return false;
     }
 
@@ -99,6 +104,9 @@ class TransactionModal extends React.Component {
   }
 
   open = function(budget, budgetItem, transaction) {
+
+console.log(budgetItem);
+
     this.budget = budget;
     this.budgetItem = budgetItem || (transaction ? transaction.budgetItem : null);
     const momentToday = new moment().startOf('day');
@@ -163,6 +171,11 @@ class TransactionModal extends React.Component {
   }
 
   getTransactionInfo(transaction) {
+    let momentTransDate = moment(transaction.date, moment.ISO_8601);
+    console.log(momentTransDate);
+    let momentTransDate2 = jsonParser(transaction.date);
+    console.log(momentTransDate2);
+
     let transactionInfo = transaction ? {
       _id: transaction._id,
       budgetItem: transaction.budgetItem,
@@ -171,9 +184,9 @@ class TransactionModal extends React.Component {
       account: transaction.account,
       value: transaction.value,
       description: transaction.description,
-      date: moment(transaction.date).toDate()
-    } : {
-    };
+      //date: new Date(2017, 6, 7)
+      date: momentTransDate.toDate()
+    } : {};
     return transactionInfo;
   }
 

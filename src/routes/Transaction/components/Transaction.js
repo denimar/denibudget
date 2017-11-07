@@ -12,7 +12,8 @@ import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
 import TransactionModal from './TransactionModal';
 import FaArrowRight from 'react-icons/lib/fa/arrow-right';
-import FaPlusCircle from 'react-icons/lib/fa/plus-circle'
+import FaPlusCircle from 'react-icons/lib/fa/plus-circle';
+import GoFlame from 'react-icons/lib/go/flame';
 import Moment from 'moment';
 import { CRUD_ACTION_BUTTON_EDIT, CRUD_ACTION_BUTTON_DELETE } from '../../../constants'
 import commonConstant from '../../../../common/common.constant'
@@ -188,7 +189,7 @@ class Transaction extends React.Component {
         <div className="description">
           <span>{ transactionOrBudgetItem.description }</span>
           { (onlyTransactionItem || isUnforecasted) ? null : (
-            <OverlayTrigger placement="top" overlay={(
+              <OverlayTrigger placement="top" overlay={(
                 <Tooltip id="btnActionButtonAddTransactionTooltip"><Translate value="transaction.addTransactionTooltip" /></Tooltip>
               )}>
                 <FaPlusCircle
@@ -219,7 +220,19 @@ class Transaction extends React.Component {
     );
 
     return (
-      <div key={ index } className={ 'budget-item ' + (isUnforecasted ? 'is-unforecasted ' : ' ') + transactionOrBudgetItem.type.toLowerCase() + (onlyTransactionItem ? ' is-only-transaction-item' : '') }>
+      <div key={ index } className={ 'budget-item ' + transactionOrBudgetItem.type.toLowerCase() + (onlyTransactionItem ? ' is-only-transaction-item' : '') }>
+        { isUnforecasted ? (
+          <div className="unforecasted-indicator">
+            <OverlayTrigger placement="top" overlay={(
+              <Tooltip id="unforecastedIndicatorTooltip"><Translate value="transaction.unforecastedIndicatorTooltip" /></Tooltip>
+            )}>
+              <GoFlame
+                color={ transactionOrBudgetItem.type.toLowerCase() === 'c' ? '#00cc00' : '#ff4d4d' }
+                size="20"
+              />
+            </OverlayTrigger>
+          </div>
+        ) : null }
         { descriptionElem }
         { budgetTransactionsGraph }
       </div>

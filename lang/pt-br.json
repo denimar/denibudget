@@ -50,7 +50,8 @@
     "editTransactionTooltip": "Editar este item de orçamento.",
     "removeTransactionTooltip": "Remover este item de orçamento.",
     "confirmDeletion": "Confirmar exclusão de transação?",
-    "invalidDate": "Data da transação precisa estar dentro do período do orçamento",
+    "invalidDate": "Data da transação precisa estar dentro do período do orçamento (entre %{startDate} e %{endDate}).",
+    "unforecastedIndicatorTooltip": "Esta transação não estava prevista!",
     "filter": {
       "forecasted": "Previsto",
       "actual": "Realizado",
