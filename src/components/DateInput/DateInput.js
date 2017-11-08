@@ -7,7 +7,7 @@ import 'moment';
 
 if (I18n.t('lang') != 'en') {
   require('moment/locale/' + I18n.t('lang'));
-}  
+}
 
 class DateInput extends React.Component {
 
@@ -30,7 +30,8 @@ class DateInput extends React.Component {
             months        : I18n.t('calendar.months'),
             weekdays      : I18n.t('calendar.weekdays'),
             weekdaysShort : I18n.t('calendar.weekdaysShort')
-          }
+          },
+
         }}
       />
     )

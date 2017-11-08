@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal, Button, Form, FormGroup, FormControl, Checkbox, Col, ButtonGroup, Input, ControlLabel, FieldGroup, Radio } from 'react-bootstrap';
 import CurrencyInput from 'react-currency-input';
-var jsonParser = require('moment-json-parser');
 import moment from 'moment'
 import axios from 'axios';
 import Select from 'react-select';
@@ -104,9 +103,6 @@ class TransactionModal extends React.Component {
   }
 
   open = function(budget, budgetItem, transaction) {
-
-console.log(budgetItem);
-
     this.budget = budget;
     this.budgetItem = budgetItem || (transaction ? transaction.budgetItem : null);
     const momentToday = new moment().startOf('day');
@@ -171,10 +167,7 @@ console.log(budgetItem);
   }
 
   getTransactionInfo(transaction) {
-    let momentTransDate = moment(transaction.date, moment.ISO_8601);
-    console.log(momentTransDate);
-    let momentTransDate2 = jsonParser(transaction.date);
-    console.log(momentTransDate2);
+    let momentTransDate = moment(transaction.date, 'YYYY-MM-DD');
 
     let transactionInfo = transaction ? {
       _id: transaction._id,
