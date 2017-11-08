@@ -1,6 +1,6 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/CoreLayout'
-//import Home from './Home'
+import LoginRoute from './Login'
 import TransactionRoute from './Transaction'
 import CategoryRoute from './Category'
 import AccountRoute from './Account'
@@ -15,6 +15,7 @@ export const createRoutes = (store) => ({
   component   : CoreLayout,
   indexRoute  : BudgetRoute(store),
   childRoutes : [
+    LoginRoute(store),
     TransactionRoute(store),
     CategoryRoute(store),
     AccountRoute(store),

@@ -10,6 +10,7 @@ module.exports = {
     CATEGORY: BASE_ENDPOINTS + '/category',
     CATEGORY_LIST: BASE_ENDPOINTS + '/categorylist',
     CUSTOMER: BASE_ENDPOINTS + '/customer',
+    LOGIN: BASE_ENDPOINTS + '/login',    
     TRANSACTION: BASE_ENDPOINTS + '/transaction'
   }
 

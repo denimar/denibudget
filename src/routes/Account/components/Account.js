@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 import './Account.scss';
 import PageBody from '../../../components/PageBody';
 import PageHeaderCrud from '../../../components/PageHeaderCrud';
-import AccountModal from './AccountModal'
+import AccountModal from './AccountModal';
 import AccountTransferModal from './AccountTransferModal'
 import { CRUD_ACTION_BUTTON_TRANSFER, CRUD_ACTION_BUTTON_DELETE, CRUD_ACTION_BUTTON_EDIT } from '../../../constants'
-import Dialog from 'react-bootstrap-dialog'
-import Moment from 'moment'
+import Dialog from 'react-bootstrap-dialog';
+import Moment from 'moment';
 import routine from '../../../../common/common.routine';
 import ReactEcharts from 'echarts-for-react';
 import FaExchange from 'react-icons/lib/fa/exchange';

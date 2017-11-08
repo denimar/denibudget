@@ -3,8 +3,7 @@ import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 import { Translate } from 'react-redux-i18n';
 
-export const Header = () => (
-
+let headerElem = (
   <div className="main-header">
 
     <div className="navigation">
@@ -16,7 +15,8 @@ export const Header = () => (
     </div>
 
   </div>
+);
 
-)
+export const Header = () => location.pathname == '/login' ? null : headerElem
 
 export default Header
