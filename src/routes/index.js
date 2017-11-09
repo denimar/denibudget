@@ -13,7 +13,7 @@ import StatementRoute from './Statement'
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  indexRoute  : BudgetRoute(store),
+  indexRoute  : LoginRoute(store),
   childRoutes : [
     LoginRoute(store),
     TransactionRoute(store),

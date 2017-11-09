@@ -7,6 +7,12 @@
     "accounts": "Accounts",
     "categories": "Categories"
   },
+  "login": {
+    "database": "Database",
+    "user": "User",
+    "password": "Password",
+    "buttonText": "Login"
+  },
   "budget": {
     "description": "Description",
     "period": "Period",

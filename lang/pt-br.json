@@ -7,6 +7,12 @@
     "accounts": "Contas",
     "categories": "Categorias"
   },
+  "login": {
+    "database": "Banco de Dados",
+    "user": "Usuário",
+    "password": "Senha",
+    "buttonText": "Login"
+  },
   "budget": {
     "description": "Descrição",
     "period": "Período",

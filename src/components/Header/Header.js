@@ -17,6 +17,8 @@ let headerElem = (
   </div>
 );
 
-export const Header = () => location.pathname == '/login' ? null : headerElem
+let inLoginPage = location.pathname == '/' || location.pathname == '/login';
+
+export const Header = () => inLoginPage ? null : headerElem
 
 export default Header
