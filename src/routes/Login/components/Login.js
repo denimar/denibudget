@@ -16,10 +16,15 @@ class Login extends React.Component {
   }
 
   loginButtonClick() {
+    alert(LoginService.getConnectedUserToken());
+
+    let nickName = 'denimar';
     LoginService
-      .authenticate('denimar', '123')
+      .authenticate(nickName, '123')
       .then((response) => {
-        console.log(response);
+        if (response.success) {
+          document.cookie = `user=${nickName};token=${response.token}`;
+        }
       });
   }
 

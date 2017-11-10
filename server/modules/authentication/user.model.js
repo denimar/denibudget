@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-require('mongoose-double')(mongoose);
 
 //Schema Budget Item
 let userSchema = new Schema({
   name: String,
   nickName: String,
+  password: String,
   admin: Boolean
 });
 
