@@ -11,7 +11,10 @@
     "database": "Database",
     "user": "User",
     "password": "Password",
-    "buttonText": "Login"
+    "buttonText": "Login",
+    "authentication": {
+      "failureMsg": "Authentication failure! User or password invalid!"
+    }
   },
   "budget": {
     "description": "Description",

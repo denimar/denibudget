@@ -1,35 +1,43 @@
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
+const AUTH_PRIVATE_KEY = fs.readFileSync('./private.key');  // get private key
 
 module.exports = {
 
-  checkToken: (req, res) => {
-    let body = req.body || {};
-    let query = req.query || {};
-    let token = body.token || query.token || req.headers['x-access-token'];
-    if (token) {
-      let cert = fs.readFileSync('./private.key');  // get private key
-      jwt.verify(token, cert, function(err, decoded) {
-        console.log('**********************');
-        console.log(decoded);
-        console.log('**********************');
+  createToken: (user, expiresIn) => {
+    const payload = {
+      admin: user.admin
+    };
+    return jwt.sign({ data: payload }, AUTH_PRIVATE_KEY, { expiresIn: expiresIn });
+  },
 
+  checkToken: (req, res) => {
+    let token = req.headers['x-access-token'];
+    let isItOk = false;
+    if (token) {
+      jwt.verify(token, AUTH_PRIVATE_KEY, function(err, decodedUser) {
         if (err) {
-          return res.json({
+          res.status(403).send({
             success: false,
-            message: 'Failed to authenticate token.'
+            message: 'Failed to authenticate token.',
+            class: err.name
           });
         } else {
-          req.decoded = decoded;
-          next();
+          if (!decodedUser.admin) {
+            //TODO: make some checks for non-admin users
+          }
+          isItOk = true;
         }
       });
     } else {
       res.status(403).send({
         success: false,
-        message: 'No token provided.'
+        message: 'No token provided',
+        class: 'NoTokenProvideError'
       });
     }
+
+    return isItOk;
   }
 
 }

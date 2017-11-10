@@ -51,7 +51,6 @@ class Account extends React.Component {
       ],
       onHide: (dialog) => {}
     })
-
   }
 
   onChartReadyCallback() {

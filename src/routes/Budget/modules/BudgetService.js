@@ -1,23 +1,37 @@
 import commonConstant from '../../../../common/common.constant'
 import axios from 'axios';
+import AjaxRoutine from '../../../util/AjaxRoutine';
 
 class BudgetService {
+
+  static fetchBudgets() {
+    const url = commonConstant.ENDPOINT.BUDGET;
+    return new Promise((resolve, reject) => {
+      AjaxRoutine.get(url)
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
 
   /**
    * function used to get budgets for select element
    */
   static getBudgetsForSelects(selectElem, callbackFn) {
 
-    return new Promise((success, error) => {
+    return new Promise((resolve, reject) => {
       const url = commonConstant.ENDPOINT.BUDGET;
 
-      axios.get(url)
-        .then((response) => {
-          success({options: response.data})
+      AjaxRoutine.get(url)
+        .then(response => {
+          resolve({options: response.data})
           callbackFn(response.data);
         })
         .catch((err) => {
-          error(err);
+          reject(err);
         });
     });
 

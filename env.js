@@ -1,7 +1,7 @@
 module.exports = {
 
   development: {
-    PORT: 3000,
+    PORT: 3001,
     MONGODB_HOST: 'ds117109.mlab.com',
     MONGODB_PORT: 17109,
     MONGODB_DATABASE: 'budget',
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   staging: {
-    PORT: 3000,
+    PORT: 3001,
     MONGODB_HOST: 'ds117109.mlab.com',
     MONGODB_PORT: 17109,
     MONGODB_DATABASE: 'budget',
@@ -22,7 +22,7 @@ module.exports = {
 
 /*
   production: {
-    //PORT: 3000,
+    //PORT: 3001,
     MONGODB_HOST: '32-3a.mongo.evennode.com',
     MONGODB_PORT: 27017,
     MONGODB_DATABASE: 'b06782f406525ca8f6285931fb0fb06a',
@@ -34,7 +34,7 @@ module.exports = {
 */
 
   production: {
-    //PORT: 3000,
+    //PORT: 3001,
     MONGODB_HOST: 'ds117109.mlab.com',
     MONGODB_PORT: 17109,
     MONGODB_DATABASE: 'budget',

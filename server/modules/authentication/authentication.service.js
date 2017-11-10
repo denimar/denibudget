@@ -4,7 +4,7 @@ module.exports = {
 
   authenticate: (req, res) => {
     authenticationRepository
-      .authenticate(req.body.nickName, req.body.password)
+      .authenticate(req.body.nickName, req.body.password, res)
       .then((authenticationData) => {
         res.end(JSON.stringify(authenticationData, null, 2));
       }, (err) => {

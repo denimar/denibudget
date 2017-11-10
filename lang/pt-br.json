@@ -11,7 +11,10 @@
     "database": "Banco de Dados",
     "user": "Usuário",
     "password": "Senha",
-    "buttonText": "Login"
+    "buttonText": "Login",
+    "authentication": {
+      "failureMsg": "Falha na autenticação! Usuário ou senha inválidos!"
+    }
   },
   "budget": {
     "description": "Descrição",

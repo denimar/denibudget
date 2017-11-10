@@ -4,13 +4,12 @@ import authenticationHelper from '../authentication/authentication.helper';
 module.exports = {
 
   getBudgets: (req, res) => {
-
-    authenticationHelper.checkToken(req, res);
-
-    budgetRepository.getBudgets()
-      .then((budgets) => {
-        res.end(JSON.stringify(budgets, null, 2));
-      });
+    if (authenticationHelper.checkToken(req, res)) {
+      budgetRepository.getBudgets()
+        .then((budgets) => {
+          res.end(JSON.stringify(budgets, null, 2));
+        });
+    }
   },
 
   addBudget: (req, res) => {

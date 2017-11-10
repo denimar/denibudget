@@ -7,7 +7,7 @@ let headerElem = (
   <div className="main-header">
 
     <div className="navigation">
-      <IndexLink to='/' activeClassName="route-active"><Translate value="tabs.budgets"/></IndexLink>
+      <IndexLink to='/budget' activeClassName="route-active"><Translate value="tabs.budgets"/></IndexLink>
       <IndexLink to='/transaction' activeClassName="route-active"><Translate value="tabs.transactions"/></IndexLink>
       <IndexLink to='/statement' activeClassName="route-active"><Translate value="tabs.statements"/></IndexLink>
       <IndexLink to='/account' activeClassName="route-active"><Translate value="tabs.accounts"/></IndexLink>
