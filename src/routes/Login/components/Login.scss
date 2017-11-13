@@ -15,72 +15,93 @@
     align-items: center;
     height: 100%;
 
-    .login-box {
-      background-color: $background-color;
-      border: solid 1px darken($background-color, 2);
-      box-shadow: 10px 10px 40px $background-color;
-      border-radius: 6px;
-      width: 350px;
-      //padding: 20px;
+    .login-box-and-messages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-      .login-title {
-        background-color: darken($background-color, 5);
-        padding: 10px;
-        text-align: center;
-        color: white;
-        font-style: italic;
-        font-weight: bold;
-        font-size: 24px;
-      }
-
-      .login-image {
-        margin-top: 15px;
-        margin-bottom: 15px;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        flex-direction: column;
-        color: #006699;
-      }
-
-      .login-field {
-        display: flex;
-        flex-direction: column;
-        margin-top: 5px;
-        border-bottom: solid 1px;
-        border-color: lighten($background-color, 8);
-        margin-left: 5px;
-        margin-right: 5px;
-
-        .login-field-input {
-          background-color: $background-color;
-          border: 0;
-          color: lighten($background-color, 15);
-          font-size: 14px;
-          outline: 0;
-          padding: 10px;
-        }
-
-        input.login-field-input {
-          color: #ffffff;
-        }
-
-        &:focus-within {
-          border-color: lighten($background-color, 25);
-        }
-      }
-
-      .login-button {
-        color: #fff;
-        background-color: #5cb85c;
-        border-color: #4cae4c;
+      .login-box {
+        background-color: $background-color;
+        border: solid 1px darken($background-color, 2);
+        box-shadow: 10px 10px 40px $background-color;
         border-radius: 6px;
-        cursor: pointer;
-        margin: 32px 5px 5px;
-        padding: 10px 16px;
-        font-size: 18px;
-        text-align: center;
+        width: 350px;
+
+        .login-title {
+          background-color: darken($background-color, 5);
+          padding: 10px;
+          text-align: center;
+          color: white;
+          font-style: italic;
+          font-weight: bold;
+          font-size: 24px;
+        }
+
+        .login-image {
+          margin-top: 15px;
+          margin-bottom: 15px;
+          display: flex;
+          text-align: center;
+          align-items: center;
+          flex-direction: column;
+          color: #006699;
+        }
+
+        .login-field {
+          display: flex;
+          flex-direction: column;
+          margin-top: 5px;
+          border-bottom: solid 1px;
+          border-color: lighten($background-color, 8);
+          margin-left: 5px;
+          margin-right: 5px;
+
+          .login-field-input {
+            background-color: $background-color;
+            border: 0;
+            color: lighten($background-color, 15);
+            font-size: 14px;
+            outline: 0;
+            padding: 10px;
+          }
+
+          input.login-field-input {
+            color: #ffffff;
+          }
+
+          &:focus-within {
+            border-color: lighten($background-color, 25);
+          }
+        }
+
+        .login-button {
+          $login-button-background-color: #5cb85c;
+          background-color: $login-button-background-color;
+          color: #fff;
+          border-color: #4cae4c;
+          border-radius: 6px;
+          cursor: pointer;
+          margin: 32px 5px 5px;
+          padding: 10px 16px;
+          font-size: 18px;
+          text-align: center;
+
+          &.disabled {
+            pointer-events: none;
+            opacity: 0.65;
+            filter: alpha(opacity=65);
+            box-shadow: none;
+            user-select: none;
+          }
+        }
       }
+
+      .login-messages {
+        margin-top: 15px;
+        color: red;
+        font-size: 18px;
+      }
+
     }
   }
 
