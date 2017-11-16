@@ -1,15 +1,12 @@
 const budgetRepository = require('./budget.repository');
-import authenticationHelper from '../authentication/authentication.helper';
 
 module.exports = {
 
   getBudgets: (req, res) => {
-    if (authenticationHelper.checkToken(req, res)) {
-      budgetRepository.getBudgets()
-        .then((budgets) => {
-          res.end(JSON.stringify(budgets, null, 2));
-        });
-    }
+    budgetRepository.getBudgets()
+      .then((budgets) => {
+        res.end(JSON.stringify(budgets, null, 2));
+      });
   },
 
   addBudget: (req, res) => {

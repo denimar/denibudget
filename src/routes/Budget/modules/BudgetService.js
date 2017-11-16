@@ -7,7 +7,7 @@ class BudgetService {
   static fetchBudgets() {
     const url = commonConstant.ENDPOINT.BUDGET;
     return new Promise((resolve, reject) => {
-      AjaxRoutine.get(url)
+      axios.get(url)
         .then(response => {
           resolve(response.data);
         })
@@ -25,7 +25,7 @@ class BudgetService {
     return new Promise((resolve, reject) => {
       const url = commonConstant.ENDPOINT.BUDGET;
 
-      AjaxRoutine.get(url)
+      axios.get(url)
         .then(response => {
           resolve({options: response.data})
           callbackFn(response.data);

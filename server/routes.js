@@ -1,5 +1,8 @@
+
+
 module.exports = function(app) {
 
+  require('./requestFilter.js')(app);
   require('./modules/authentication/authentication.controller.js')(app);
   require('./modules/category/category.controller.js')(app);
   require('./modules/account/account.controller.js')(app);

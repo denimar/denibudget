@@ -81,6 +81,7 @@
     "bootstrap-daterangepicker": "^2.1.25",
     "chart.js": "^2.5.0",
     "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
     "css-loader": "^0.26.0",
     "cssnano": "^3.7.4",
     "debug": "^2.2.0",
