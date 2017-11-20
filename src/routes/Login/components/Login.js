@@ -36,7 +36,7 @@ class Login extends React.Component {
     let passwordInput = loginForm.querySelector('input[name=password]');
     passwordInput.value = null;
 
-    nickNameInput.focus();    
+    nickNameInput.focus();
   }
 
   checkDisableLoginButton() {
@@ -97,8 +97,8 @@ class Login extends React.Component {
               <form id="login-form">
                 <div className="login-field">
                   <select className="login-field-input">
-                    <option value="oficial">Base Oficial on MapLab</option>
-                    <option value="teste">Base Teste on MapLab</option>
+                    <option value="1">Base Oficial on MapLab</option>
+                    <option value="2">Base Teste on MapLab</option>
                   </select>
                 </div>
                 <div className="login-field">
