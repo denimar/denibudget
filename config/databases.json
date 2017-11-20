@@ -1,0 +1,20 @@
+{
+  "oficial": {
+    "MONGODB_HOST": "ds117109.mlab.com",
+    "MONGODB_PORT": 17109,
+    "MONGODB_DATABASE": "budget",
+    "MONGODB_CONNECTION_TIMEOUT": 10000,
+    "MONGODB_REPLICA_SET": false,
+    "MONGODB_USER": "denimar",
+    "MONGODB_PASSWORD": "dm90460"
+  },
+  "demo": {
+    "MONGODB_HOST": "ds115396.mlab.com",
+    "MONGODB_PORT": 15396,
+    "MONGODB_DATABASE": "demo",
+    "MONGODB_CONNECTION_TIMEOUT": 10000,
+    "MONGODB_REPLICA_SET": false,
+    "MONGODB_USER": "denimar",
+    "MONGODB_PASSWORD": "dm90460"
+  }
+}

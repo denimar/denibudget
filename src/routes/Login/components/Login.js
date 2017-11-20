@@ -97,8 +97,8 @@ class Login extends React.Component {
               <form id="login-form">
                 <div className="login-field">
                   <select className="login-field-input">
-                    <option value="1">Base Oficial on MapLab</option>
-                    <option value="2">Base Teste on MapLab</option>
+                    <option value="oficial">Base Oficial on MapLab</option>
+                    <option value="demo">Base Teste on MapLab</option>
                   </select>
                 </div>
                 <div className="login-field">
