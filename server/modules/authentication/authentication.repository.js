@@ -4,21 +4,20 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import authenticationHelper from './authentication.helper';
 import ms from 'ms';
-
+import Connection from '../../Connection';
+const conn = new Connection();
 import bcrypt from 'bcrypt-nodejs';
-
 const model = require('./user.model');
-let User = mongoose.model('User');
 
 module.exports = {
 
-  authenticate: (nickName, password, res) => {
+  authenticate: (database, nickName, password, res) => {
+    conn.setDatabase(database);
 
     return new Promise(successFn => {
       res.cookie('auth', '');
 
-      rodar aqui o mongoose.connect(MONGODB_URI, options) com a base que o usuário selecionar no login...
-      verificar se o usuário está tentando logar na mesma base e esta já está conectada... neste caso não precisa conectar novamente...
+      let User = conn.getConnection().model('User');
 
       User.findOne({
         nickName: nickName

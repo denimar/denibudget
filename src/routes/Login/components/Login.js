@@ -21,9 +21,11 @@ class Login extends React.Component {
 
   getFormValues() {
     let loginForm = document.querySelector('#login-form');
+    let database = loginForm.querySelector('select[name=database]').value;
     let nickName = loginForm.querySelector('input[name=userName]').value;
     let password = loginForm.querySelector('input[name=password]').value;
     return {
+      database: database,
       nickName: nickName,
       password: password
     }
@@ -72,7 +74,7 @@ class Login extends React.Component {
     let form = this.getFormValues();
 
     LoginService
-      .authenticate(form.nickName, form.password)
+      .authenticate(form.database, form.nickName, form.password)
       .then((response) => {
         if (response.success) {
           window.location = "/budget";
@@ -96,7 +98,7 @@ class Login extends React.Component {
 
               <form id="login-form">
                 <div className="login-field">
-                  <select className="login-field-input">
+                  <select name="database" className="login-field-input">
                     <option value="oficial">Base Oficial on MapLab</option>
                     <option value="demo">Base Teste on MapLab</option>
                   </select>

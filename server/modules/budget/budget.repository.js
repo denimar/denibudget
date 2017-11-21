@@ -1,8 +1,10 @@
 import moment from 'moment'
 const mongoose = require('mongoose');
 const model = require('./budget.model');
-let Budget = mongoose.model('Budget');
-let repositoryBudgetHelper = require('../../helper/repository.helper')(Budget);
+import Connection from '../../Connection';
+const conn = new Connection();
+let Budget = null;
+let repositoryBudgetHelper = null;
 let Transaction = mongoose.model('Transaction');
 let repositoryTransactionHelper = require('../../helper/repository.helper')(Transaction);
 let generalHelper = require('../general/general.helper');
@@ -10,9 +12,14 @@ let accountRepository = require('../account/account.repository');
 let categoryRepository = require('../category/category.repository');
 import { I18n } from 'react-redux-i18n';
 
-module.exports = {
+class BudgetRepository {
 
-  getBudgets: () => {
+  constructor() {
+    Budget = conn.getConnection().model('Budget');
+    repositoryBudgetHelper = require('../../helper/repository.helper')(Budget);
+  }
+
+  getBudgets() {
     return new Promise(function(success) {
       repositoryBudgetHelper.getAll({}, {startDate: -1}, null, null, (query) => {
         query.populate('details.category');
@@ -24,17 +31,17 @@ module.exports = {
           });
       });
     });
-  },
+  }
 
-  getBudgetById: (budgetId) => {
+  getBudgetById(budgetId) {
     return repositoryBudgetHelper.getAll({
       _id: budgetId
     }, {startDate: -1}, null, null, (query) => {
       query.populate('details.category');
     });
-  },
+  }
 
-  add: (documentToAdd) => {
+  add(documentToAdd) {
     return new Promise(function(success) {
 
       let newDocument = new Budget(documentToAdd);
@@ -54,9 +61,9 @@ module.exports = {
 
     });
 
-  },
+  }
 
-  del: (id) => {
+  del(id) {
     return new Promise(function(success) {
 
       Budget.findById(id, (err, budget) => {
@@ -77,9 +84,9 @@ module.exports = {
 
     });
 
-  },
+  }
 
-  upd: (budgetToUpd) => {
+  upd(budgetToUpd) {
     let details = budgetToUpd.details || [];
     details.forEach(item => {
       if (!item._id) { //when id comes undefined means it is a new record
@@ -94,13 +101,13 @@ module.exports = {
       });
     });
 
-  },
+  }
 
-  getHowMuchMoneyIHadAtTheEndOfTheBudget: (budget) => {
+  getHowMuchMoneyIHadAtTheEndOfTheBudget(budget) {
     return _getHowMuchMoneyIHadAtTheEndOfTheBudget(budget);
-  },
+  }
 
-  getHowMuchMoneyAtTheEnd: () => {
+  getHowMuchMoneyAtTheEnd() {
     let self = this;
     let budgetAndHowMuchMoneyArray = [];
     let budgetCount = 0;
@@ -198,3 +205,5 @@ function _setCategoriesPath(budgets, categories) {
     })
   })
 }
+
+export default BudgetRepository;

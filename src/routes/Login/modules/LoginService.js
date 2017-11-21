@@ -3,13 +3,14 @@ import commonConstant from '../../../../common/common.constant'
 
 class LoginService {
 
-  static authenticate(nickName, password) {
+  static authenticate(database, nickName, password) {
     return new Promise((successFn, failureFn) => {
       const url = commonConstant.ENDPOINT.LOGIN + '/authenticate';
 
       axios.post(url, {
-          nickName: nickName,
-          password: password
+        database: database,
+        nickName: nickName,
+        password: password
       })
       .then((response) => {
         successFn(response.data);
