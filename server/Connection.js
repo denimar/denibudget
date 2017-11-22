@@ -6,22 +6,15 @@ mongoose.Promise = global.Promise;
 class Connection {
 
   constructor() {
-    this.connections = [];
+    this.currentConnection = null;
   }
 
-  setDatabase(databaseName) {
-    this.databaseName = databaseName;
-  }
+  connect(databaseName) {
+    const databaseConfig = databasesConfig[databaseName];
 
-  getConnection() {
-    for (let i = 0 ; i < this.connections.length; i++) {
-      let conn = this.connections[i];
-      if (conn.databaseName === this.databaseName) {
-        return conn.connectionObj;
-      }
+    if (this.currentConnection) {
+      this.currentConnection.close();
     }
-
-    const databaseConfig = databasesConfig[this.databaseName];
 
     const options = {
       useMongoClient: true
@@ -35,10 +28,6 @@ class Connection {
       options.replset.rs_name = databaseConfig.MONGODB_REPLICA_SET;
     }
 
-    mongoose.connect(MONGODB_URI, options);
-
-    const connectionObj = mongoose.connection;
-
     console.log('----------------------------------------------------------');
     console.log(' Trying to connect to MongoDB:');
     console.log('----------------------------------------------------------');
@@ -49,27 +38,24 @@ class Connection {
     console.log(' Replacaset : ' + databaseConfig.MONGODB_REPLICA_SET);
     console.log('----------------------------------------------------------');
 
-    connectionObj.on('error', err => {
-      console.log('----------------------------------------------------------');
-      console.log('Failed to connect to MongoDB:');
-      console.log(err);
-      console.log('----------------------------------------------------------');
-      throw err;
-    });
+    let createConnectionPromise = mongoose.connect(MONGODB_URI, options);
 
-    connectionObj.on('connected', () => {
-      console.log('----------------------------------------------------------');
-      console.log('MongoDB Connected Successfully!!');
-      console.log('----------------------------------------------------------');
-    });
+    createConnectionPromise.then(
+      (newConnection) => {
+        this.currentConnection = newConnection;
+        console.log('----------------------------------------------------------');
+        console.log('MongoDB Connected Successfully!!');
+        console.log('----------------------------------------------------------');
+      },
+      err => {
+        console.log('----------------------------------------------------------');
+        console.log('Failed to connect to MongoDB:');
+        console.log(err.message);
+        console.log('----------------------------------------------------------');
+        //throw err;
+      }
+    );
 
-
-    this.connections.push({
-      databaseName: this.databaseName,
-      connectionObj: connectionObj
-    });
-
-    return connectionObj;
   }
 
 }

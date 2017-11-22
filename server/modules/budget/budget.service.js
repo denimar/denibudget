@@ -1,20 +1,17 @@
 import BudgetRepository from './budget.repository';
+const budgetRepository = new BudgetRepository();
 
 class BudgetService {
 
-  constructor() {
-    this.budgetRepository = new BudgetRepository();
-  }
-
   getBudgets(req, res) {
-    this.budgetRepository.getBudgets()
+    budgetRepository.getBudgets()
       .then((budgets) => {
         res.end(JSON.stringify(budgets, null, 2));
       });
   }
 
   addBudget(req, res) {
-    this.budgetRepository.add(req.body)
+    budgetRepository.add(req.body)
       .then((addedBudget) => {
         res.end(JSON.stringify(addedBudget, null, 2));
       });
@@ -23,21 +20,21 @@ class BudgetService {
   delBudget(req, res) {
     let id = req.params.id;
 
-    this.budgetRepository.del(id)
+    budgetRepository.del(id)
       .then((deletedBudget) => {
         res.end(JSON.stringify(deletedBudget, null, 2));
       });
   }
 
   updBudget(req, res) {
-    this.budgetRepository.upd(req.body)
+    budgetRepository.upd(req.body)
       .then((updatedBudget) => {
         res.end(JSON.stringify(updatedBudget, null, 2));
       });
   }
 
   getHowMuchMoneyAtTheEnd(req, res) {
-    this.budgetRepository.getHowMuchMoneyAtTheEnd()
+    budgetRepository.getHowMuchMoneyAtTheEnd()
       .then(howMuchMoney => {
         res.end(JSON.stringify(howMuchMoney, null, 2));
       });

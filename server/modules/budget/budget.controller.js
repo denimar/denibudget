@@ -1,7 +1,8 @@
-const budgetService = require('./budget.service');
 const commonConstant = require('../../../common/common.constant');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+import BudgetService from './budget.service';
+const budgetService = new BudgetService();
 
 module.exports = function(app) {
 

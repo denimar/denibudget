@@ -1,8 +1,8 @@
 import moment from 'moment'
 const mongoose = require('mongoose');
 const model = require('./budget.model');
-import Connection from '../../Connection';
-const conn = new Connection();
+// import Connection from '../../Connection';
+// const conn = new Connection();
 let Budget = null;
 let repositoryBudgetHelper = null;
 let Transaction = mongoose.model('Transaction');
@@ -15,7 +15,7 @@ import { I18n } from 'react-redux-i18n';
 class BudgetRepository {
 
   constructor() {
-    Budget = conn.getConnection().model('Budget');
+    Budget = mongoose.model('Budget');
     repositoryBudgetHelper = require('../../helper/repository.helper')(Budget);
   }
 

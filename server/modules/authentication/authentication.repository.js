@@ -12,12 +12,12 @@ const model = require('./user.model');
 module.exports = {
 
   authenticate: (database, nickName, password, res) => {
-    conn.setDatabase(database);
+    conn.connect(database);
 
     return new Promise(successFn => {
       res.cookie('auth', '');
 
-      let User = conn.getConnection().model('User');
+      let User = mongoose.model('User');
 
       User.findOne({
         nickName: nickName
