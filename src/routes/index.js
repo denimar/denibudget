@@ -1,11 +1,12 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/CoreLayout'
-import LoginRoute from './Login'
-import TransactionRoute from './Transaction'
-import CategoryRoute from './Category'
 import AccountRoute from './Account'
-import BudgetRoute from './Budget'
-import StatementRoute from './Statement'
+import HomeRoute from './Home'
+import VehicleRoute from './Vehicle'
+import TripRoute from './Trip'
+import TripsRoute from './Trips'
+import ItineraryRoute from './Itinerary'
+import ItinerariesRoute from './Itineraries'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -13,14 +14,14 @@ import StatementRoute from './Statement'
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  indexRoute  : LoginRoute(store),
+  indexRoute  : HomeRoute,
   childRoutes : [
-    LoginRoute(store),
-    TransactionRoute(store),
-    CategoryRoute(store),
     AccountRoute(store),
-    BudgetRoute(store),
-    StatementRoute(store)
+    VehicleRoute,
+    TripRoute,
+    TripsRoute,
+    ItineraryRoute,
+    ItinerariesRoute
   ]
 })
 

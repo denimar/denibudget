@@ -1,0 +1,42 @@
+.vehicle-container {
+  height: 55px;
+  //width: 950px;
+  display: flex;
+  flex-direction: row;
+
+  .vehicle-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .vehicle-image {
+      width: 182px;
+      height: 48px;
+      opacity: 0.7;
+    }
+
+    .vehicle-prefix-label {
+      z-index: 8;
+      top: -29px;
+      position: relative;
+      font-weight: bold;
+      color: #666666;
+      font-size: 16px;
+      background-color: white;
+      margin-left: 10px;
+    }
+
+    .company-label {
+      z-index: 9;
+      top: -32px;
+      position: relative;
+      font-weight: bold;
+      color: #8c8c8c;
+      font-size: 10px;
+      margin-left: 10px;
+      background-color: white;
+    }
+
+  }
+
+}

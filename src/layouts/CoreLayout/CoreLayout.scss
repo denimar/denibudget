@@ -1,3 +1,5 @@
+@import '../../styles/_base.scss';
+
 .core-layout {
   height: 100%;
   display: -webkit-flex;
@@ -7,14 +9,11 @@
   justify-content: space-around;
 
   .core-layout-viewport {
-    background-color: #f0ffff;
+    background-color: $body-background-color;
     flex: 1;
     justify-content: space-around;
     display: flex;
-
-    &> div {
-      display: flex;
-    }
+    //overflow-y: auto;
   }
 
 }

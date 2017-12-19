@@ -1,0 +1,30 @@
+{
+  "stations": {
+    "station": [
+      {
+        "id": "19",
+        "code": "TICAN",
+        "name": "TICAN",
+        "code_node": "TICAN",
+        "latitude": "-27.452118172968156",
+        "longitude": "-48.45602631568909"
+      },
+      {
+        "id": "20",
+        "code": "TICEN",
+        "name": "TICEN",
+        "code_node": "TICEN",
+        "latitude": "-27.59824416982918",
+        "longitude": "-48.55412006378174"
+      },
+      {
+        "id": "17",
+        "code": "TILAG",
+        "name": "TILAG",
+        "code_node": "TILAG",
+        "latitude": "-27.60276388784975",
+        "longitude": "-48.47075432538986"
+      }
+    ]
+  }
+}

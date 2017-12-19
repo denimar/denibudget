@@ -1,0 +1,87 @@
+@import '../../../styles/_base.scss';
+
+.itinerary-panel-container {
+  $border-and-shadow-color: lighten($base-color, 40);
+  width: 350px;
+  display: block;
+  border: 1px solid $border-and-shadow-color;
+  //box-shadow: -1px -1px 2px $border-and-shadow-color, 1px 1px 2px $border-and-shadow-color;
+  box-shadow: 2px 2px 4px #a6a6a6;
+  border-radius: 2px;
+
+  .itinerary-panel {
+    display: block;
+    flex-direction: column;
+    background-color: white;
+
+    .itinerary-panel-header {
+      //background-color: lighten($base-color, 45);
+      background-color: lighten($base-color, 64);
+      border-bottom: solid 1px lighten($base-color, 55);
+      padding: 3px 3px 3px 15px;
+      color: $base-color;
+      font-weight: bold;
+      display: flex;
+      flex-direction: row;
+
+      .itinerary-panel-header-title {
+        justify-content: space-around;
+        flex: 1;
+      }
+
+      .itinerary-panel-action-buttons {
+        width: 34px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .itinerary-panel-action-button {
+          color: #a6a6a6;
+          border: solid 1px #e6e6e6;
+          padding: 2px;
+          cursor: pointer;
+          margin-left: 1px;
+          border-radius: 2px;
+
+          &:hover {
+            background-color: #f2f2f2;
+            color: #808080;
+            //border-color: #cccccc;
+          }
+        }
+      }
+    }
+
+    .itinerary-panel-body {
+      padding: 15px 20px;
+    }
+
+  }
+}
+
+
+// .itinerary-panel-container {
+//   $border-and-shadow-color: lighten($base-color, 40);
+//   width: 350px;
+//   display: block;
+//   border: 1px solid $border-and-shadow-color;
+//   //box-shadow: -1px -1px 10px $border-and-shadow-color, 1px 1px 10px $border-and-shadow-color;
+//   border-radius: 2px;
+//
+//   .itinerary-panel {
+//     display: block;
+//     flex-direction: column;
+//
+//     .itinerary-panel-header {
+//       background-color: lighten($base-color, 45);
+//       padding: 3px 15px;
+//       color: darken($base-color, 5);
+//       font-weight: bold;
+//     }
+//
+//     .itinerary-panel-body {
+//       padding: 15px 20px;
+//     }
+//
+//   }
+// }

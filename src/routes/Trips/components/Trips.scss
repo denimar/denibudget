@@ -1,0 +1,15 @@
+.trips-container {
+  //display: flex;
+  //flex-direction: column;
+  width: 100%;
+
+  .trip-container {
+    //height: 80px;
+    padding-top: 8px;
+    padding-bottom: 4px;    
+
+    &:not(:last-child) {
+      border-bottom: solid 1px #d9d9d9;
+    }
+  }
+}

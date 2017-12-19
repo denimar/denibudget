@@ -1,25 +1,66 @@
-//@import "compass/css3";
+@import '../../styles/_base.scss';
+
+// @font-face {
+//     font-family: Roboto;
+//     src: url(../../styles/fonts/Roboto/Roboto-Regular.ttf);
+// }
 
 .main-header {
-  $base-color-header: #4990E2;
-  background-color: $base-color-header;
-  border: solid 1px darken($base-color-header, 6%);;
-  box-shadow: 0px 4px 10px #888888;
-  padding-top: 14px;
+  $base-color-header: $base-color;//#2D8306; //#1c61b0 //#4990E2;
+  //background-color: $base-color-header;
+  //border: solid 1px darken($base-color-header, 6%);
+  //box-shadow: 0px 4px 10px #888888;
+  //padding-top: 14px;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   z-index: 2;
-  height: 50px;
-  min-height: 50px;
+  height: 60px;
+  min-height: 60px;
 
-  * {
-    box-sizing: border-box;
+////
+border-top: 1px solid #fff!important;
+border-bottom: 3px solid #3c80a6!important;
+color: #777;
+text-shadow: 0 1px 0 #fff;
+-webkit-box-shadow: 0 0 5px rgba(0,0,0,.55)!important;
+-moz-box-shadow: 0 0 5px rgba(0,0,0,.55)!important;
+box-shadow: 0 0 5px rgba(0,0,0,.55)!important;
+padding-left: 20px;
+///
+
+  .header-hamburger-menu {
+    cursor: pointer;
+  }
+
+  .wplex-logo {
+    margin-top: 9px;
+    margin-left: 15px;
+    width: 150px;
+    height: 30px;
+  }
+
+  .trip-manager-logo {
+    margin-top: -2px;
+    margin-left: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .trip-manager-title {
+    font-size: 38px;
+    margin-left: 20px;
+    margin-top: -4px;
+    //color: #006699;
+    color: #52B748;
+    font-family: Barlow;
+    font-weight: bold;
   }
 
   .navigation {
     flex-direction: row;
     display: flex;
+    display:none;
 
     a {
       text-decoration: none;

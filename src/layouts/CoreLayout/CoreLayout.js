@@ -1,19 +1,25 @@
 import React from 'react'
 import Header from '../../components/Header'
+import TabViewSelector from '../../components/TabViewSelector'
+import ChipsStationSelector from '../../components/ChipsStationSelector'
 import './CoreLayout.scss'
 import '../../styles/core.scss'
 
-export const CoreLayout = ({ children }) => (
-  <div className='core-layout'>
-    <Header />
-    <div className='core-layout-viewport'>
-      {children}
-    </div>
-  </div>
-)
+class CoreLayout extends React.Component {
 
-CoreLayout.propTypes = {
-  children : React.PropTypes.element.isRequired
+  render() {
+    return (
+      <div className='core-layout'>
+        <Header />
+        <TabViewSelector />
+        <ChipsStationSelector />
+        <div className='core-layout-viewport'>
+          { this.props.children }
+        </div>
+      </div>
+    )
+  }
+
 }
 
 export default CoreLayout

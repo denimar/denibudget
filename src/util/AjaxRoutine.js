@@ -10,13 +10,7 @@ class AjaxRoutine {
           resolveFn(response);
         })
         .catch((err) => {
-          let responseError = err.response || {data: {}};
-
-          if (responseError.data.class == 'TokenExpiredError' || responseError.data.class == 'NoTokenProvidedError') {
-            window.location = "/login";
-          } else {
-            rejectFn(err);
-          }
+          rejectFn(err);
         });
     });
   }

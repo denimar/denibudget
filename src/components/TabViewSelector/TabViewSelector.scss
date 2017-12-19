@@ -1,0 +1,53 @@
+@import '../../styles/_base.scss';
+
+.tab-view-selector-container {
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px 4px 0px 0px;
+  font-size: 12px;
+  border-bottom: solid 1px #d9d9d9; //#c0c0c0;
+  @include no-select-mixin;
+
+  .tab-view-selector {
+    display: flex;
+    flex-direction: row;
+
+    .tab-view-selector-label {
+      color: #cccccc;
+      font-size: 11px;
+      font-style: italic;
+      padding: 5px 8px;
+    }
+
+    .tab-view-selector-item {
+      $tab-view-selector-item-border-color: #d9d9d9;
+      color: #8c8c8c;
+      background-color: #f2f2f2;
+
+      border-top: solid 1px $tab-view-selector-item-border-color;
+      border-left: solid 1px $tab-view-selector-item-border-color;
+      border-right: solid 1px $tab-view-selector-item-border-color;
+
+      padding: 5px 6px;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      cursor: pointer;
+      margin-right: 2px;
+      font-size: 12px;
+
+      &.selected {
+        outline: solid 1px #E6E6E6;
+        background-color: $body-background-color; //#d9d9d9;
+        color: #262626;
+        font-weight: bold;
+        border-color: darken($tab-view-selector-item-border-color, 5%);
+        box-shadow: -2px -2px 4px $tab-view-selector-item-border-color, 2px 2px 4px $tab-view-selector-item-border-color;
+      }
+
+    }
+
+  }
+
+}
